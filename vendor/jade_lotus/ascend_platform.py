@@ -54,11 +54,12 @@ API = {
     "logs": "/api/v2/train?Action=GetJobLog",
     "events": "/api/v2/train?Action=ListJobEvents",
     "node_events": "/api/v2/cluster?Action=ListNodeEvents",
+    "nodes": "/api/v2/workspace?Action=ListNodeDimension",
     "stop": "/api/v2/train?Action=StopJob",
 }
 READ_ONLY_API = frozenset(API[key] for key in (
     "user", "permissions", "projects", "images", "groups", "resource", "prices", "schedule",
-    "list", "detail", "instances", "logs", "events", "node_events"))
+    "list", "detail", "instances", "logs", "events", "node_events", "nodes"))
 SESSION_HOSTS = frozenset(("qz.sii.edu.cn", "keycloak-inspire-prod.sii.edu.cn", "cas.sii.edu.cn"))
 SESSION_MAX_REDIRECTS = 8
 SESSION_TIMEOUT_SECONDS = 45

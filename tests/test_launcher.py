@@ -1,6 +1,8 @@
 """Portable launch invariants: source freeze, lifecycle and fixed-ID budget."""
 from pathlib import Path
 import json
+import select
+import subprocess
 import sys
 
 import pytest
@@ -45,6 +47,24 @@ def test_prepare_freezes_without_starting_or_submitting(prepared):
     assert "ASCEND_VISIBLE_DEVICES=" not in shell
     assert "ASCEND_RT_VISIBLE_DEVICES=" not in shell
     assert "HCCL_RDMA_TIMEOUT=12" in shell
+
+
+def test_account_execution_rejected_before_creation_or_controller(prepared, monkeypatch):
+    run, config, site, _ = prepared
+    site["budget_scope"] = "account"
+    launch.write(config, site)
+    dest = run.parent / "account-run"
+    with pytest.raises(ValueError, match="read-only planning"):
+        launch.prepare(config, dest)
+    assert not dest.exists()
+    launch.write(run / "site.json", site)
+    monkeypatch.setattr(launch, "verify", lambda *_: None)
+    monkeypatch.setattr(launch, "start_controller", lambda *_: pytest.fail("controller started"))
+    monkeypatch.setattr(launch, "reconcile", lambda *_args, **_kwargs: pytest.fail("platform mutation attempted"))
+    with pytest.raises(ValueError, match="read-only planning"):
+        launch.run_training(None, run)
+    with pytest.raises(ValueError, match="read-only planning"):
+        launch.snapshot(None, run, fill=True)
 
 
 def test_prepare_rejects_reuse_and_verify_detects_mutation(prepared):
@@ -184,3 +204,173 @@ def test_persistent_platform_failure_records_unconfirmed_cleanup(prepared, monke
     assert launch.read(run / "first_platform_error.json")["error"].endswith("failure 1")
     assert launch.read(run / "NEEDS_CLEANUP.json")["resources_released"] is False
     assert launch.read(run / "cleanup_failed.json")["resources_released"] is False
+
+
+def test_actual_process_lock_contention_has_a_specific_retryable_type(tmp_path):
+    directory = tmp_path / "shared-budget-lock"
+    directory.mkdir()
+    code = """import fcntl, pathlib, sys
+with (pathlib.Path(sys.argv[1]) / 'writer.lock').open('a+') as stream:
+    fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    print('locked', flush=True)
+    sys.stdin.readline()
+"""
+    child = subprocess.Popen([sys.executable, "-u", "-c", code, str(directory)],
+                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    try:
+        assert select.select([child.stdout], [], [], 5)[0], "Lock owner did not report readiness"
+        assert child.stdout.readline().strip() == "locked"
+        with pytest.raises(launch.WriterLockBusy) as captured:
+            with launch.writer_lock(directory):
+                pytest.fail("A second process acquired the held writer lock")
+        assert isinstance(captured.value, RuntimeError)
+        assert captured.value.path == directory
+        assert isinstance(captured.value.__cause__, BlockingIOError)
+    finally:
+        try:
+            child.communicate("release\n", timeout=5)
+        except subprocess.TimeoutExpired:
+            child.kill()
+            child.communicate(timeout=5)
+    assert child.returncode == 0
+    with launch.writer_lock(directory):
+        pass  # A released lock is immediately reusable, with no stale lease.
+
+
+def test_snapshot_serializes_intent_read_through_reconcile(prepared, monkeypatch):
+    run, _, _, _ = prepared
+    site = launch.read(run / "site.json")
+    site.update(cards=4, active_cards=2, job_layout=[1, 1, 2], defer_standby_until_idle=True)
+    launch.write(run / "site.json", site)
+    captured = []
+    def planner(client, target, config, intents, *, training_started):
+        captured.append(intents)
+        return None
+    monkeypatch.setattr(launch, "deferred_layout_planner", planner)
+    def reconcile(*args, **kwargs):
+        # The real POSIX lock must exclude a second snapshot before it reads
+        # the old zero-intent state or captures another layout index.
+        with pytest.raises(launch.WriterLockBusy):
+            launch.snapshot(object(), run, fill=True)
+        count = 2 if len(captured) == 1 else 3
+        launch.write(run / "ascend_fleet/state.json", {"jobs": [
+            {"status": "job_succeeded", "official_terminal": True} for _ in range(count)]})
+        return {key: None for key in ("at", "marker", "active_jobs", "running_jobs", "pending_jobs",
+            "local_requested_reserved_cards", "verified_allocated_cards", "created", "blocked_reason", "errors")}
+    monkeypatch.setattr(launch, "reconcile", reconcile)
+    launch.snapshot(object(), run, fill=True)
+    launch.snapshot(object(), run, fill=True)
+    assert captured == [0, 2]
+
+
+def test_training_retries_more_than_three_lock_conflicts_without_stopping(prepared, monkeypatch):
+    run, _, _, _ = prepared
+    monkeypatch.setattr(launch, "start_controller", lambda target: None)
+    monkeypatch.setattr(launch, "controller_disappeared", lambda target: False)
+    monkeypatch.setattr(launch.time, "sleep", lambda seconds: None)
+    calls = []
+    def snapshot(*args, **kwargs):
+        assert not (run / "STOP").exists() and not (run / "FATAL.json").exists()
+        calls.append("snapshot")
+        if len(calls) <= 4:
+            raise launch.WriterLockBusy(run / "global-budget-lock")
+        launch.write(run / "COMPLETE.json", {"status": "passed"})
+        return {"active_jobs": 0, "local_requested_reserved_cards": 0, "blocked_reason": None}
+    def forbidden(*args, **kwargs):
+        pytest.fail("Ordinary lock contention must not trigger cleanup or controller stop")
+    monkeypatch.setattr(launch, "snapshot", snapshot)
+    monkeypatch.setattr(launch, "cleanup", forbidden)
+    monkeypatch.setattr(launch, "stop_owned_controller", forbidden)
+    assert launch.run_training(object(), run, watch_seconds=60) == 0
+    assert len(calls) == 6
+    assert not (run / "first_platform_error.json").exists()
+    assert launch.read(run / "lock_retry.json")["training_stop_requested"] is False
+
+
+def test_training_lock_retry_remains_bounded_by_watch_deadline(prepared, monkeypatch):
+    run, _, _, _ = prepared
+    clock = [0.]
+    monkeypatch.setattr(launch.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(launch.time, "sleep", lambda seconds: clock.__setitem__(0, clock[0] + seconds))
+    monkeypatch.setattr(launch, "start_controller", lambda target: None)
+    monkeypatch.setattr(launch, "controller_disappeared", lambda target: False)
+    def busy(*args, **kwargs):
+        raise launch.WriterLockBusy(run / "global-budget-lock")
+    cleanups = []
+    monkeypatch.setattr(launch, "snapshot", busy)
+    monkeypatch.setattr(launch, "cleanup", lambda *a, **kw: cleanups.append(True))
+    assert launch.run_training(object(), run, watch_seconds=3, interval_seconds=1) == 3
+    assert clock[0] == 3 and cleanups == [True]
+    assert (run / "WATCH_EXPIRED.json").exists()
+    assert not (run / "FATAL.json").exists()
+
+
+def test_cleanup_lock_contention_never_kills_controller_and_can_be_retried(prepared, monkeypatch):
+    run, _, _, _ = prepared
+    lock = run / "global-budget-lock"
+    stopped = []
+    def snapshot(*args, **kwargs):
+        with launch.writer_lock(lock):
+            return {"active_jobs": 0, "local_requested_reserved_cards": 0}
+    monkeypatch.setattr(launch, "snapshot", snapshot)
+    monkeypatch.setattr(launch, "stop_owned_controller", lambda target: stopped.append(target))
+    with launch.writer_lock(lock):
+        receipt = launch.cleanup(object(), run, wait_seconds=0)
+    assert not receipt["resources_released"] and receipt["controller_stop_deferred"]
+    assert stopped == []
+    assert launch.read(run / "cleanup_receipt.json")["lock_path"] == str(lock)
+    retried = launch.cleanup(object(), run, wait_seconds=0)
+    assert retried["resources_released"] and not retried["controller_stop_deferred"]
+    assert stopped == [run]
+
+
+def test_unrelated_runtime_error_remains_fatal_without_premature_controller_stop(prepared, monkeypatch):
+    run, _, _, _ = prepared
+    stopped = []
+    def broken(*args, **kwargs):
+        raise RuntimeError("corrupt fleet state")
+    monkeypatch.setattr(launch, "snapshot", broken)
+    monkeypatch.setattr(launch, "stop_owned_controller", lambda target: stopped.append(target))
+    with pytest.raises(RuntimeError, match="corrupt fleet state"):
+        launch.cleanup(object(), run, wait_seconds=0)
+    assert stopped == []
+
+
+def test_training_does_not_misclassify_an_unrelated_runtime_error_as_lock_busy(prepared, monkeypatch):
+    run, _, _, _ = prepared
+    monkeypatch.setattr(launch, "start_controller", lambda target: None)
+    monkeypatch.setattr(launch, "controller_disappeared", lambda target: False)
+    calls = []
+    def broken(*args, **kwargs):
+        calls.append("snapshot")
+        raise RuntimeError("corrupt fleet state")
+    def cleanup(*args, **kwargs):
+        calls.append("cleanup")
+        return {"resources_released": False}
+    monkeypatch.setattr(launch, "snapshot", broken)
+    monkeypatch.setattr(launch, "cleanup", cleanup)
+    with pytest.raises(RuntimeError, match="corrupt fleet state"):
+        launch.run_training(object(), run, watch_seconds=60)
+    assert calls == ["snapshot", "cleanup"]
+    assert not (run / "lock_retry.json").exists()
+    assert "corrupt fleet state" in launch.read(run / "NEEDS_CLEANUP.json")["original_error"]
+
+
+@pytest.mark.parametrize("isolate,clear", [(False, False), (True, False), (False, True), (True, True)])
+def test_cache_isolation_and_dataset_overrides_are_independent(prepared, isolate, clear):
+    run, _, _, _ = prepared
+    site = launch.read(run / "site.json")
+    site.update(isolate_model_cache=isolate, clear_openpi_data_overrides=clear)
+    script = launch.launcher_source(run, site, [str(run / "runtime")])
+    assert ('export HF_HOME="$kit_run/cache/huggingface"' in script) == isolate
+    assert ("export TMPDIR=/tmp" in script) == isolate
+    assert ("unset OPENPI_EXCLUDED_EPISODES_FILE OPENPI_EPISODE_PROMPTS_MANIFEST" in script) == clear
+
+
+def test_dataset_override_clearing_requires_explicit_boolean(prepared):
+    _, config, site, _ = prepared
+    assert launch.resolve_site(config)["clear_openpi_data_overrides"] is False
+    site["clear_openpi_data_overrides"] = "true"
+    launch.write(config, site)
+    with pytest.raises(ValueError, match="clear_openpi_data_overrides must be boolean"):
+        launch.resolve_site(config)

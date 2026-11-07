@@ -1,6 +1,6 @@
 # 网页自动占卡与平台配置
 
-当前经过验证的后端是 QZ（`qz.sii.edu.cn`）。所谓“网页自动占卡”使用的是官方网页调用的后台接口：发现项目、镜像和资源规格，提交多个独立 LOW/1 单卡作业，跟踪平台状态与自有提交账本。运行不依赖模拟鼠标点击；训练进程也不保存网页登录密码。
+当前经过验证的后端是 QZ（`qz.sii.edu.cn`）。所谓“网页自动占卡”使用的是官方网页调用的后台接口：发现项目、镜像和资源规格，提交 LOW/1 作业，跟踪平台状态与自有提交账本。默认独立单卡，也支持已发现的 2/4/8/16 卡规格；节点资源规划和混合布局见 [09](09_topology_training.md)。运行不依赖模拟鼠标点击；训练进程也不保存网页登录密码。
 
 身份来自使用者已有的私有 SSO cookie 文件。底层平台模块也提供官方 OAuth client；具体 launcher 已开放的参数见 `launch.py --help`。cookie 权限应为0600，路径在命令行提供；分发目录和源码快照不包含 cookie、密码、token。已有 SSO 可沿官方 HTTPS 登录链刷新；登录过期时按官方入口重新登录，不把凭据写进训练日志。
 
@@ -18,7 +18,7 @@
 
 ## 提交前后有什么区别
 
-prepare只创建本地新运行目录、冻结代码与配置；verify检查冻结文件。run是显式开始执行：启动CPU controller并提交预算内的独立单卡作业。observe查询，不创建新作业。cleanup仅处理本run的自有job，直到官方终态才释放账本预留。未知提交结果仍占预算，不能在超时后盲目重复POST。
+prepare只创建本地新运行目录、冻结代码与配置；verify检查冻结文件。run是显式开始执行：启动CPU controller并按冻结的布局提交预算内的作业。observe查询，不创建新作业。cleanup仅处理本run的自有job，直到官方终态才释放账本预留。未知提交结果仍占预算，不能在超时后盲目重复POST。
 
 `ascend_fleet/state.json`保存自有job_id、不可变请求和观察结果；`latest.json`显示预留、running、pending和错误。平台API不可用时，不以本地进程退出代替官方释放证明。要区分 requested_reserved_cards、真实执行worker证据和平台可返回的allocated identity；某字段不可核验不代表没有用卡。
 
@@ -28,7 +28,7 @@ prepare只创建本地新运行目录、冻结代码与配置；verify检查冻�
 
 ## 设备与环境
 
-CANN set_env之后保留其PYTHONPATH和库路径，再追加本工具包运行时代码。平台可能将物理第12张卡映射为容器里的逻辑npu0；不要强制ASCEND_VISIBLE_DEVICES=0覆盖已有mask。每个worker先核验恰好一个可见NPU，再使用逻辑npu0。
+CANN set_env之后保留其PYTHONPATH和库路径，再追加本工具包运行时代码。平台可能将物理第12张卡映射为容器里的逻辑npu0；不要强制ASCEND_VISIBLE_DEVICES=0覆盖已有mask。单卡worker核验一个可见NPU并使用逻辑npu0；多卡作业保留完整可见集合，各worker按独立逻辑序号选设备，并核对作业总可见数量。
 
 现有实测参考设置为 HCCL_INTRA_ROCE_ENABLE=1、RDMA_TIMEOUT=12、较大通信buffer与512MiB桶、10ms热控制轮询。它们对当前910B/CANN/网络布局有效，不能当通用最优值。RDMA_TIMEOUT是底层事务参数，不等于controller的心跳或作业超时；不要为了提速把所有超时都缩短。具体调参方法见 [性能验证](04_validation_and_performance.md)。
 

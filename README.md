@@ -6,6 +6,8 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 
 **本次独立接入验证已通过：** 无会话背景的agent按目录完成真实两卡20步，以及2→1受控掉卡20步；loss从4.453125降到0.16766，两轮数值参考均通过，资源均已释放。[查看接入验收](docs/06_handoff_acceptance.md)。
 
+**整机与碎卡混合优化：** 新增节点资源规划、每作业 1/2/4/8/16 卡、固定候选池的延迟申请与步边界接入。4×16 OpenPI 30 步短训实际提交间隔均值 **1.767 秒**；600 步小模型自动切入/定时切回及严格 CPU 数值参考通过。默认 HCCL 大梯度通信约 0.108 秒，手工分层在本轮反而更慢。功能、结果和恢复限制见 [09 混合训练](docs/09_topology_training.md)。这是有界实验验收，不代表整 pod 抢占后已能自动无损恢复。
+
 ## 目录与读取顺序
 
 | 入口 | 解决的问题 |
@@ -18,6 +20,7 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 | [05 已有证据与边界](docs/05_evidence_and_limits.md) | 已验证什么，哪些情形需要额外实现 |
 | [06 本次接入验收](docs/06_handoff_acceptance.md) | 不继承对话的agent的真实短跑结果 |
 | [07 独立项目与依赖](docs/07_standalone_project.md) | 目录迁移、外部输入、历史证据和验证范围 |
+| [08 拓扑执行计划](docs/08_topology_execution_plan.md)、[09 混合训练](docs/09_topology_training.md) | 节点规划、多卡作业、timeout对照、候选切换与限制 |
 | `adapters.py`、[模型模板](examples/model_adapter_template.py) | 可修改的模型接入点 |
 | [toy代码](examples/toy_regression.py)、[数值审计](examples/audit_toy.py) | 无外部数据、CPU参考与真实NPU短训练 |
 | [站点示例](config/site.example.json)、`launch.py` | prepare/verify/run/observe/cleanup |
@@ -26,7 +29,7 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 
 ## 环境条件
 
-训练作业需要兼容的 torch/torch_npu/CANN/HCCL、每作业一张可见 NPU、跨作业网络、共享文件系统和可用的 QZ 登录状态。当前已验证后端限定两个 QZ 空间，其他站点需移植资源后端。toy还需要NumPy；不需要OpenPI、模型下载或数据集。CPU参考可用普通CPU PyTorch；CPU检查的依赖列在 [requirements-cpu.txt](requirements-cpu.txt)，在自己的环境中安装。NPU环境需单独匹配版本，不能用这份CPU依赖文件升级共享NPU环境。
+训练作业需要兼容的 torch/torch_npu/CANN/HCCL、与申请规格一致的可见 NPU、跨作业网络、共享文件系统和可用的 QZ 登录状态。多卡作业保留完整设备mask，每个进程选择独立逻辑设备；不能再次把可见域切成只有一张卡。当前已验证后端限定两个 QZ 空间，其他站点需移植资源后端。toy还需要NumPy；不需要OpenPI、模型下载或数据集。CPU参考可用普通CPU PyTorch；CPU检查的依赖列在 [requirements-cpu.txt](requirements-cpu.txt)，在自己的环境中安装。NPU环境需单独匹配版本，不能用这份CPU依赖文件升级共享NPU环境。
 
 可以把本目录单独复制到共享盘其他位置。`launch.py`仅使用本项目的vendor，缺失时直接报错，不回退到原项目；prepare会冻结本轮执行代码。自己的模块通过site中的`source_dirs`提供**纯源码目录**，prepare后使用快照，不继续执行可变原文件。数据、权重、环境、私有inventory和登录文件由站点另供。
 

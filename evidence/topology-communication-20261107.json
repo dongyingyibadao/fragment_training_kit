@@ -1,0 +1,533 @@
+{
+  "schema": "fragment-topology-validation-20261107-v1",
+  "pure_communication_results": [
+    {
+      "schema": "topology-experiment-result-v1",
+      "cards": 32,
+      "job_layout": [
+        16,
+        16
+      ],
+      "payload_bytes": 67108864,
+      "warmup": 3,
+      "iterations": 10,
+      "all_reports_passed": true,
+      "resources_released": true,
+      "timing": "rank maximum of full sequence; source copies and Gloo checks excluded",
+      "rows": [
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 0.004408888891339302,
+          "rank_max_p95_seconds": 0.007207820005714891,
+          "rank_max_samples_seconds": [
+            0.00333428755402565,
+            0.003949567675590515,
+            0.008139751851558685,
+            0.002957843244075775,
+            0.003295399248600006,
+            0.004690974950790405,
+            0.004839666187763214,
+            0.0060687921941280365,
+            0.004085373133420944,
+            0.002727232873439789
+          ]
+        },
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "hierarchy",
+          "strategy": "sharded",
+          "case_index": 1,
+          "rank_max_mean_seconds": 0.003206968307495117,
+          "rank_max_p95_seconds": 0.00399479791522026,
+          "rank_max_samples_seconds": [
+            0.004112157970666885,
+            0.0022545158863067627,
+            0.0027530230581760406,
+            0.0037398971617221832,
+            0.0026500895619392395,
+            0.0034358538687229156,
+            0.0038513578474521637,
+            0.003031183034181595,
+            0.0028468258678913116,
+            0.0033947788178920746
+          ]
+        },
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 2,
+          "rank_max_mean_seconds": 0.003193286061286926,
+          "rank_max_p95_seconds": 0.003584272041916847,
+          "rank_max_samples_seconds": [
+            0.0030688606202602386,
+            0.0032722502946853638,
+            0.003348827362060547,
+            0.0037081800401210785,
+            0.0034328289330005646,
+            0.0034122243523597717,
+            0.0028923116624355316,
+            0.0026411116123199463,
+            0.0029637515544891357,
+            0.003192514181137085
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 0.0034019526094198225,
+          "rank_max_p95_seconds": 0.004181565530598163,
+          "rank_max_samples_seconds": [
+            0.0037960074841976166,
+            0.002711009234189987,
+            0.003975857049226761,
+            0.0034921690821647644,
+            0.004349872469902039,
+            0.0030563846230506897,
+            0.002773646265268326,
+            0.0034338049590587616,
+            0.003591131418943405,
+            0.002839643508195877
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "hierarchy",
+          "strategy": "sharded",
+          "case_index": 1,
+          "rank_max_mean_seconds": 0.0033005181699991225,
+          "rank_max_p95_seconds": 0.004335030168294906,
+          "rank_max_samples_seconds": [
+            0.0022620707750320435,
+            0.0025589056313037872,
+            0.004064418375492096,
+            0.0032966099679470062,
+            0.003193892538547516,
+            0.0031433850526809692,
+            0.003661036491394043,
+            0.004556439816951752,
+            0.002959832549095154,
+            0.0033085905015468597
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 2,
+          "rank_max_mean_seconds": 0.0036109980195760728,
+          "rank_max_p95_seconds": 0.004697131551802158,
+          "rank_max_samples_seconds": [
+            0.003141593188047409,
+            0.00412948802113533,
+            0.00435098260641098,
+            0.00404873862862587,
+            0.002531822770833969,
+            0.0034752339124679565,
+            0.004980344325304031,
+            0.003174729645252228,
+            0.0034145191311836243,
+            0.0028625279664993286
+          ]
+        }
+      ],
+      "source_manifest_sha256": "25baf2d465a3e2fda66a29f7787df2cc67c5100b837cd31effac684df75c6071",
+      "scope": "pure collective; not OpenPI update throughput; default HCCL can already use hierarchy",
+      "run_name": "topology-bench32-small-20261107-v1"
+    },
+    {
+      "schema": "topology-experiment-result-v1",
+      "cards": 64,
+      "job_layout": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "payload_bytes": 6736577376,
+      "buckets": 13,
+      "warmup": 3,
+      "iterations": 10,
+      "all_reports_passed": true,
+      "resources_released": true,
+      "timing": "rank maximum of full sequence; source copies and Gloo checks excluded",
+      "rows": [
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 0.10782151292078197,
+          "rank_max_p95_seconds": 0.10896022618981079,
+          "rank_max_samples_seconds": [
+            0.1090170859824866,
+            0.10876305773854256,
+            0.10684258700348437,
+            0.10782532207667828,
+            0.10740811377763748,
+            0.1086801178753376,
+            0.10678563499823213,
+            0.10670234262943268,
+            0.10889073088765144,
+            0.10730013623833656
+          ]
+        },
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "hierarchy",
+          "strategy": "sharded",
+          "case_index": 1,
+          "rank_max_mean_seconds": 0.1408874878892675,
+          "rank_max_p95_seconds": 0.14345590844750403,
+          "rank_max_samples_seconds": [
+            0.1400301232933998,
+            0.1404908720869571,
+            0.1404261328279972,
+            0.14135806262493134,
+            0.14100874960422516,
+            0.13954845815896988,
+            0.1451723277568817,
+            0.13941640499979258,
+            0.14063676446676254,
+            0.14078698307275772
+          ]
+        },
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 2,
+          "rank_max_mean_seconds": 0.1073655259096995,
+          "rank_max_p95_seconds": 0.10894568533403799,
+          "rank_max_samples_seconds": [
+            0.10753945214673877,
+            0.10623959894292057,
+            0.1078093908727169,
+            0.1081804484128952,
+            0.10526210069656372,
+            0.10828462243080139,
+            0.10671875881962478,
+            0.10770152136683464,
+            0.10643281042575836,
+            0.10948655498214066
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 0.10866120585706085,
+          "rank_max_p95_seconds": 0.11062642317265271,
+          "rank_max_samples_seconds": [
+            0.10781283304095268,
+            0.10924524813890457,
+            0.11149706318974495,
+            0.10852478817105293,
+            0.10828614700585604,
+            0.10846545989625156,
+            0.10810244083404541,
+            0.10778963193297386,
+            0.10732613876461983,
+            0.10956230759620667
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "hierarchy",
+          "strategy": "sharded",
+          "case_index": 1,
+          "rank_max_mean_seconds": 0.14074746367987245,
+          "rank_max_p95_seconds": 0.1432334866374731,
+          "rank_max_samples_seconds": [
+            0.13889707601629198,
+            0.1415364220738411,
+            0.1399190053343773,
+            0.14143913611769676,
+            0.1384330317378044,
+            0.14052526280283928,
+            0.14308767393231392,
+            0.14335278794169426,
+            0.1388506479561329,
+            0.14143359288573265
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 2,
+          "rank_max_mean_seconds": 0.10770894230809062,
+          "rank_max_p95_seconds": 0.10941372346132994,
+          "rank_max_samples_seconds": [
+            0.1082269623875618,
+            0.10868647322058678,
+            0.10782976448535919,
+            0.10732957511208951,
+            0.10702340677380562,
+            0.10714632272720337,
+            0.11000874638557434,
+            0.1068115346133709,
+            0.10702726244926453,
+            0.10699937492609024
+          ]
+        },
+        {
+          "timeout_point": "002-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 0.10838684355840086,
+          "rank_max_p95_seconds": 0.11131829782389104,
+          "rank_max_samples_seconds": [
+            0.11303312331438065,
+            0.10739540308713913,
+            0.10652340576052666,
+            0.10917359590530396,
+            0.107424296438694,
+            0.1077614538371563,
+            0.10922240000218153,
+            0.10876460373401642,
+            0.10645545274019241,
+            0.10811470076441765
+          ]
+        },
+        {
+          "timeout_point": "002-rdma-16",
+          "mode": "hierarchy",
+          "strategy": "sharded",
+          "case_index": 1,
+          "rank_max_mean_seconds": 0.14177987237926573,
+          "rank_max_p95_seconds": 0.14319394621998072,
+          "rank_max_samples_seconds": [
+            0.14103996381163597,
+            0.13978523295372725,
+            0.14261095225811005,
+            0.14280831068754196,
+            0.14350946620106697,
+            0.14214321970939636,
+            0.14247996732592583,
+            0.14160609617829323,
+            0.14115739683620632,
+            0.14065811783075333
+          ]
+        },
+        {
+          "timeout_point": "002-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 2,
+          "rank_max_mean_seconds": 0.10679757648613304,
+          "rank_max_p95_seconds": 0.10985586150782183,
+          "rank_max_samples_seconds": [
+            0.10553920269012451,
+            0.10970793291926384,
+            0.10582926496863365,
+            0.1054472029209137,
+            0.10518338903784752,
+            0.10721461893990636,
+            0.10654041543602943,
+            0.10678872000426054,
+            0.10574812395498157,
+            0.10997689398936927
+          ]
+        }
+      ],
+      "transport_evidence": {
+        "scope": "rank0 communicator creation logs, not byte profiling",
+        "counts": {
+          "HCCS": 210,
+          "ROCE": 27
+        },
+        "communicator_key_info": [
+          "rankSize[16] serverNum[1] moduleNum[2]",
+          "rankSize[4] serverNum[4] moduleNum[4]",
+          "rankSize[64] serverNum[4] moduleNum[8]"
+        ]
+      },
+      "source_manifest_sha256": "de6e5f99b623c85db013984795e7b9e015da88d9106c0c76a231955b30a5512b",
+      "scope": "pure collective; not OpenPI update throughput; default HCCL can already use hierarchy",
+      "run_name": "topology-bench64-representative-20261107-v1",
+      "physical_nodes": 4,
+      "cards_per_physical_node": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "all_jobs_official_succeeded": true
+    },
+    {
+      "schema": "topology-experiment-result-v1",
+      "cards": 64,
+      "job_layout": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "payload_bytes": 6736577376,
+      "buckets": 13,
+      "warmup": 3,
+      "iterations": 10,
+      "all_reports_passed": true,
+      "resources_released": true,
+      "timing": "rank maximum of full sequence; source copies and Gloo checks excluded",
+      "rows": [
+        {
+          "timeout_point": "000-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 5.178721503727138,
+          "rank_max_p95_seconds": 6.003197840508074,
+          "rank_max_samples_seconds": [
+            4.900159314274788,
+            4.874743152409792,
+            5.161015015095472,
+            6.0021132081747055,
+            5.696919549256563,
+            4.886151146143675,
+            4.5422519370913506,
+            5.151478160172701,
+            4.568298287689686,
+            6.004085266962647
+          ]
+        },
+        {
+          "timeout_point": "001-rdma-12",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 1.0114923752844334,
+          "rank_max_p95_seconds": 1.1666896305978298,
+          "rank_max_samples_seconds": [
+            0.9812491275370121,
+            0.9966663420200348,
+            0.9576882086694241,
+            0.9688926078379154,
+            0.9003443829715252,
+            1.1437373757362366,
+            1.1854687482118607,
+            0.9383203275501728,
+            0.9902363382279873,
+            1.0523202940821648
+          ]
+        },
+        {
+          "timeout_point": "002-rdma-16",
+          "mode": "flat",
+          "strategy": "flat",
+          "case_index": 0,
+          "rank_max_mean_seconds": 7.49035615324974,
+          "rank_max_p95_seconds": 7.813119400106371,
+          "rank_max_samples_seconds": [
+            7.827599354088306,
+            7.78460918366909,
+            7.791189968585968,
+            7.529413156211376,
+            6.391228064894676,
+            7.539759062230587,
+            7.795421678572893,
+            7.509333673864603,
+            7.205041166394949,
+            7.529966223984957
+          ]
+        }
+      ],
+      "transport_evidence": {
+        "scope": "rank0 communicator creation logs, not byte profiling",
+        "counts": {
+          "ROCE": 33
+        },
+        "communicator_key_info": [
+          "rankSize[64] serverNum[64] moduleNum[64]"
+        ]
+      },
+      "source_manifest_sha256": "81772ba76588644fefbc2b7049c354bc89a5f2d25563151a42b9b87d197a46aa",
+      "scope": "pure collective; not OpenPI update throughput; different allocations from packed64",
+      "run_name": "topology-bench64-single-20261107-v1",
+      "physical_nodes": 5,
+      "cards_per_physical_node": [
+        16,
+        16,
+        12,
+        12,
+        8
+      ],
+      "all_jobs_official_succeeded": true
+    }
+  ],
+  "notes": [
+    "Different layouts used different allocations; timeouts and communication strategies were swept on the same devices within each run.",
+    "No gradient communication timing here is whole OpenPI update throughput.",
+    "Transport counts are rank-zero communicator creation logs, not device byte profiling."
+  ],
+  "budget_scope": "registered_fleets",
+  "managed_experiment_card_limit": 64
+}

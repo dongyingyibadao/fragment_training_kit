@@ -243,13 +243,17 @@ def _hold_matches(value, spec, member, command):
 
 class ControllerLiveness:
     """File adapter for monotonic supervisor counters and irreversible fences."""
-    def __init__(self, run, spec):
+    def __init__(self, run, spec, *, persisted_fences=(), used_tokens=(), generation_floor=0, epoch=0,
+                 last_committed_step=None):
         from jade_lotus.resident_liveness import ResidentLiveness
         self.run, self.spec, self.keys = Path(run), spec, {}
         self.seen_exits = set()
         self._persisted_losses = {}
+        self.used_tokens, self.generation_floor = set(used_tokens), generation_floor
+        self.last_committed_step = last_committed_step
         self.detector = ResidentLiveness(spec["run_id"],
-            heartbeat_timeout_seconds=spec.get("heartbeat_timeout", 15))
+            heartbeat_timeout_seconds=spec.get("heartbeat_timeout", 15), persisted_fences=persisted_fences)
+        self.detector.epoch = epoch
 
     def register_ready(self, members, receipt):
         from jade_lotus.resident_liveness import SessionKey, Heartbeat
@@ -309,17 +313,62 @@ class ControllerLiveness:
         finally:
             self._persist_losses()
 
-    def begin_step(self, *args, **kwargs):
-        return self._transition(self.detector.begin_step, *args, **kwargs)
+    def begin_step(self, step_token, **kwargs):
+        from jade_lotus.resident_liveness import FencedSession
+        if step_token in self.used_tokens or kwargs["generation"] < self.generation_floor:
+            raise FencedSession("Step token or communication generation was retired before this active-group view")
+        result = self._transition(self.detector.begin_step, step_token, **kwargs)
+        self.used_tokens.add(step_token)
+        self.generation_floor = kwargs["generation"]
+        return result
 
     def advance_phase(self, *args, **kwargs):
         return self._transition(self.detector.advance_phase, *args, **kwargs)
 
     def finish_step(self, *args, **kwargs):
-        return self._transition(self.detector.finish_step, *args, **kwargs)
+        base_step = self.detector.base_step
+        result = self._transition(self.detector.finish_step, *args, **kwargs)
+        self.last_committed_step = base_step + 1
+        return result
 
-    def reconfigure_pre_apply(self, *args, **kwargs):
-        return self._transition(self.detector.reconfigure_pre_apply, *args, **kwargs)
+    def reconfigure_pre_apply(self, step_token, new_step_token, **kwargs):
+        from jade_lotus.resident_liveness import FencedSession
+        if new_step_token in self.used_tokens:
+            raise FencedSession("A repaired communication token was already used in an earlier active-group view")
+        result = self._transition(self.detector.reconfigure_pre_apply, step_token, new_step_token, **kwargs)
+        self.used_tokens.add(new_step_token)
+        self.generation_floor = kwargs["generation"]
+        return result
+
+    def rebuild_active(self, members, *, generation, committed_step, receipt):
+        """Replace the monitored view only at a completed COMMIT boundary.
+
+        Parked sessions leave the active detector, while every irreversible
+        session/token/generation fence and the loss evidence remain in force.
+        This never resets a pending step or revives a previously fenced worker.
+        """
+        from dataclasses import asdict
+        from jade_lotus.resident_liveness import LivenessError
+        if (self.detector.phase != "idle" or self.detector.step_token is not None
+                or self.detector.frozen_sessions or type(generation) is not int
+                or generation <= self.generation_floor or type(committed_step) is not int
+                or committed_step != self.last_committed_step):
+            raise LivenessError("Active liveness may rebuild only at an idle COMMIT and a newer communication generation")
+        self.poll()  # Persist any final old-view losses before retiring that view.
+        new = ControllerLiveness(self.run, self.spec, persisted_fences=self.detector.fenced_sessions,
+            used_tokens=self.used_tokens, generation_floor=generation, epoch=self.detector.epoch,
+            last_committed_step=self.last_committed_step)
+        new.seen_exits = set(self.seen_exits)
+        new._persisted_losses = dict(self._persisted_losses)
+        new.register_ready(members, receipt=receipt)
+        _write(self.run / "topology" / f"liveness-generation-{generation}.json", {
+            "run_id": self.spec["run_id"], "committed_step": committed_step, "generation": generation,
+            "previous_generation_floor": self.generation_floor, "prior_epoch": self.detector.epoch,
+            "active_sessions": [asdict(key) for key in new.keys.values()],
+            "retained_fenced_sessions": [asdict(key) for key in sorted(self.detector.fenced_sessions, key=repr)],
+            "retained_step_tokens": sorted(self.used_tokens), "full_state_receipt": receipt,
+            "parked_sessions_are_not_active_losses": True})
+        return new
 
 
 class FaultMonitor:
@@ -763,7 +812,7 @@ def _worker_step(run, spec, member, command, engine, optimizer, group, progress,
         engine.torch.npu.set_device(engine.torch_device)
         engine._sync()  # Before submissions, with this CPU thread's device context.
     monitor = FaultMonitor(run / "abort" / f"{token}.json", fence, member,
-        lambda: _cleanup_backend(backend, torch_npu, 0,
+        lambda: _cleanup_backend(backend, torch_npu, engine.torch_device.index,
             lambda rows: _record(run, spec, member, token, "cleanup_progress", operations=rows)),
         initialize=initialize_monitor).start()
     decision, collective_error, recovered_this_step = None, None, False
@@ -902,12 +951,14 @@ def child(args):
         raise ValueError("Controller specification is missing")
     member = {"worker_id": args.worker_id, "session_id": args.session_id, "pid": os.getpid(),
               "hostname": socket.gethostname(), "address": socket.gethostbyname(socket.gethostname()),
-              "port": _free_port(), "started_at": time.time()}
+              "port": _free_port(), "started_at": time.time(),
+              "device_index": args.device_index, "allocated_devices": args.allocated_devices,
+              "allocation_group": os.environ.get("JADE_ALLOCATION_GROUP", args.worker_id)}
     active_status = {"token": None, "base_step": None, "generation": None}
-    def progress(phase):
+    def progress(phase, *, timeout_seconds=None):
         _write(run / "status" / f"{args.worker_id}-{args.session_id}.json",
                {**_identity(member), "run_id": spec["run_id"], "phase": phase,
-                **active_status, "deadline": time.time() + spec["phase_timeout"]})
+                **active_status, "deadline": time.time() + (spec["phase_timeout"] if timeout_seconds is None else timeout_seconds)})
     prefetch = None
     try:
         progress("import_and_load_model")
@@ -921,15 +972,15 @@ def child(args):
         config = json.loads(config_path.read_text())
         if config.get("batch_size") != 256 or config.get("disable_activation_checkpointing") is not True:
             raise ValueError("Probe requires global256 with recomputation disabled")
-        if torch.npu.device_count() != 1:
-            raise ValueError("Each worker must be allocated exactly one visible NPU")
+        if torch.npu.device_count() != args.allocated_devices or not 0 <= args.device_index < args.allocated_devices:
+            raise ValueError("Logical device and visible count must match the allocated job")
         config.update(npu_gradient_export="fp32_snapshot_v1", npu_gradient_transfer="leaf_copy_v1")
         if config.get("resident_adapter"):
             from fragment_training_kit.adapters import create_engine
-            engine = create_engine(config, device_index=0)
+            engine = create_engine(config, device_index=args.device_index)
         else:
             from jade_lotus.npu_gradient_model import TorchNpuGradientEngine
-            engine = TorchNpuGradientEngine(config, device_index=0)
+            engine = TorchNpuGradientEngine(config, device_index=args.device_index)
         _reject_active_dropout(engine.model, torch)
         torch.npu.reset_peak_memory_stats(engine.torch_device)
         optimizer = torch.optim.AdamW(list(engine.parameters.values()), lr=learning_rate(config, 0),
@@ -943,19 +994,37 @@ def child(args):
                 "replacement": args.replacement, "loaded_at": time.time(), **initial_state,
                 **({"adapter_device": {"resident_adapter": config["resident_adapter"],
                     "device": str(engine.torch_device), "visible_devices": torch.npu.device_count(),
-                    "device_name": torch.npu.get_device_name(0)}} if config.get("resident_adapter") else {})})
-        group, completed_step, previous = None, initial_state["completed_step"], None
+                    "device_index": args.device_index, "allocated_devices": args.allocated_devices,
+                    "device_name": torch.npu.get_device_name(args.device_index)}} if config.get("resident_adapter") else {})})
+        from jade_lotus.topology_cohort_runtime import CommittedBoundaryLease
+        boundary_lease = CommittedBoundaryLease(spec["phase_timeout"])
+        group, completed_step, previous, parked = None, initial_state["completed_step"], None, False
         while True:
-            progress("idle_boundary")
+            idle_timeout = boundary_lease.remaining()
+            progress("idle_boundary", timeout_seconds=idle_timeout)
+            independent_standby = group is None and (parked or (
+                spec.get("topology_slots", spec["cards"]) > spec["cards"] and args.replacement))
+            next_idle_refresh = time.monotonic() + min(5.0, spec["phase_timeout"] / 3)
             def next_command():
+                nonlocal next_idle_refresh
+                if independent_standby and time.monotonic() >= next_idle_refresh:
+                    progress("parked_idle" if parked else "standby_idle")
+                    next_idle_refresh = time.monotonic() + min(5.0, spec["phase_timeout"] / 3)
                 value = _read(run / "commands" / f"{args.worker_id}.json")
                 if (value and value.get("run_id") == spec["run_id"] and value.get("token") != previous
                         and _same_identity(value.get("recipient"), member)):
                     return value
                 return None
-            command = _wait(next_command, spec["phase_timeout"], "fenced worker command",
-                            interval=_control_poll_seconds(spec))
+            try:
+                command = _wait(next_command, idle_timeout, "fenced worker command",
+                                interval=_control_poll_seconds(spec))
+            except TimeoutError:
+                if independent_standby:
+                    continue  # A healthy parked/standby worker may wait many steps.
+                raise
             previous, action = command["token"], command["action"]
+            if action not in {"hold_committed_boundary", "release_committed_boundary"}:
+                boundary_lease.release()
             active_status.update(token=previous, base_step=command.get("base_step"),
                                  generation=command.get("group", {}).get("generation"))
             if action == "init":
@@ -984,6 +1053,46 @@ def child(args):
                 receipt = _load_state(engine, optimizer, command["path"], command["expected_step"], command["state_metadata"])
                 completed_step = command["expected_step"]
                 _record(run, spec, member, previous, "loaded", completed_step=completed_step, receipt=receipt)
+            elif action == "hold_committed_boundary":
+                if group is None:
+                    raise ValueError("Only an active committed group may receive a boundary hold")
+                duration = boundary_lease.arm(command, completed_step=completed_step,
+                                              generation=group["generation"])
+                progress("holding_committed_boundary", timeout_seconds=boundary_lease.remaining())
+                _record(run, spec, member, previous, "boundary_held", completed_step=completed_step,
+                        generation=group["generation"], hold_seconds=duration,
+                        bounded_controller_wait=True, lease_renewable=False)
+            elif action == "release_committed_boundary":
+                if (group is None or boundary_lease.deadline is None
+                        or command["expected_step"] != completed_step
+                        or command["expected_generation"] != group["generation"]):
+                    raise ValueError("Boundary release requires the exact held committed group")
+                boundary_lease.release()
+                progress("released_committed_boundary")
+                _record(run, spec, member, previous, "boundary_released", completed_step=completed_step,
+                        generation=group["generation"])
+            elif action == "park":
+                if (group is None or command["expected_step"] != completed_step
+                        or command["expected_generation"] != group["generation"]):
+                    raise ValueError("Park requires the exact idle committed group/step boundary")
+                progress("park_committed_group")
+                engine._sync()
+                dist.destroy_process_group()
+                group, parked = None, True
+                if prefetch is not None:
+                    prefetch.close()
+                state = _fingerprint(engine, optimizer, step=completed_step, gradients=False)
+                _record(run, spec, member, previous, "parked", completed_step=completed_step,
+                        model_sha256=state["model_sha256"], optimizer_sha256=state["optimizer_sha256"],
+                        optimizer_config_sha256=state["optimizer_config_sha256"])
+            elif action == "load_parked":
+                if group is not None or not parked or command["expected_step"] < completed_step:
+                    raise ValueError("Only an explicitly parked worker may load a current boundary state")
+                progress("load_parked_native_state")
+                receipt = _load_state(engine, optimizer, command["path"], command["expected_step"], command["state_metadata"])
+                completed_step = command["expected_step"]
+                _record(run, spec, member, previous, "loaded", completed_step=completed_step, receipt=receipt,
+                        explicitly_parked=True)
             elif action == "describe_native_state":
                 if completed_step != command["expected_step"]:
                     raise ValueError("Native blueprint requires the exact committed boundary")
@@ -1016,6 +1125,7 @@ def child(args):
                         or (role != "replacement" and not receipt["existing_state_not_overwritten"])):
                     raise ValueError("Device join requires complete actual state byte verification")
                 completed_step = boundary
+                parked = False
                 state = receipt["native_state"]
                 _record(run, spec, member, previous, "joined", completed_step=completed_step,
                         model_sha256=state["model_sha256"], optimizer_sha256=state["optimizer_sha256"],
@@ -1028,6 +1138,7 @@ def child(args):
                     dist.destroy_process_group()
                 group = command["group"]
                 _init_group(dist, group, member, spec["collective_timeout"])
+                parked = False
                 state = _fingerprint(engine, optimizer, step=completed_step, gradients=False)
                 _record(run, spec, member, previous, "joined", completed_step=completed_step,
                         model_sha256=state["model_sha256"], optimizer_sha256=state["optimizer_sha256"],
@@ -1122,12 +1233,15 @@ def supervisor(args):
     spec = _wait(lambda: _read(run / "spec.json"), args.phase_timeout, "controller spec")
     if args.worker_id not in spec["workers"]:
         raise ValueError("Worker is outside this isolated probe")
-    session, replacement, process = uuid.uuid4().hex, False, None
+    if getattr(args, "initial_standby", False) and args.worker_id in spec.get("initial_workers", spec["workers"]):
+        raise ValueError("An initial active worker cannot be launched as independent standby")
+    session, replacement, process = uuid.uuid4().hex, getattr(args, "initial_standby", False), None
     while True:
         logfile = run / "logs" / f"{args.worker_id}-{session}.log"
         logfile.parent.mkdir(parents=True, exist_ok=True)
         cli = [sys.executable, str(Path(__file__).resolve()), "--child", "--run-dir", str(run),
-               "--worker-id", args.worker_id, "--session-id", session]
+               "--worker-id", args.worker_id, "--session-id", session,
+               "--device-index", str(args.device_index), "--allocated-devices", str(args.allocated_devices)]
         if replacement:
             cli.append("--replacement")
         with logfile.open("x") as output:
@@ -1187,7 +1301,8 @@ def _external_reduced_or_recover(run, spec, members, group, mapping, token, step
     pending = None
     deadline = time.monotonic() + spec["phase_timeout"]
     while time.monotonic() < deadline:
-        notices = [n for n in watch.poll() if n.newly_fenced]
+        current_ids = {m["worker_id"] for m in members}
+        notices = [n for n in watch.poll() if n.newly_fenced and n.session.worker_id in current_ids]
         if notices:
             if pending is not None or len(notices) != 1 or already_lost:
                 raise RuntimeError("Only one communication-stage loss is supported by this component")
@@ -1233,7 +1348,8 @@ def _external_reduced_or_recover(run, spec, members, group, mapping, token, step
                 "detector_token": detector_token, "base_step": step, "group": new_group,
                 "assignments": repaired, "replay": replay})
             def repaired_reduced():
-                later = [n for n in watch.poll() if n.newly_fenced]
+                later = [n for n in watch.poll() if n.newly_fenced
+                         and n.session.worker_id in {m["worker_id"] for m in survivors}]
                 if later:
                     raise RuntimeError("Second loss during communication repair is unsupported")
                 records = _reports(run, spec, survivors, token, "reduced")
@@ -1347,6 +1463,8 @@ def _inspect_boundary(run, spec, members, boundary, summary, wait_reports):
 
 def controller(args):
     """Pure CPU orchestration; this path never imports torch or torch_npu."""
+    from jade_lotus.topology_cohort_runtime import (CandidateUnavailable, CohortBoundaryRuntime,
+        CohortRecoveryRequired, validate_topology_config)
     run = args.run_dir.resolve()
     run.mkdir(parents=True, exist_ok=True)
     if (run / "spec.json").exists() or any((run / name).exists() for name in ("run_config.json", "active.json", "COMPLETE.json")):
@@ -1370,11 +1488,15 @@ def controller(args):
         value = config.get(key, 0)
         if type(value) is not int or value < 0:
             raise ValueError(f"{key} must be a nonnegative integer")
-    workers = [f"w{rank + 1:06d}" for rank in range(args.cards)]
+    topology_slots = validate_topology_config(config, args.cards, start_step=start_step, steps=args.steps)
+    workers = [f"w{rank + 1:06d}" for rank in range(topology_slots)]
+    initial_workers = workers[:args.cards]
     spec = {"schema": SCHEMA, "run_id": uuid.uuid4().hex, "config": str(args.config.resolve()),
             "config_sha256": hashlib.sha256(config_bytes).hexdigest(), "seed": config.get("seed", 42),
             "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-            "workers": workers, "cards": args.cards, "steps": args.steps, "fault_step": args.fault_step,
+            "workers": workers, "initial_workers": initial_workers, "cards": args.cards,
+            "topology_slots": topology_slots, "run_dir": str(run),
+            "steps": args.steps, "fault_step": args.fault_step,
             "start_step": start_step, "resume": resume,
             "phase_timeout": args.phase_timeout, "collective_timeout": args.collective_timeout,
             "bucket_bytes": args.bucket_mib * 1024**2, "replacement": not args.no_replacement,
@@ -1401,34 +1523,67 @@ def controller(args):
                "single_card_loss_during_optimizer_apply_verified": False,
                "durable_gradient_acceptance_verified": False}
     _write(run / "summary.json", summary)
-    watch = None
-    def checked_wait(readiness, label, *, hot_control=False):
+    watch, topology = None, None
+    members, nonactive_errors = [], set()
+    def checked_wait(readiness, label, *, hot_control=False, fatal_members=None, timeout_seconds=None):
         def check():
+            fatal_ids = set(initial_workers) if not members else {m["worker_id"] for m in members}
+            fatal_ids.update(m["worker_id"] for m in (fatal_members or ()))
             if watch is not None:
-                notices = [n for n in watch.poll() if n.newly_fenced]
+                notices = [n for n in watch.poll() if n.newly_fenced and n.session.worker_id in fatal_ids]
                 if notices:
                     raise RuntimeError("recovery_required: loss outside the supported communication collection phase")
             errors = list((run / "errors").glob("*.json"))
-            if errors:
-                raise RuntimeError(f"Worker failed: {errors[0]}")
+            for path in errors:
+                record = _read(path)
+                if topology_slots == args.cards or not record or record.get("worker_id") in fatal_ids:
+                    raise RuntimeError(f"Worker failed: {path}")
+                if str(path) not in nonactive_errors:
+                    nonactive_errors.add(str(path))
+                    summary.setdefault("topology_candidate_failures", []).append({"evidence": str(path),
+                        "worker_id": record.get("worker_id"), "active_group_continued": True})
             for path in (run / "exits").glob("*.json"):
                 record = _read(path)
                 if watch is not None and record and any(key.matches_supervisor_record(record) for key in watch.detector.fenced_sessions):
                     continue  # An exact persisted loss is already being repaired.
                 if record and record.get("run_id") == spec["run_id"] and record.get("exit_code") != 0 and not record.get("killed_by_controller"):
+                    if topology_slots > args.cards and record.get("worker_id") not in fatal_ids:
+                        continue
                     raise RuntimeError(f"Unexpected worker exit: {path}")
             return readiness()
-        return _wait(check, args.phase_timeout, label,
+        return _wait(check, args.phase_timeout if timeout_seconds is None else min(args.phase_timeout, timeout_seconds), label,
                      interval=_control_poll_seconds(spec) if hot_control else 0.1)
     def wait_reports(members, token, phase):
-        return checked_wait(lambda: _reports(run, spec, members, token, phase), phase, hot_control=True)
+        return checked_wait(lambda: _reports(run, spec, members, token, phase), phase, hot_control=True,
+                            fatal_members=members)
+    def pool_ready(worker):
+        record = _read(run / "ready" / f"{worker}.json")
+        supervisor = _read(run / "supervisors" / f"{worker}.json")
+        if (not record or record.get("run_id") != spec["run_id"] or record.get("worker_id") != worker
+                or not supervisor or supervisor.get("run_id") != spec["run_id"]
+                or not _same_identity(supervisor, record)):
+            raise CandidateUnavailable("Candidate has not completed its independent initial model load")
+        if (_read(run / "exits" / f"{worker}-{record['session_id']}.json") is not None
+                or _read(run / "errors" / f"{worker}-{record['session_id']}.json") is not None):
+            raise CandidateUnavailable("Candidate session has exited or reported an error")
+        if watch is not None and any(k.worker_id == worker and k.session_id == record["session_id"]
+                                     for k in watch.detector.fenced_sessions):
+            raise CandidateUnavailable("Candidate session has already been irreversibly fenced")
+        return record
+    def wait_candidate_reports(candidates, token, phase, *, timeout_seconds=None):
+        def ready_reports():
+            for candidate in candidates:
+                if not _same_identity(pool_ready(candidate["worker_id"]), candidate):
+                    raise CandidateUnavailable("Candidate session changed during state alignment")
+            return _reports(run, spec, candidates, token, phase)
+        return checked_wait(ready_reports, f"candidate {phase}", hot_control=True, timeout_seconds=timeout_seconds)
     victim, replacement_member, joined = None, None, False
     try:
         def initial_ready():
-            records = [_read(run / "ready" / f"{worker}.json") for worker in workers]
+            records = [_read(run / "ready" / f"{worker}.json") for worker in initial_workers]
             return records if all(record and record.get("run_id") == spec["run_id"]
                                   and record.get("worker_id") == worker and not record["replacement"]
-                                  for worker, record in zip(workers, records)) else None
+                                  for worker, record in zip(initial_workers, records)) else None
         members = checked_wait(initial_ready, "all initial model loads")
         restored = _validate_initial_states(members, spec)
         if restored:
@@ -1443,6 +1598,13 @@ def controller(args):
         if args.external_loss:
             watch = ControllerLiveness(run, spec)
             watch.register_ready(members, receipt=f"initialized-group-{group['generation']}")
+        if topology_slots > args.cards or config.get("resident_topology_switches"):
+            topology = CohortBoundaryRuntime(spec, config.get("resident_topology_switches", []),
+                send=lambda members, action, **fields: _send(run, spec, members, action, **fields),
+                wait_active=wait_reports, wait_candidate=wait_candidate_reports, ready=pool_ready,
+                make_group=_group, persist=lambda state: _write(run / "topology" / "state.json", state),
+                metadata=lambda boundary: _boundary_metadata(spec, boundary))
+            topology.start(members, group)
         summary.update(stage="training", training_started_at=time.time())
         _write(run / "summary.json", summary)
         previous_commit = time.monotonic()
@@ -1453,7 +1615,8 @@ def controller(args):
             token = uuid.uuid4().hex
             detector_token = token
             if watch is not None:
-                if watch.poll():
+                if any(n.newly_fenced and n.session.worker_id in {m["worker_id"] for m in members}
+                       for n in watch.poll()):
                     raise RuntimeError("Unsupported loss at the idle/update boundary")
                 watch.begin_step(token, base_step=step, generation=group["generation"],
                                           sessions=[watch.keys[m["worker_id"]] for m in members])
@@ -1535,6 +1698,8 @@ def controller(args):
                     "command_started_at": commit_started_at})
             previous_commit = committed_at
             _publish_commit(run, summary, summary["commits"][-1], window=config.get("resident_summary_window", 0))
+            if topology is not None:
+                topology.on_commit(step + 1, members)
             checkpoint_every = config.get("resident_checkpoint_every", 0)
             verify_every = config.get("resident_verify_every", 0)
             stability_boundary = bool(resume) and step + 1 == start_step + 2000
@@ -1542,6 +1707,25 @@ def controller(args):
                 _periodic_checkpoint(run, spec, members, step + 1, summary, wait_reports)
             if (verify_every and (step + 1) % verify_every == 0) or stability_boundary:
                 _inspect_boundary(run, spec, members, step + 1, summary, wait_reports)
+            if topology is not None and step + 1 < args.steps:
+                try:
+                    request = _read(run / "topology" / "switch_request.json")
+                except (ValueError, OSError) as error:
+                    request = {"request_id": "invalid-request-file", "reason": str(error)}
+                previous_generation = group["generation"]
+                members, group = topology.boundary(step + 1, members, group, request)
+                if watch is not None and group["generation"] != previous_generation:
+                    try:
+                        watch = watch.rebuild_active(members, generation=group["generation"], committed_step=step + 1,
+                            receipt=f"verified-cohort-boundary/{group['generation']}")
+                    except Exception as error:
+                        topology.recovery_required = True
+                        _write(run / "topology" / "state.json", topology.snapshot())
+                        raise CohortRecoveryRequired("New active group liveness could not be verified after boundary reconfiguration") from error
+                summary["topology_switches"] = list(topology.requests.values())
+                summary["topology_state"] = str(run / "topology" / "state.json")
+                summary["topology_automatic_failover_verified"] = False
+                _write(run / "summary.json", summary)
             # Independent loading does not block healthy updates. The join
             # boundary starts only after at least two further healthy commits.
             if (victim is not None and "fault" in summary and not args.no_replacement and not joined
@@ -1616,8 +1800,37 @@ def controller(args):
             record = wait_reports([members[0]], token, "exported")[members[0]["worker_id"]]
             summary["final_checkpoint"] = {"path": str(path), "receipt": record["receipt"]}
             _write(run / "summary.json", summary)
-        token = _send(run, spec, members, "finish")
+        finish_members, ready_standby = list(members), []
+        if topology is not None:
+            active_ids = {m["worker_id"] for m in members}
+            for worker in workers:
+                if worker in active_ids:
+                    continue
+                own = _read(run / "supervisors" / f"{worker}.json")
+                if (not own or own.get("run_id") != spec["run_id"]
+                        or _read(run / "exits" / f"{worker}-{own['session_id']}.json") is not None):
+                    continue
+                # A still-loading registered child receives finish when it
+                # reaches its command loop; unallocated slots are never waited.
+                finish_members.append(own)
+                ready = _read(run / "ready" / f"{worker}.json")
+                if ready and ready.get("run_id") == spec["run_id"] and _same_identity(ready, own):
+                    ready_standby.append(ready)
+        token = _send(run, spec, finish_members, "finish")
         final = wait_reports(members, token, "finished")
+        if topology is not None:
+            def standby_finished():
+                result = {}
+                for standby in ready_standby:
+                    rows = _reports(run, spec, [standby], token, "finished")
+                    if rows:
+                        result.update(rows)
+                    elif _read(run / "exits" / f"{standby['worker_id']}-{standby['session_id']}.json") is None:
+                        return None
+                return result
+            standby_final = checked_wait(standby_finished, "ready parked/standby finish", hot_control=True)
+            summary["topology_resident_finish"] = {"sent": [_identity(m) for m in finish_members],
+                "standby_reports": standby_final, "waited_for_unallocated_slots": False}
         digests = {(record["model_sha256"], record["optimizer_sha256"], record["optimizer_config_sha256"]) for record in final.values()}
         if len(digests) != 1 or any(record["completed_step"] != args.steps for record in final.values()):
             raise AssertionError("Final complete native states or optimizer steps disagree")
@@ -1635,7 +1848,9 @@ def controller(args):
         return 0
     except BaseException:
         summary.update(status="failed", error=traceback.format_exc(), failed_at=time.time())
-        if watch is not None and watch.detector.phase in ("applying", "committing", "recovery_required"):
+        if ((watch is not None and watch.detector.phase in ("applying", "committing", "recovery_required"))
+                or isinstance(sys.exc_info()[1], CohortRecoveryRequired)
+                or (topology is not None and topology.recovery_required)):
             summary["recovery_required"] = True
         _write(run / "summary.json", summary)
         raise
@@ -1717,7 +1932,11 @@ def options(argv=None):
     parser.add_argument("--resume-source-spec", type=Path)
     parser.add_argument("--worker-id")
     parser.add_argument("--session-id", help=argparse.SUPPRESS)
+    parser.add_argument("--device-index", type=int, default=0, help="Logical device within the job's unchanged visibility mask")
+    parser.add_argument("--allocated-devices", type=int, choices=(1, 2, 4, 8, 16), default=1)
     parser.add_argument("--replacement", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--initial-standby", action="store_true",
+                        help="Supervisor: load independently outside the initial active communication group")
     parser.add_argument("--cards", type=int, default=8)
     parser.add_argument("--steps", type=int, default=12)
     parser.add_argument("--fault-step", type=int, default=3, help="One-based update at which to kill the last rank")
@@ -1742,6 +1961,8 @@ def options(argv=None):
     parser.add_argument("--inject-stage", choices=("before-collective", "backward"), default="before-collective",
                         help="Injector-only: kill after exact backward-phase observation or hold before HCCL")
     args = parser.parse_args(argv)
+    if not 0 <= args.device_index < args.allocated_devices:
+        parser.error("--device-index must be inside the allocated visible device set")
     if args.controller and args.config is None:
         parser.error("--controller requires --config")
     if bool(args.resume_checkpoint) != bool(args.resume_source_spec) or (args.resume_checkpoint and not args.controller):
@@ -1750,6 +1971,8 @@ def options(argv=None):
         parser.error("A safe --worker-id is required")
     if args.child and (not args.session_id or not _SAFE_ID.fullmatch(args.session_id)):
         parser.error("Internal child requires a safe session")
+    if args.initial_standby and not args.worker:
+        parser.error("--initial-standby is a supervisor-only option")
     if not 2 <= args.cards <= 64 or not 1 <= args.fault_step < args.steps <= 20000:
         parser.error("Expected 2..64 cards and 1 <= fault-step < steps <= 20000")
     if min(args.phase_timeout, args.collective_timeout, args.bucket_mib, args.heartbeat_timeout) <= 0:

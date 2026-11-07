@@ -1,0 +1,113 @@
+{
+  "status": "passed",
+  "scope": "real NPU saved run vs independent full-global-batch CPU AdamW oracle",
+  "audit_mode": "live_run",
+  "npu_training_rerun": false,
+  "steps": 600,
+  "cards_requested": 4,
+  "initial_active_cards": 4,
+  "physical_pool_slots": 6,
+  "global_batch": 256,
+  "initial_loss": 4.453125,
+  "final_checkpoint_loss": 0.6513373851776123,
+  "relative_loss_drop": 0.8537347626267818,
+  "gradient_and_optimizer_reference_passed": true,
+  "full_native_checkpoint_verified": true,
+  "all_final_workers_state_hashes_identical": true,
+  "parameter_max_abs_errors": {
+    "weight": 1.3083219528198242e-05,
+    "bias": 5.960464477539063e-08
+  },
+  "adam_state_max_abs_errors": {
+    "weight.step": 0.0,
+    "weight.exp_avg": 9.469863471167628e-07,
+    "weight.exp_avg_sq": 5.960464477539062e-07,
+    "bias.step": 0.0,
+    "bias.exp_avg": 1.705330987533671e-08,
+    "bias.exp_avg_sq": 6.394884621840902e-14
+  },
+  "steady_commit_seconds_mean": 0.09487682943944913,
+  "steady_commit_seconds_median": 0.09462807793170214,
+  "steady_commit_interval_seconds_mean": 0.13929321574228473,
+  "steady_commit_samples": 596,
+  "steady_excluded_recovery_steps": [],
+  "steady_excluded_switch_steps": [
+    332,
+    501
+  ],
+  "topology_switches": [
+    {
+      "automatic_failover": false,
+      "boundary_step": 331,
+      "candidate_workers": [
+        "w000005",
+        "w000006"
+      ],
+      "export_load_park_join_pause_seconds": 0.6414054539054632,
+      "first_new_commit": 332,
+      "full_state_alignment_verified": true,
+      "model_sha256": "5a4f92d44ad680416ed4426ef1b083a4638c5666a01ec16f15813d7924e1b9e9",
+      "new_generation": 1,
+      "old_cohort_is_hot_standby": false,
+      "old_generation": 0,
+      "old_resources_retained": true,
+      "optimizer_sha256": "dec8e2bdb90e221e2da2f65405492aa651c9bcd1618e24fb5fe8b2057cae6089",
+      "request_id": "cw-d7b935abdbee415ea87f7ea31b0b6284-1",
+      "request_sha256": "f244f5449d056b1bbf9f2bb7ff99e6e28ca3e2aaa5388b3682372d3a140b148b",
+      "retire_workers": [
+        "w000003",
+        "w000004"
+      ],
+      "status": "committed"
+    },
+    {
+      "automatic_failover": false,
+      "boundary_step": 500,
+      "candidate_workers": [
+        "w000003",
+        "w000004"
+      ],
+      "export_load_park_join_pause_seconds": 0.573054026812315,
+      "first_new_commit": 501,
+      "full_state_alignment_verified": true,
+      "model_sha256": "b757f4b1af896ab2480e636a73178508dec127a7930dd9dd4dcd574f455e5f7c",
+      "new_generation": 2,
+      "old_cohort_is_hot_standby": false,
+      "old_generation": 1,
+      "old_resources_retained": true,
+      "optimizer_sha256": "04336ed4cc2ca9b93967992f902d24dd0b55ae23945453b408076d1a9742136a",
+      "request_id": "return-original-after-auto",
+      "request_sha256": "eb7ceaa255f33d789a38b69885b8253d18276ae85c94a0ac45b5b36f4d01b3c9",
+      "retire_workers": [
+        "w000005",
+        "w000006"
+      ],
+      "status": "committed"
+    }
+  ],
+  "recovery_updates": [],
+  "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups, recovery update and first update after cohort switches excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
+  "actual_fault_occurred": false,
+  "limitations": [
+    "Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.",
+    "Saved-evidence audit does not rerun HCCL; real failure injection is reported separately."
+  ],
+  "schema": "fragment-topology-switch-validation-v1",
+  "run_name": "topology-switch6-auto-toy600-20261107-v5",
+  "job_layout": [
+    1,
+    1,
+    1,
+    1,
+    2
+  ],
+  "low_priority": "LOW/1",
+  "learning_rate": 0.001,
+  "resources_released": true,
+  "original_audit_sha256": "f9a8087fe6ac1b18c6ffb901ebd75bce50bc16e111470f7c22147bc4ed355241",
+  "unchanged_original_numerical_tolerances": true,
+  "scope_limits": [
+    "Automatic bounded candidate admission and scheduled return succeeded; no abrupt loss injected.",
+    "Only six physical slots; does not establish sixteen-card state transfer latency or full-pod failure recovery."
+  ]
+}

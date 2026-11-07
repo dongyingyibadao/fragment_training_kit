@@ -139,10 +139,13 @@ def audit_run(directory, *, archived_evidence=False):
     for worker in spec["workers"]:
         ready = json.loads(evidence_path("ready", f"{worker}.json").read_text())
         proof = ready.get("adapter_device", {})
+        index, allocated = proof.get("device_index", 0), proof.get("allocated_devices", 1)
         if (ready["run_id"] != spec["run_id"] or proof.get("resident_adapter") != config["resident_adapter"]
-                or proof.get("device") != "npu:0" or proof.get("visible_devices") != 1
+                or type(index) is not int or type(allocated) is not int or allocated not in (1, 2, 4, 8, 16)
+                or not 0 <= index < allocated or proof.get("device") != f"npu:{index}"
+                or proof.get("visible_devices") != allocated
                 or "Ascend" not in proof.get("device_name", "")):
-            raise ValueError("Expected actual assigned single-NPU adapter readiness evidence")
+            raise ValueError("Expected actual assigned logical-NPU adapter readiness evidence")
         devices.append(proof)
     if list(evidence_path("errors").glob("*.json")):
         raise ValueError("Worker errors are present")
@@ -227,7 +230,10 @@ def audit_run(directory, *, archived_evidence=False):
     if not actual_final_loss < observed[0]["loss"] * .5:
         raise AssertionError("Toy objective did not decrease by at least 50 percent")
     recovery_steps = ({summary["fault"]["base_step"] + 1} if "fault" in summary else set())
-    steady_rows = [r for r in observed[2:] if r["step"] not in recovery_steps]
+    switch_steps = {row["first_new_commit"] for row in summary.get("topology_switches", [])
+                    if row.get("status") == "committed"}
+    transition_steps = recovery_steps | switch_steps
+    steady_rows = [r for r in observed[2:] if r["step"] not in transition_steps]
     steady = [r["commit_seconds"] for r in steady_rows]
     intervals = [r["commit_interval_seconds"] for r in steady_rows]
     scope = ("archived real NPU evidence vs independent full-global-batch CPU AdamW oracle; no NPU training rerun"
@@ -236,6 +242,8 @@ def audit_run(directory, *, archived_evidence=False):
             "audit_mode": "archived_evidence" if archived_evidence else "live_run",
             "npu_training_rerun": False,
             "run_dir": str(directory), "steps": spec["steps"], "cards_requested": spec["cards"],
+            "initial_active_cards": spec["cards"],
+            "physical_pool_slots": spec.get("topology_slots", spec["cards"]),
             "global_batch": 256, "npu_readiness_evidence": devices,
             "initial_loss": observed[0]["loss"], "final_checkpoint_loss": actual_final_loss,
             "relative_loss_drop": 1 - actual_final_loss / observed[0]["loss"],
@@ -246,8 +254,10 @@ def audit_run(directory, *, archived_evidence=False):
             "steady_commit_seconds_median": statistics.median(steady) if steady else None,
             "steady_commit_interval_seconds_mean": statistics.mean(intervals) if intervals else None,
             "steady_commit_samples": len(steady), "steady_excluded_recovery_steps": sorted(recovery_steps),
+            "steady_excluded_switch_steps": sorted(switch_steps),
+            "topology_switches": summary.get("topology_switches", []),
             "recovery_updates": [r for r in observed if r["step"] in recovery_steps],
-            "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups and recovery update excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
+            "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups, recovery update and first update after cohort switches excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
             "steps_observed": observed,
             "actual_fault_occurred": "fault" in summary,
             "limitations": ["Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.",

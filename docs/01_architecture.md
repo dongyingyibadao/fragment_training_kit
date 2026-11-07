@@ -1,12 +1,12 @@
 # 一步训练与掉卡恢复
 
-每个 LOW/1 平台作业独立申请一张卡，CPU supervisor 管理自己的训练子进程。CPU controller 决定本步成员与样本位置，模型、局部梯度和原生 AdamW 状态常驻每张 NPU。平台调度和训练成员是两套状态：平台作业 running 不等于训练 READY。
+默认每个 LOW/1 平台作业独立申请一张卡，也可按 `job_layout` 申请包含 2/4/8/16 卡的作业；每张卡仍由独立 CPU supervisor 管理训练子进程。CPU controller 决定本步成员与样本位置，模型、局部梯度和原生 AdamW 状态常驻每张 NPU。平台调度和训练成员是两套状态：平台作业 running 不等于训练 READY。多卡共享设备域和候选切换见 [09](09_topology_training.md)；下文单成员恢复证据不涵盖整个多卡作业同时丢失。
 
 当前复用路径明确固定 **global batch 256、atomic unit 4、关闭梯度重算、原生 torch.optim.AdamW**。支持 2–64 个初始成员。要改变 global batch、优化器或状态精度，需要修改并验证相应合同，不能只改一个配置数字。
 
 ```mermaid
 flowchart TD
-    P["QZ LOW/1 资源管理：独立单卡作业"] --> S["每卡 CPU supervisor + NPU 子进程"]
+    P["QZ LOW/1 资源管理：单卡或多卡作业"] --> S["每卡 CPU supervisor + NPU 子进程"]
     C["CPU controller：成员快照、版本 k、64 个 atomic-4 单元"] --> S
     S --> F["NPU 前反向：按本卡分配累积 local_grad"]
     F --> B["将 local_grad 复制到独立 reduce_buffer"]

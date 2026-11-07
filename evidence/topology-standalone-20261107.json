@@ -1,0 +1,33 @@
+{
+  "schema": "fragment-topology-standalone-check-v1",
+  "passed": true,
+  "source_runtime_set_sha256": "b37b711b5e72cd47e2c4d84fbdbec75d6d281c85d647b5e317c51ee788440fa3",
+  "original_project_reads_forbidden": true,
+  "external_pythonpath_removed": true,
+  "platform_jobs_created": 0,
+  "tests_passed": 253,
+  "checks": {
+    "hashes": {
+      "returncode": 0,
+      "seconds": 0.2162935733795166
+    },
+    "tests": {
+      "returncode": 0,
+      "seconds": 11.979203701019287
+    },
+    "cpu_oracle": {
+      "returncode": 0,
+      "seconds": 2.3112761974334717
+    },
+    "normal_archive": {
+      "returncode": 0,
+      "seconds": 2.356699228286743
+    },
+    "fault_archive": {
+      "returncode": 0,
+      "seconds": 2.373006820678711
+    }
+  },
+  "source_receipt_sha256": "09293fa374d9bd5bf8f393a69187dc5d96455e98d6484d56fd7896bf9e46d3cb",
+  "scope": "Copied standalone project: final source tests, hash verification, CPU toy oracle, and original normal/fault evidence audits. Does not rerun historical NPU experiments."
+}

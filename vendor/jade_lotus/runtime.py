@@ -33,6 +33,14 @@ def atomic_json(path, data):
         os.close(directory_fd)
 
 
+class WriterLockBusy(RuntimeError):
+    """Another live writer holds this lock; no guarded work has started."""
+
+    def __init__(self, path):
+        self.path = Path(path)
+        super().__init__(f"Another trainer owns {self.path}; refusing concurrent writes")
+
+
 @contextlib.contextmanager
 def writer_lock(run_dir):
     """Hold a POSIX advisory lock for the entire writer lifetime.
@@ -46,7 +54,7 @@ def writer_lock(run_dir):
         try:
             fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as error:
-            raise RuntimeError(f"Another trainer owns {path}; refusing concurrent writes") from error
+            raise WriterLockBusy(path) from error
         try:
             yield
         finally:

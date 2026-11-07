@@ -373,7 +373,7 @@ def _observe(client, entry, snapshot_id, observation_path):
 
 def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, fill=False,
               registry_path=None, job_runtime_seconds=86400, retries=2, reset_failures=False,
-              global_card_limit=32):
+              global_card_limit=32, placement_planner=None):
     # Larger experiments must explicitly opt in; existing callers retain the
     # historical 32-card ceiling across all registered fleets and spaces.
     positive_int(card_limit, "card_limit", 64)
@@ -456,7 +456,8 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
         used = sum(row["cards"] for row in reserved)
         local = sum(row["cards"] for row in reserved if str(state_path) in row["fleet_paths"])
         available = min(max(0, global_card_limit - used), max(0, card_limit - local))
-        placements = [] if marker or state.get("blocked_reason") else plan_placements(inventory, reserved, available, state["group_backoff"], now)
+        planner = placement_planner or plan_placements
+        placements = [] if marker or state.get("blocked_reason") else planner(inventory, reserved, available, state["group_backoff"], now)
         write_json(state_path, state)
         created = []
         if fill and not marker and not state.get("blocked_reason"):
