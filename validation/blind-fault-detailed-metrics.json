@@ -1,0 +1,551 @@
+{
+  "status": "passed",
+  "label": "fault",
+  "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+  "run_id": "76748e278aad4587b595af1327b905b5",
+  "mode": "controlled-fault",
+  "requested_cards": 2,
+  "initial_members": 2,
+  "final_members": 1,
+  "steps": 20,
+  "global_batch": 256,
+  "atomic_units": 64,
+  "atomic_samples": 4,
+  "checkpoint_calls": 0,
+  "numeric": {
+    "initial_loss": 4.453125,
+    "final_checkpoint_loss": 0.16766051948070526,
+    "relative_loss_drop": 0.962349918432403,
+    "max_per_step_global_loss_abs_error": 2.775341272354126e-07,
+    "max_per_step_gradient_norm_abs_error": 4.76837158203125e-07,
+    "max_final_parameter_abs_error": 2.9802322387695312e-08,
+    "max_final_adam_state_abs_error": 2.980232238769531e-07,
+    "parameter_errors": {
+      "weight": 2.9802322387695312e-08,
+      "bias": 2.9802322387695312e-08
+    },
+    "adam_state_errors": {
+      "weight.step": 0.0,
+      "weight.exp_avg": 1.1920928955078125e-07,
+      "weight.exp_avg_sq": 2.980232238769531e-07,
+      "bias.step": 0.0,
+      "bias.exp_avg": 0.0,
+      "bias.exp_avg_sq": 0.0
+    },
+    "npu_vs_cpu_atol": 0.0002,
+    "npu_vs_cpu_rtol": 0.0002,
+    "final_native_checkpoint_verified": true,
+    "all_final_workers_state_hashes_identical": true,
+    "gradient_comparison_scope": "逐步完整梯度范数与最终参数/Adam对独立CPU全batch参考；CPU atomic oracle另逐参数验证分片梯度。"
+  },
+  "npu_readiness": [
+    {
+      "device": "npu:0",
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 1
+    },
+    {
+      "device": "npu:0",
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 1
+    }
+  ],
+  "actual_unit_coverage": [
+    {
+      "step": 1,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 2,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 3,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 4,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 5,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 6,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 7,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 8,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 9,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 10,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 11,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 12,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 13,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 14,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 15,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 16,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 17,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 18,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 19,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 20,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 1,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    }
+  ],
+  "fault": {
+    "step": 3,
+    "injection_stage": "victim_full_backward_finished_held_before_collective",
+    "victim": {
+      "pid": 40,
+      "session_id": "9328d10cd865412c891b3017681a3140",
+      "worker_id": "w000002"
+    },
+    "survivor": {
+      "pid": 40,
+      "session_id": "1fb7e09b4d86438fae1ca0fb011921b5",
+      "worker_id": "w000001"
+    },
+    "original_units": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34,
+      36,
+      38,
+      40,
+      42,
+      44,
+      46,
+      48,
+      50,
+      52,
+      54,
+      56,
+      58,
+      60,
+      62
+    ],
+    "replayed_units": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61,
+      63
+    ],
+    "replayed_samples": 128,
+    "healthy_pid_session_preserved": true,
+    "full_native_state_gradients_and_pointers_unchanged": true,
+    "healthy_rollback_count": 0,
+    "expected_collective_error": {
+      "message": "npuSynchronizeDevice:torch_npu/csrc/core/npu/NPUStream.cpp:564 NPU function error: FORCE STOP, error code is 107022\n[ERROR] 2026-11-06-13:05:53 (PID:40, Device:0, RankID:0) ERR00100 PTA call acl api failed",
+      "type": "RuntimeError"
+    },
+    "commit_seconds": 1.1625092225149274,
+    "actual_commit_interval_seconds": 1.167541716247797,
+    "worker_recovery_total_seconds": 0.5723667033016682,
+    "recovery_total_overlaps_other_phase_timings": true,
+    "replay_data_seconds": 0.003945481032133102,
+    "replay_backward_seconds": 0.011172210797667503,
+    "repair_evidence": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/reports/w000001/1fb7e09b4d86438fae1ca0fb011921b5/15edd7a1ac2747688cacb2086ce276a6/repair_submitted.json",
+    "recovered_evidence": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/reports/w000001/1fb7e09b4d86438fae1ca0fb011921b5/15edd7a1ac2747688cacb2086ce276a6/recovered.json",
+    "victim_completed_backward_evidence": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/reports/w000002/9328d10cd865412c891b3017681a3140/15edd7a1ac2747688cacb2086ce276a6/local_ready.json",
+    "scope": "受控训练子进程退出，原supervisor存活；不是整个平台作业强制丢失。"
+  },
+  "performance": {
+    "warmup_steps_excluded": [
+      1,
+      2
+    ],
+    "fault_step_excluded": 3,
+    "first_update_commit_seconds": 1.666493097320199,
+    "steady_update_command_to_commit_seconds": {
+      "count": 17,
+      "mean": 0.09475164685179205,
+      "median": 0.09297035448253155,
+      "p95_linear": 0.11972962319850915,
+      "min": 0.07261369749903679,
+      "max": 0.20300959050655365
+    },
+    "steady_actual_commit_intervals_including_periodic_inspection_pauses_seconds": {
+      "count": 17,
+      "mean": 0.10587519566145014,
+      "median": 0.09779488481581211,
+      "p95_linear": 0.14804774671792978,
+      "min": 0.0784522881731391,
+      "max": 0.20770808309316635
+    },
+    "steady_actual_commit_intervals_excluding_periodic_inspection_boundaries_seconds": {
+      "count": 14,
+      "mean": 0.10081734561494418,
+      "median": 0.0948781562037766,
+      "p95_linear": 0.1407798596192151,
+      "min": 0.0784522881731391,
+      "max": 0.20770808309316635
+    },
+    "periodic_full_state_inspections": [
+      {
+        "full_states_identical": true,
+        "members": 1,
+        "pause_seconds": 0.030404801480472088,
+        "step": 5,
+        "token": "6e591631550a4ee7a4ec97212b47243f"
+      },
+      {
+        "full_states_identical": true,
+        "members": 1,
+        "pause_seconds": 0.03052337933331728,
+        "step": 10,
+        "token": "ef7aef9fb44b4f4297e9819f51a2ba21"
+      },
+      {
+        "full_states_identical": true,
+        "members": 1,
+        "pause_seconds": 0.030325328931212425,
+        "step": 15,
+        "token": "9cd6d57808924700b282a3a44048c9ac"
+      },
+      {
+        "full_states_identical": true,
+        "members": 1,
+        "pause_seconds": 0.03082339558750391,
+        "step": 20,
+        "token": "3c9c8b1d802b4a77b37eb889187f7356"
+      }
+    ],
+    "periodic_full_state_inspection_pause_seconds_total": 0.1220769053325057,
+    "loading_seconds_by_worker_same_process_clock": {
+      "w000002": 5.221453666687012,
+      "w000001": 9.427552938461304
+    },
+    "controller_training_started_to_complete_seconds": 4.921779632568359,
+    "launcher_start_to_training_complete_seconds": 30.184722661972046,
+    "first_submission_intent_to_training_complete_seconds": 26.681381702423096,
+    "launcher_start_to_official_release_exit_seconds": 96.91335201263428,
+    "finalization_last_commit_to_summary_seconds": 0.10929656028747559,
+    "checkpoint_verification_seconds": 0.0005462057888507843,
+    "checkpoint_save_isolated_seconds": null,
+    "checkpoint_timing_limit": "最终化间隔含全状态hash、checkpoint写入及核验；原运行时只保留verify receipt，没有独立save计时。",
+    "worker_phase_seconds_by_worker": {
+      "w000001": {
+        "data_seconds": {
+          "count": 17,
+          "mean": 0.0069959948168081395,
+          "median": 0.006611856631934643,
+          "p95_linear": 0.008216888085007664,
+          "min": 0.006170613691210747,
+          "max": 0.012055790051817894
+        },
+        "backward_seconds": {
+          "count": 17,
+          "mean": 0.019069554393782336,
+          "median": 0.01873423531651497,
+          "p95_linear": 0.021323162503540515,
+          "min": 0.01760749612003565,
+          "max": 0.023795955814421177
+        },
+        "communication_seconds": {
+          "count": 17,
+          "mean": 0.0030216275002149973,
+          "median": 0.0026998845860362053,
+          "p95_linear": 0.00443664975464344,
+          "min": 0.0020017875358462334,
+          "max": 0.004679957404732704
+        },
+        "gradient_buffer_pack_seconds": {
+          "count": 17,
+          "mean": 0.0018740947741795989,
+          "median": 0.0018616802990436554,
+          "p95_linear": 0.0021794894710183144,
+          "min": 0.0016597025096416473,
+          "max": 0.002186455763876438
+        },
+        "install_clip_optimizer_seconds": {
+          "count": 17,
+          "mean": 0.0014775607954053318,
+          "median": 0.0014701299369335175,
+          "p95_linear": 0.00189919862896204,
+          "min": 0.00115903839468956,
+          "max": 0.0019050436094403267
+        },
+        "apply_wait_seconds": {
+          "count": 17,
+          "mean": 0.018011069582665667,
+          "median": 0.014847834594547749,
+          "p95_linear": 0.02450119312852621,
+          "min": 0.0134897381067276,
+          "max": 0.024639821611344814
+        },
+        "worker_step_seconds": {
+          "count": 17,
+          "mean": 0.06915719944107182,
+          "median": 0.059890625067055225,
+          "p95_linear": 0.0934471430256962,
+          "min": 0.053306070156395435,
+          "max": 0.1817337991669774
+        }
+      }
+    },
+    "worker_phase_timing_scope": "原worker同步计时，按worker分列；不把不同rank最大阶段相加，不把故障恢复与重叠阶段相加。",
+    "join_performed": false,
+    "original_audit_steady_metric": 0.15407151216641068,
+    "original_audit_steady_metric_limit": "原副本仅排除前两步，故障轮会包含第3步恢复；本记录已另行剔除故障步，且单列真实commit间隔和hash暂停。"
+  },
+  "resources": {
+    "schema": "blind-owned-resource-proof-v1",
+    "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+    "read_only": true,
+    "job_scope": "only IDs in this run ascend_fleet/state.json",
+    "jobs": [
+      {
+        "queried_at": 1793970505.8822424,
+        "job_id": "job-5a4aab18-6650-4dcf-a149-724564be4d03",
+        "worker_id": "w000001",
+        "owned_identity_matched": true,
+        "official_status": "job_succeeded",
+        "official_terminal": true,
+        "priority_level": "LOW",
+        "priority_name": "1",
+        "instances": [
+          {
+            "created_at": "1793970334000",
+            "finished_at": "1793970361000",
+            "instance_status": "instance_success",
+            "instance_type": "instance_type_worker",
+            "name": "job-5a4aab18-6650-4dcf-a149-724564be4d03-worker-0",
+            "node": "infra-gpu-npu-471.host.shzhisuan.com",
+            "node_status": "READY",
+            "running_time_ms": "24000",
+            "started_at": "1793970337000"
+          }
+        ]
+      },
+      {
+        "queried_at": 1793970506.2366612,
+        "job_id": "job-78972594-c277-47fa-9a15-a625f4726b5f",
+        "worker_id": "w000002",
+        "owned_identity_matched": true,
+        "official_status": "job_succeeded",
+        "official_terminal": true,
+        "priority_level": "LOW",
+        "priority_name": "1",
+        "instances": [
+          {
+            "created_at": "1793970334000",
+            "finished_at": "1793970356000",
+            "instance_status": "instance_success",
+            "instance_type": "instance_type_worker",
+            "name": "job-78972594-c277-47fa-9a15-a625f4726b5f-worker-0",
+            "node": "infra-gpu-npu-471.host.shzhisuan.com",
+            "node_status": "READY",
+            "running_time_ms": "19000",
+            "started_at": "1793970337000"
+          }
+        ]
+      }
+    ],
+    "launcher_counts": {
+      "active_jobs": 0,
+      "running_jobs": 0,
+      "pending_jobs": 0,
+      "local_requested_reserved_cards": 0
+    },
+    "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/cleanup_receipt.json",
+    "resources_released": true,
+    "no_other_jobs_modified": true
+  },
+  "controller": {
+    "pid": 2379274,
+    "exact_owned_identity_still_live": false
+  },
+  "evidence": {
+    "audit": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-real-npu-audit.json",
+    "summary": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/summary.json",
+    "official_resource_proof": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-resource-proof.json",
+    "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/cleanup_receipt.json",
+    "source_manifest": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/source_manifest.json"
+  },
+  "blocking_errors": []
+}

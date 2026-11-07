@@ -1,0 +1,55 @@
+{
+  "schema": "blind-kit-onboarding-plan-v1",
+  "at": 1793969494.3096886,
+  "scope": "仅独立副本内部文档/代码及显式site配置，不读取母repo其他实现或历史",
+  "handoff": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/handoff.json",
+  "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+  "read_documents": [
+    "README.md",
+    "AGENT_START_HERE.md",
+    "PLAN.md",
+    "docs/01_architecture.md",
+    "docs/02_adapting_your_model.md",
+    "docs/03_platform_and_resources.md",
+    "docs/04_validation_and_performance.md",
+    "docs/05_evidence_and_limits.md",
+    "docs/06_handoff_acceptance.md"
+  ],
+  "read_code": [
+    "__init__.py",
+    "tools/verify_package.py",
+    "examples/audit_toy.py",
+    "launch.py"
+  ],
+  "understanding": [
+    "独立LOW/1作业每卡常驻FP32 toy模型及原生AdamW，CPU controller控制成员与版本，HCCL SUM归约。",
+    "本轮不注入故障、不补占；仅申请两张初始卡，目标20次更新，每步256样本，atomic4且重算为0。",
+    "本地prepare/verify不申请资源；run提交并等待训练完整成功；audit独立CPU参考验证NPU loss/梯度范数/最终参数与Adam；observe/cleanup须提供官方终态及运行/排队/预留0。",
+    "不修改工具包或冻结run，保留最早错误；若阻断只清理自己run的资源并联系主agent。"
+  ],
+  "plan": [
+    "清除外部PYTHONPATH，用含torch与NumPy的CPU解释器检查vendor导入来源并校验运行时manifest。",
+    "在独立父目录执行20步CPU数学oracle，保存原始输出、退出码与数值误差。",
+    "用已给site配置prepare全新run，再verify冻结文件；核对cards=2、steps=20、LOW/1资源定义。",
+    "通过私有cookie路径运行真实20步训练，持续查看本轮日志与提交进度，等待完整状态与checkpoint。",
+    "对probe执行数值和速度审计，记录容差、loss、梯度/参数/Adam误差与运行计时。",
+    "observe查询自己的job官方状态，必要时cleanup；证明running/pending/reserved为0并输出中文及JSON验收记录。"
+  ],
+  "environment_policy": {
+    "PYTHONPATH": "removed before all commands",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+  },
+  "site_summary": {
+    "python": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/openpi/.venv-ascend/bin/python",
+    "cards": 2,
+    "steps": 20,
+    "mode": "external-loss",
+    "replacement": false,
+    "source_dirs": [],
+    "global_card_limit": 64
+  },
+  "credentials": "仅使用CLI路径，不读取或打印私有凭据内容",
+  "extra_user_interactions": 0,
+  "planned_extra_user_interactions": 0
+}

@@ -1,0 +1,17 @@
+{
+  "resident_adapter": "your_model_adapter:create_engine",
+  "resident_rng_scheme": "REPLACE_WITH_YOUR_CANONICAL_SAMPLE_RNG_CONTRACT",
+  "resident_precision_contract": "REPLACE_WITH_YOUR_NATIVE_PARAMETER_AND_ADAM_DTYPE_CONTRACT",
+  "seed": 7,
+  "batch_size": 256,
+  "microbatch_size": 4,
+  "worker_microbatch_size": 4,
+  "disable_activation_checkpointing": true,
+  "resident_data_workers": 0,
+  "resident_final_state": "checkpoint",
+  "target_steps": 20,
+  "peak_lr": 0.00005,
+  "end_lr": 0.000005,
+  "warmup_steps": 2,
+  "clip_gradient_norm": 1.0
+}

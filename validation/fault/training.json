@@ -1,0 +1,18 @@
+{
+  "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+  "batch_size": 256,
+  "worker_microbatch_size": 4,
+  "resident_rng_scheme": "toy-orthogonal256-canonical-position-v1",
+  "resident_precision_contract": "native FP32 parameters and FP32 AdamW moments; no FP32 master",
+  "disable_activation_checkpointing": true,
+  "resident_data_workers": 0,
+  "seed": 7,
+  "target_steps": 20,
+  "peak_lr": 0.05,
+  "end_lr": 0.05,
+  "warmup_steps": 0,
+  "decay_steps": 20,
+  "clip_gradient_norm": 10.0,
+  "resident_final_state": "checkpoint",
+  "resident_verify_every": 5
+}

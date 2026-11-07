@@ -1,0 +1,35 @@
+{
+  "schema": "jade-resident-openpi-controlled-fault-v1",
+  "status": "passed",
+  "committed_steps": 20000,
+  "executed_steps": 4000,
+  "start_step": 16000,
+  "completed_at": 1793910554.7468069,
+  "final_members": 64,
+  "final_states_identical": true,
+  "healthy_rollback_count": 0,
+  "durable_gradient_acceptance_verified": false,
+  "single_card_loss_during_optimizer_apply_verified": false,
+  "final_checkpoint": {
+    "path": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/runs/pi05-ascend-resident-low64-b4-rdma12-resume16000-20000-20261105-v1/probe/states/final-20000",
+    "receipt": {
+      "checkpoint": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/runs/pi05-ascend-resident-low64-b4-rdma12-resume16000-20000-20261105-v1/probe/states/final-20000",
+      "chunk_bytes": 67108864,
+      "format": "jade-native-resident-state-v1",
+      "manifest_sha256": "d7fc9bed65f3391725416ac4f7ef7fe68e6f4bb5956d4b411211102561ce851a",
+      "model_sha256": "4e4bf45216f91d1752f3d37b5963d0e09ca3592220e9d11b4cacb95bf220cac9",
+      "named_model_parameters": 813,
+      "operation": "verify",
+      "optimizer_parameter_states": 805,
+      "optimizer_sha256": "12939b458fdf7030516014d6b2b2701686f5624ecbdce1b3d0534bc1bb36ad27",
+      "payload_bytes": 20946116788,
+      "payload_bytes_verified": true,
+      "precision_contract": "native_model_and_native_adamw_moments_no_fp32_master",
+      "seconds": 47.873238030821085,
+      "step": 20000,
+      "tensor_count": 3230,
+      "unique_model_parameters": 812,
+      "verified_loaded_state": false
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "format": "jade-ascend-libero-independent-audit-v1",
+  "audit_passed": true,
+  "completion_verified": true,
+  "training_step": 20000,
+  "checkpoint_sha256": "39d75cc4b8e1594ebe2e536309aac5166b81a3514b07c9ee49123b10d53e4022",
+  "overall": {
+    "completed": 2000,
+    "successes": 1899,
+    "failures": 101,
+    "success_rate": 0.9495,
+    "wilson95_low": 0.9390120477558316,
+    "wilson95_high": 0.958264526738322
+  },
+  "by_suite": {
+    "libero_spatial": {
+      "completed": 500,
+      "successes": 487,
+      "failures": 13,
+      "success_rate": 0.974,
+      "wilson95_low": 0.9560285091657758,
+      "wilson95_high": 0.9847436160766728
+    },
+    "libero_object": {
+      "completed": 500,
+      "successes": 480,
+      "failures": 20,
+      "success_rate": 0.96,
+      "wilson95_low": 0.9390264041651492,
+      "wilson95_high": 0.9739592026102227
+    },
+    "libero_goal": {
+      "completed": 500,
+      "successes": 480,
+      "failures": 20,
+      "success_rate": 0.96,
+      "wilson95_low": 0.9390264041651492,
+      "wilson95_high": 0.9739592026102227
+    },
+    "libero_10": {
+      "completed": 500,
+      "successes": 452,
+      "failures": 48,
+      "success_rate": 0.904,
+      "wilson95_low": 0.8750130375724849,
+      "wilson95_high": 0.9268264953345811
+    }
+  },
+  "failed_videos_verified": 101,
+  "infrastructure_error_attempts": 0
+}

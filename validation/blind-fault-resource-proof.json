@@ -1,0 +1,63 @@
+{
+  "schema": "blind-owned-resource-proof-v1",
+  "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+  "read_only": true,
+  "job_scope": "only IDs in this run ascend_fleet/state.json",
+  "jobs": [
+    {
+      "queried_at": 1793970505.8822424,
+      "job_id": "job-5a4aab18-6650-4dcf-a149-724564be4d03",
+      "worker_id": "w000001",
+      "owned_identity_matched": true,
+      "official_status": "job_succeeded",
+      "official_terminal": true,
+      "priority_level": "LOW",
+      "priority_name": "1",
+      "instances": [
+        {
+          "created_at": "1793970334000",
+          "finished_at": "1793970361000",
+          "instance_status": "instance_success",
+          "instance_type": "instance_type_worker",
+          "name": "job-5a4aab18-6650-4dcf-a149-724564be4d03-worker-0",
+          "node": "infra-gpu-npu-471.host.shzhisuan.com",
+          "node_status": "READY",
+          "running_time_ms": "24000",
+          "started_at": "1793970337000"
+        }
+      ]
+    },
+    {
+      "queried_at": 1793970506.2366612,
+      "job_id": "job-78972594-c277-47fa-9a15-a625f4726b5f",
+      "worker_id": "w000002",
+      "owned_identity_matched": true,
+      "official_status": "job_succeeded",
+      "official_terminal": true,
+      "priority_level": "LOW",
+      "priority_name": "1",
+      "instances": [
+        {
+          "created_at": "1793970334000",
+          "finished_at": "1793970356000",
+          "instance_status": "instance_success",
+          "instance_type": "instance_type_worker",
+          "name": "job-78972594-c277-47fa-9a15-a625f4726b5f-worker-0",
+          "node": "infra-gpu-npu-471.host.shzhisuan.com",
+          "node_status": "READY",
+          "running_time_ms": "19000",
+          "started_at": "1793970337000"
+        }
+      ]
+    }
+  ],
+  "launcher_counts": {
+    "active_jobs": 0,
+    "running_jobs": 0,
+    "pending_jobs": 0,
+    "local_requested_reserved_cards": 0
+  },
+  "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/cleanup_receipt.json",
+  "resources_released": true,
+  "no_other_jobs_modified": true
+}

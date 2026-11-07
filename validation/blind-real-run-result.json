@@ -1,0 +1,26 @@
+{
+  "step": "real-run",
+  "argv": [
+    "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+    "fragment_training_kit/launch.py",
+    "run",
+    "--run-dir",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+    "--cookie-file",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+    "--watch-seconds",
+    "1200"
+  ],
+  "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py run --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies --watch-seconds 1200",
+  "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+  "environment": {
+    "PYTHONPATH": "removed",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+  },
+  "started_at": 1793969724.7629232,
+  "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-run.stdout.log",
+  "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-run.stderr.log",
+  "ended_at": 1793969823.0085394,
+  "returncode": 0
+}

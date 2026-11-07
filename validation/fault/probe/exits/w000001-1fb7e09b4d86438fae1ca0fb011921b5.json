@@ -1,0 +1,1 @@
+{"exit_code": 0, "heartbeat_counter": 19, "kill_directive": null, "killed_by_controller": false, "phase_timed_out": false, "pid": 40, "run_id": "76748e278aad4587b595af1327b905b5", "schema": "jade-resident-openpi-controlled-fault-v1", "session_id": "1fb7e09b4d86438fae1ca0fb011921b5", "supervisor_pid": 8, "time": 1793970361.1159923, "worker_id": "w000001"}

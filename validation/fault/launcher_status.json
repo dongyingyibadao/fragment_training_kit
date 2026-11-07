@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-06T13:08:25.577142+00:00",
+  "marker": "STOP",
+  "active_jobs": 0,
+  "running_jobs": 0,
+  "pending_jobs": 0,
+  "local_requested_reserved_cards": 0,
+  "verified_allocated_cards": 0,
+  "created": [],
+  "blocked_reason": null,
+  "errors": [],
+  "committed_steps": 20,
+  "stage": "training",
+  "training_status": "passed",
+  "initial_intent_limit": 2,
+  "arbitrary_fleet_refill_joins_supported": false
+}

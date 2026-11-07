@@ -1,0 +1,24 @@
+{
+  "top_level_keys": [
+    "kind",
+    "status",
+    "generated_at_utc",
+    "audit_seconds",
+    "audit_cpu_only_no_torch_import",
+    "run",
+    "run_id",
+    "source_verification",
+    "provenance",
+    "platform_identity",
+    "actual_CANN_environment_evidence",
+    "training",
+    "fault",
+    "replacement",
+    "final_checkpoint",
+    "final_state",
+    "timing",
+    "scope",
+    "limitations"
+  ],
+  "note": "Original audit hash records the full evidence; see original file for details."
+}

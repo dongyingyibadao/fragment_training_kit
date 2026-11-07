@@ -1,0 +1,35 @@
+{
+  "records": [
+    {
+      "source": "artifacts/ascend-resident-20261103/native-fastpoll32-rdma16-devicejoin-500-independent-audit-v1.json",
+      "sha256": "a77e82db3feb714fb9a9a47e45cac4ac112553bd0222e04ba07f481588163b46",
+      "summary_file": "native-fastpoll32-rdma16-devicejoin-500-independent-audit-v1.json",
+      "summary_is_full_original": false
+    },
+    {
+      "source": "artifacts/ascend-resident-20261103/unknown-platform8-rdma16-independent-audit-v1.json",
+      "sha256": "e8f336f0cea401dd21ae0d3769708d68f30620ad73e9b50bc84d949f2c59295f",
+      "summary_file": "unknown-platform8-rdma16-independent-audit-v1.json",
+      "summary_is_full_original": false
+    },
+    {
+      "source": "artifacts/libero-eval-20000-20261106/final-report/audit.json",
+      "sha256": "b51a18b7fe80b61a8f5e72e9623dcc2eb610b519113c85c228e9e9b47de6e781",
+      "summary_file": "final-report-audit.json",
+      "summary_is_full_original": false
+    },
+    {
+      "source": "runs/pi05-ascend-resident-low64-b4-rdma12-resume16000-20000-20261105-v1/probe/summary.json",
+      "sha256": "579d52b75402179cd9c3cf2f51ac005451adad313cfdcee3bf319dd395800c8b",
+      "summary_file": "openpi-final20000-summary.json",
+      "summary_is_full_original": false
+    },
+    {
+      "source": "artifacts/ascend-collective-diagnosis-20261105/rdma12-stability-2000-independent-audit.json",
+      "sha256": "585281a07675aa93675ea1d37690fd1dbf8dfe82c6197724964027625941fe92",
+      "summary_file": "rdma12-stability-2000-independent-audit.json",
+      "summary_is_full_original": true
+    }
+  ],
+  "scope": "Lightweight summaries, full original source hashes; no weights or credentials included."
+}

@@ -1,0 +1,269 @@
+{
+  "status": "passed",
+  "scope": "real NPU saved run vs independent full-global-batch CPU AdamW oracle",
+  "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe",
+  "steps": 20,
+  "cards_requested": 2,
+  "global_batch": 256,
+  "npu_readiness_evidence": [
+    {
+      "device": "npu:0",
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 1
+    },
+    {
+      "device": "npu:0",
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 1
+    }
+  ],
+  "initial_loss": 4.453125,
+  "final_checkpoint_loss": 0.16766051948070526,
+  "relative_loss_drop": 0.962349918432403,
+  "gradient_and_optimizer_reference_passed": true,
+  "full_native_checkpoint_verified": true,
+  "all_final_workers_state_hashes_identical": true,
+  "parameter_max_abs_errors": {
+    "weight": 2.9802322387695312e-08,
+    "bias": 2.9802322387695312e-08
+  },
+  "adam_state_max_abs_errors": {
+    "weight.step": 0.0,
+    "weight.exp_avg": 1.1920928955078125e-07,
+    "weight.exp_avg_sq": 2.980232238769531e-07,
+    "bias.step": 0.0,
+    "bias.exp_avg": 0.0,
+    "bias.exp_avg_sq": 0.0
+  },
+  "steady_commit_seconds_mean": 0.09475164685179205,
+  "steady_commit_seconds_median": 0.09297035448253155,
+  "steady_commit_interval_seconds_mean": 0.10587519566145014,
+  "steady_commit_samples": 17,
+  "steady_excluded_recovery_steps": [
+    3
+  ],
+  "recovery_updates": [
+    {
+      "step": 3,
+      "loss": 3.4191246423870325,
+      "gradient_norms": [
+        3.6981751918792725
+      ],
+      "commit_seconds": 1.1625092225149274,
+      "commit_interval_seconds": 1.167541716247797,
+      "members": 1
+    }
+  ],
+  "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups and recovery update excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
+  "steps_observed": [
+    {
+      "step": 1,
+      "loss": 4.453125,
+      "gradient_norms": [
+        4.220486164093018,
+        4.220486164093018
+      ],
+      "commit_seconds": 1.666493097320199,
+      "commit_interval_seconds": 1.6664981776848435,
+      "members": 2
+    },
+    {
+      "step": 2,
+      "loss": 3.913124982267618,
+      "gradient_norms": [
+        3.956324338912964,
+        3.956324338912964
+      ],
+      "commit_seconds": 0.16909110080450773,
+      "commit_interval_seconds": 0.17526881769299507,
+      "members": 2
+    },
+    {
+      "step": 3,
+      "loss": 3.4191246423870325,
+      "gradient_norms": [
+        3.6981751918792725
+      ],
+      "commit_seconds": 1.1625092225149274,
+      "commit_interval_seconds": 1.167541716247797,
+      "members": 1
+    },
+    {
+      "step": 4,
+      "loss": 2.9713952778838575,
+      "gradient_norms": [
+        3.447547435760498
+      ],
+      "commit_seconds": 0.07574902847409248,
+      "commit_interval_seconds": 0.08122366946190596,
+      "members": 1
+    },
+    {
+      "step": 5,
+      "loss": 2.569695089943707,
+      "gradient_norms": [
+        3.206054210662842
+      ],
+      "commit_seconds": 0.09319271333515644,
+      "commit_interval_seconds": 0.09779488481581211,
+      "members": 1
+    },
+    {
+      "step": 6,
+      "loss": 2.21298661082983,
+      "gradient_norms": [
+        2.975221872329712
+      ],
+      "commit_seconds": 0.09468752797693014,
+      "commit_interval_seconds": 0.1327560069039464,
+      "members": 1
+    },
+    {
+      "step": 7,
+      "loss": 1.8991276451852173,
+      "gradient_norms": [
+        2.756176710128784
+      ],
+      "commit_seconds": 0.08431320358067751,
+      "commit_interval_seconds": 0.0888582281768322,
+      "members": 1
+    },
+    {
+      "step": 8,
+      "loss": 1.62474250420928,
+      "gradient_norms": [
+        2.5493078231811523
+      ],
+      "commit_seconds": 0.09639767371118069,
+      "commit_interval_seconds": 0.10158326849341393,
+      "members": 1
+    },
+    {
+      "step": 9,
+      "loss": 1.3855662536807358,
+      "gradient_norms": [
+        2.354201316833496
+      ],
+      "commit_seconds": 0.09890963137149811,
+      "commit_interval_seconds": 0.1047415854409337,
+      "members": 1
+    },
+    {
+      "step": 10,
+      "loss": 1.1772333616390824,
+      "gradient_norms": [
+        2.1700077056884766
+      ],
+      "commit_seconds": 0.09297035448253155,
+      "commit_interval_seconds": 0.09769583866000175,
+      "members": 1
+    },
+    {
+      "step": 11,
+      "loss": 0.9959731397684664,
+      "gradient_norms": [
+        1.9959689378738403
+      ],
+      "commit_seconds": 0.08439394179731607,
+      "commit_interval_seconds": 0.12254681810736656,
+      "members": 1
+    },
+    {
+      "step": 12,
+      "loss": 0.8387740363832563,
+      "gradient_norms": [
+        1.8316922187805176
+      ],
+      "commit_seconds": 0.07459147088229656,
+      "commit_interval_seconds": 0.07948124315589666,
+      "members": 1
+    },
+    {
+      "step": 13,
+      "loss": 0.7031749759335071,
+      "gradient_norms": [
+        1.6771106719970703
+      ],
+      "commit_seconds": 0.20300959050655365,
+      "commit_interval_seconds": 0.20770808309316635,
+      "members": 1
+    },
+    {
+      "step": 14,
+      "loss": 0.5870292652398348,
+      "gradient_norms": [
+        1.5323569774627686
+      ],
+      "commit_seconds": 0.08653184212744236,
+      "commit_interval_seconds": 0.09206047374755144,
+      "members": 1
+    },
+    {
+      "step": 15,
+      "loss": 0.488375537795946,
+      "gradient_norms": [
+        1.3976774215698242
+      ],
+      "commit_seconds": 0.08554948214441538,
+      "commit_interval_seconds": 0.09148397669196129,
+      "members": 1
+    },
+    {
+      "step": 16,
+      "loss": 0.40539006842300296,
+      "gradient_norms": [
+        1.2734049558639526
+      ],
+      "commit_seconds": 0.09373266436159611,
+      "commit_interval_seconds": 0.1331326626241207,
+      "members": 1
+    },
+    {
+      "step": 17,
+      "loss": 0.3363641013856977,
+      "gradient_norms": [
+        1.159938097000122
+      ],
+      "commit_seconds": 0.09422910958528519,
+      "commit_interval_seconds": 0.09922612737864256,
+      "members": 1
+    },
+    {
+      "step": 18,
+      "loss": 0.27967228076886386,
+      "gradient_norms": [
+        1.0576809644699097
+      ],
+      "commit_seconds": 0.08440879359841347,
+      "commit_interval_seconds": 0.08983172010630369,
+      "members": 1
+    },
+    {
+      "step": 19,
+      "loss": 0.23372410098090768,
+      "gradient_norms": [
+        0.9669004678726196
+      ],
+      "commit_seconds": 0.07261369749903679,
+      "commit_interval_seconds": 0.0784522881731391,
+      "members": 1
+    },
+    {
+      "step": 20,
+      "loss": 0.1969213449920062,
+      "gradient_norms": [
+        0.887516438961029
+      ],
+      "commit_seconds": 0.09549727104604244,
+      "commit_interval_seconds": 0.10130145121365786,
+      "members": 1
+    }
+  ],
+  "actual_fault_occurred": true,
+  "limitations": [
+    "Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.",
+    "Saved-evidence audit does not rerun HCCL; real failure injection is reported separately."
+  ]
+}

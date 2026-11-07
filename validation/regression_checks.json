@@ -1,0 +1,30 @@
+{
+  "current_package_tests": {
+    "command": "cd fragment_training_kit && TORCH_DEVICE_BACKEND_AUTOLOAD=0 python -m pytest -q tests",
+    "passed": 26,
+    "seconds": 3.22
+  },
+  "existing_resident_regressions": {
+    "command": "TORCH_DEVICE_BACKEND_AUTOLOAD=0 python -m pytest -q tests/test_resident_openpi_fault.py tests/test_resident_apply_loss.py tests/test_resident_resume.py tests/test_resident_liveness_adapter.py",
+    "passed": 86,
+    "seconds": 13.67,
+    "scope": "Original source repository regression tests, not NPU jobs."
+  },
+  "release_audit_extensions": {
+    "actual_assignment_coverage_checked": true,
+    "fault_timing_separated": true,
+    "both_real_saved_runs_passed": true
+  },
+  "final_independent_copy_tests": {
+    "command": "env -u PYTHONPATH TORCH_DEVICE_BACKEND_AUTOLOAD=0 PYTHONDONTWRITEBYTECODE=1 python -m pytest -q tests",
+    "passed": 26,
+    "seconds": 3.43,
+    "copy_scope": "Complete kit copied to release-isolation/fragment_training_kit, no mother repository import path"
+  },
+  "final_independent_prepare": {
+    "prepared": true,
+    "submitted": false,
+    "frozen_files": 60,
+    "runtime_vendor_files_equal_to_both_real_runs": 45
+  }
+}

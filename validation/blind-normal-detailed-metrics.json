@@ -1,0 +1,510 @@
+{
+  "status": "passed",
+  "label": "normal",
+  "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+  "run_id": "ab6c588836bf46deb8b1616eca2bcdbd",
+  "mode": "external-loss",
+  "requested_cards": 2,
+  "initial_members": 2,
+  "final_members": 2,
+  "steps": 20,
+  "global_batch": 256,
+  "atomic_units": 64,
+  "atomic_samples": 4,
+  "checkpoint_calls": 0,
+  "numeric": {
+    "initial_loss": 4.453125,
+    "final_checkpoint_loss": 0.16766048967838287,
+    "relative_loss_drop": 0.9623499251248544,
+    "max_per_step_global_loss_abs_error": 2.775341272354126e-07,
+    "max_per_step_gradient_norm_abs_error": 4.76837158203125e-07,
+    "max_final_parameter_abs_error": 8.940696716308594e-08,
+    "max_final_adam_state_abs_error": 1.1920928955078125e-07,
+    "parameter_errors": {
+      "weight": 4.470348358154297e-08,
+      "bias": 8.940696716308594e-08
+    },
+    "adam_state_errors": {
+      "weight.step": 0.0,
+      "weight.exp_avg": 5.960464477539063e-08,
+      "weight.exp_avg_sq": 1.1920928955078125e-07,
+      "bias.step": 0.0,
+      "bias.exp_avg": 2.2351741790771484e-08,
+      "bias.exp_avg_sq": 3.725290298461914e-09
+    },
+    "npu_vs_cpu_atol": 0.0002,
+    "npu_vs_cpu_rtol": 0.0002,
+    "final_native_checkpoint_verified": true,
+    "all_final_workers_state_hashes_identical": true,
+    "gradient_comparison_scope": "逐步完整梯度范数与最终参数/Adam对独立CPU全batch参考；CPU atomic oracle另逐参数验证分片梯度。"
+  },
+  "npu_readiness": [
+    {
+      "device": "npu:0",
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 1
+    },
+    {
+      "device": "npu:0",
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 1
+    }
+  ],
+  "actual_unit_coverage": [
+    {
+      "step": 1,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 2,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 3,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 4,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 5,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 6,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 7,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 8,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 9,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 10,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 11,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 12,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 13,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 14,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 15,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 16,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 17,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 18,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 19,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    },
+    {
+      "step": 20,
+      "units": 64,
+      "unique_units": 64,
+      "samples": 256,
+      "members": 2,
+      "original_plus_replay_matches_commit_assignment": true,
+      "checkpoint_calls": 0
+    }
+  ],
+  "fault": null,
+  "performance": {
+    "warmup_steps_excluded": [
+      1,
+      2
+    ],
+    "fault_step_excluded": null,
+    "first_update_commit_seconds": 1.6471556164324284,
+    "steady_update_command_to_commit_seconds": {
+      "count": 18,
+      "mean": 0.09409815812897351,
+      "median": 0.09674635762348771,
+      "p95_linear": 0.10784546663053333,
+      "min": 0.07626521401107311,
+      "max": 0.11262776888906956
+    },
+    "steady_actual_commit_intervals_including_periodic_inspection_pauses_seconds": {
+      "count": 18,
+      "mean": 0.10550874026699199,
+      "median": 0.10331698274239898,
+      "p95_linear": 0.15004695518873631,
+      "min": 0.08174229878932238,
+      "max": 0.15774020366370678
+    },
+    "steady_actual_commit_intervals_excluding_periodic_inspection_boundaries_seconds": {
+      "count": 15,
+      "mean": 0.09790277015417814,
+      "median": 0.10282518249005079,
+      "p95_linear": 0.10893206065520644,
+      "min": 0.08174229878932238,
+      "max": 0.11290980875492096
+    },
+    "periodic_full_state_inspections": [
+      {
+        "full_states_identical": true,
+        "members": 2,
+        "pause_seconds": 0.035719881765544415,
+        "step": 5,
+        "token": "e0169ac55cfa47e786e28cd0a84e3f9c"
+      },
+      {
+        "full_states_identical": true,
+        "members": 2,
+        "pause_seconds": 0.034261833876371384,
+        "step": 10,
+        "token": "95b41ca61b524e578b181b7d489ee20b"
+      },
+      {
+        "full_states_identical": true,
+        "members": 2,
+        "pause_seconds": 0.030275878496468067,
+        "step": 15,
+        "token": "7f80258973d548349c572678daeac375"
+      },
+      {
+        "full_states_identical": true,
+        "members": 2,
+        "pause_seconds": 0.0253819078207016,
+        "step": 20,
+        "token": "3df0d21d582645daa58ad6f3ef2421a6"
+      }
+    ],
+    "periodic_full_state_inspection_pause_seconds_total": 0.12563950195908546,
+    "loading_seconds_by_worker_same_process_clock": {
+      "w000002": 9.136014938354492,
+      "w000001": 12.650938510894775
+    },
+    "controller_training_started_to_complete_seconds": 3.7349355220794678,
+    "launcher_start_to_training_complete_seconds": 33.20573425292969,
+    "first_submission_intent_to_training_complete_seconds": 28.526909112930298,
+    "launcher_start_to_official_release_exit_seconds": 98.24561619758606,
+    "finalization_last_commit_to_summary_seconds": 0.10731363296508789,
+    "checkpoint_verification_seconds": 0.0005714232102036476,
+    "checkpoint_save_isolated_seconds": null,
+    "checkpoint_timing_limit": "最终化间隔含全状态hash、checkpoint写入及核验；原运行时只保留verify receipt，没有独立save计时。",
+    "worker_phase_seconds_by_worker": {
+      "w000001": {
+        "data_seconds": {
+          "count": 18,
+          "mean": 0.0034074030506114164,
+          "median": 0.0034209229052066803,
+          "p95_linear": 0.003606709325686097,
+          "min": 0.0031556598842144012,
+          "max": 0.0037033595144748688
+        },
+        "backward_seconds": {
+          "count": 18,
+          "mean": 0.009724068662358655,
+          "median": 0.009692293591797352,
+          "p95_linear": 0.010607415670529008,
+          "min": 0.008726170286536217,
+          "max": 0.01094117946922779
+        },
+        "communication_seconds": {
+          "count": 18,
+          "mean": 0.0046409533566070926,
+          "median": 0.0031123324297368526,
+          "p95_linear": 0.013680623238906264,
+          "min": 0.0016344860196113586,
+          "max": 0.013978281058371067
+        },
+        "gradient_buffer_pack_seconds": {
+          "count": 18,
+          "mean": 0.0018531157014270623,
+          "median": 0.001781050581485033,
+          "p95_linear": 0.00215422916226089,
+          "min": 0.0015522921457886696,
+          "max": 0.00215732678771019
+        },
+        "install_clip_optimizer_seconds": {
+          "count": 18,
+          "mean": 0.001332228123727772,
+          "median": 0.0013147019781172276,
+          "p95_linear": 0.0016956573817878949,
+          "min": 0.0009448379278182983,
+          "max": 0.0024196570739150047
+        },
+        "apply_wait_seconds": {
+          "count": 18,
+          "mean": 0.030566658669461805,
+          "median": 0.03157146601006389,
+          "p95_linear": 0.03724593655206263,
+          "min": 0.023930433206260204,
+          "max": 0.03810571879148483
+        },
+        "worker_step_seconds": {
+          "count": 18,
+          "mean": 0.062496146394146815,
+          "median": 0.06289450544863939,
+          "p95_linear": 0.07775560747832058,
+          "min": 0.050896585918962955,
+          "max": 0.08918610028922558
+        }
+      },
+      "w000002": {
+        "data_seconds": {
+          "count": 18,
+          "mean": 0.0035294552540613543,
+          "median": 0.0034330901689827442,
+          "p95_linear": 0.004035831429064273,
+          "min": 0.0032092267647385597,
+          "max": 0.004321940243244171
+        },
+        "backward_seconds": {
+          "count": 18,
+          "mean": 0.009912100620567799,
+          "median": 0.00944827450439334,
+          "p95_linear": 0.01272214907221496,
+          "min": 0.008862864226102829,
+          "max": 0.012995684519410133
+        },
+        "communication_seconds": {
+          "count": 18,
+          "mean": 0.001916937426560455,
+          "median": 0.0017840731889009476,
+          "p95_linear": 0.0026535029988735913,
+          "min": 0.0014921529218554497,
+          "max": 0.0027835043147206306
+        },
+        "gradient_buffer_pack_seconds": {
+          "count": 18,
+          "mean": 0.0017890034553905327,
+          "median": 0.0017545646987855434,
+          "p95_linear": 0.0020370798651129004,
+          "min": 0.0015140166506171227,
+          "max": 0.002152577042579651
+        },
+        "install_clip_optimizer_seconds": {
+          "count": 18,
+          "mean": 0.0012406863065229522,
+          "median": 0.001181584782898426,
+          "p95_linear": 0.0015201789792627094,
+          "min": 0.0009405743330717087,
+          "max": 0.0015918724238872528
+        },
+        "apply_wait_seconds": {
+          "count": 18,
+          "mean": 0.03163151960406038,
+          "median": 0.0313690509647131,
+          "p95_linear": 0.040360136469826086,
+          "min": 0.02374529093503952,
+          "max": 0.051078345626592636
+        },
+        "worker_step_seconds": {
+          "count": 18,
+          "mean": 0.05810905330710941,
+          "median": 0.05762806395068765,
+          "p95_linear": 0.06768303881399332,
+          "min": 0.047123029828071594,
+          "max": 0.07488163933157921
+        }
+      }
+    },
+    "worker_phase_timing_scope": "原worker同步计时，按worker分列；不把不同rank最大阶段相加，不把故障恢复与重叠阶段相加。",
+    "join_performed": false,
+    "original_audit_steady_metric": 0.09409815812897351,
+    "original_audit_steady_metric_limit": "原副本仅排除前两步，故障轮会包含第3步恢复；本记录已另行剔除故障步，且单列真实commit间隔和hash暂停。"
+  },
+  "resources": {
+    "schema": "blind-owned-resource-proof-v1",
+    "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+    "read_only": true,
+    "job_scope": "only IDs in this run ascend_fleet/state.json",
+    "jobs": [
+      {
+        "queried_at": 1793970267.7705395,
+        "job_id": "job-9c588740-5fc0-4777-99cd-b8fa17511a3d",
+        "worker_id": "w000001",
+        "owned_identity_matched": true,
+        "official_status": "job_succeeded",
+        "official_terminal": true,
+        "priority_level": "LOW",
+        "priority_name": "1",
+        "instances": [
+          {
+            "created_at": "1793969735000",
+            "finished_at": "1793969763000",
+            "instance_status": "instance_success",
+            "instance_type": "instance_type_worker",
+            "name": "job-9c588740-5fc0-4777-99cd-b8fa17511a3d-worker-0",
+            "node": "infra-gpu-npu-471.host.shzhisuan.com",
+            "node_status": "READY",
+            "running_time_ms": "25000",
+            "started_at": "1793969738000"
+          }
+        ]
+      },
+      {
+        "queried_at": 1793970268.1205633,
+        "job_id": "job-170463e3-7458-4a2d-80bc-7cd103aa6d74",
+        "worker_id": "w000002",
+        "owned_identity_matched": true,
+        "official_status": "job_succeeded",
+        "official_terminal": true,
+        "priority_level": "LOW",
+        "priority_name": "1",
+        "instances": [
+          {
+            "created_at": "1793969735000",
+            "finished_at": "1793969762000",
+            "instance_status": "instance_success",
+            "instance_type": "instance_type_worker",
+            "name": "job-170463e3-7458-4a2d-80bc-7cd103aa6d74-worker-0",
+            "node": "infra-gpu-npu-471.host.shzhisuan.com",
+            "node_status": "READY",
+            "running_time_ms": "24000",
+            "started_at": "1793969738000"
+          }
+        ]
+      }
+    ],
+    "launcher_counts": {
+      "active_jobs": 0,
+      "running_jobs": 0,
+      "pending_jobs": 0,
+      "local_requested_reserved_cards": 0
+    },
+    "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/cleanup_receipt.json",
+    "resources_released": true,
+    "no_other_jobs_modified": true
+  },
+  "controller": {
+    "pid": 1997328,
+    "exact_owned_identity_still_live": false
+  },
+  "evidence": {
+    "audit": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-npu-audit.json",
+    "summary": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/probe/summary.json",
+    "official_resource_proof": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-resource-proof.json",
+    "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/cleanup_receipt.json",
+    "source_manifest": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/source_manifest.json"
+  },
+  "blocking_errors": []
+}

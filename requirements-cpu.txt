@@ -1,0 +1,5 @@
+# CPU correctness checks only. Install into your own environment.
+# NPU jobs require a separate, matched torch / torch_npu / CANN environment.
+numpy>=1.26
+torch>=2.6
+pytest>=8

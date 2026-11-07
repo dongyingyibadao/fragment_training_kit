@@ -1,0 +1,1679 @@
+{
+  "schema": "blind-kit-acceptance-v1",
+  "status": "passed",
+  "completed_at_utc": "2026-11-06T13:19:20.656803+00:00",
+  "conclusion_zh": "独立副本无额外站点交互完成CPU数值验收、真实LOW/1两卡20步正常训练及受控失联2→1的20步训练；两轮数值、实际样本覆盖与最终checkpoint均通过，自有4项平台作业全部官方成功终态且资源为0。",
+  "handoff": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/handoff.json",
+  "independent_parent": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+  "documents_read": [
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/README.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/AGENT_START_HERE.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/PLAN.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/docs/01_architecture.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/docs/02_adapting_your_model.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/docs/03_platform_and_resources.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/docs/04_validation_and_performance.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/docs/05_evidence_and_limits.md",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/docs/06_handoff_acceptance.md"
+  ],
+  "code_read": [
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/__init__.py",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/tools/verify_package.py",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/examples/audit_toy.py",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/launch.py",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/vendor/jade_lotus/ascend_platform.py",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/vendor/jade_lotus/ascend_fleet.py",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/vendor/scripts/probe_resident_openpi_fault.py"
+  ],
+  "site_config_read": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/site.json",
+  "plan": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-understanding-and-plan.json",
+  "fault_extension_plan": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-plan.json",
+  "version": {
+    "schema": "blind-kit-fingerprint-v1",
+    "kit_path": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit",
+    "package_version": "0.1.0",
+    "fingerprint_method": "sha256 of canonical JSON mapping relative path to file SHA256; exclude pycache/pyc",
+    "package_content_sha256": "b70b738159c3e4a0eff489cf4dc8248d674fa9213b1706505a9019a9e3f3a95c",
+    "runtime_manifest_sha256": "439a4ddda2da068a1122ef159ee28f4133af51e6ae82a4073be1e510cda94fa3",
+    "both_frozen_runs_match_independent_vendor_and_kit_python": true
+  },
+  "isolation": {
+    "PYTHONPATH_removed_for_all_runtime_commands": true,
+    "original_vendor_import": {
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "python": "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+      "PYTHONPATH_present": false,
+      "jade_lotus_file": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/vendor/jade_lotus/__init__.py",
+      "kit_file": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated/fragment_training_kit/__init__.py",
+      "torch_version": "2.9.0+cpu",
+      "numpy_version": "2.2.5",
+      "source_dirs": [],
+      "passed": true
+    },
+    "normal_frozen_import": {
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/runtime",
+      "PYTHONPATH_present": false,
+      "kit_file": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/runtime/fragment_training_kit/__init__.py",
+      "jade_lotus_file": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/runtime/jade_lotus/__init__.py",
+      "passed": true
+    },
+    "fault_frozen_import": {
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/runtime",
+      "PYTHONPATH_present": false,
+      "kit_file": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/runtime/fragment_training_kit/__init__.py",
+      "jade_lotus_file": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/runtime/jade_lotus/__init__.py",
+      "passed": true
+    },
+    "source_dirs": [],
+    "mother_repo_implementation_or_history_read": false,
+    "toolkit_or_frozen_code_modified": false,
+    "subagents_spawned": 0,
+    "credential_file_contents_printed": false
+  },
+  "interaction": {
+    "additional_user_information_requests": 0,
+    "additional_permission_requests": 0,
+    "main_agent_fault_scope_extension_received": true,
+    "required_site_inputs": "全部由handoff和私有site事先提供，无需人工补充。"
+  },
+  "cpu_oracle": {
+    "path": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-cpu-oracle.json",
+    "status": "passed",
+    "steps": 20,
+    "initial_loss": 4.453125,
+    "final_loss": 0.16766051948070526,
+    "atomic_gradient_equivalence": {
+      "passed": true,
+      "layouts": [
+        {
+          "world_size": 2,
+          "max_gradient_abs_error": 0.0
+        },
+        {
+          "world_size": 3,
+          "max_gradient_abs_error": 0.0
+        },
+        {
+          "world_size": 7,
+          "max_gradient_abs_error": 0.0
+        }
+      ],
+      "clear_false_replay_max_gradient_abs_error": 0.0,
+      "healthy_gradient_pointers_preserved": true,
+      "empty_replay_preserves_gradients": true,
+      "scope": "CPU mathematical validation; not a real HCCL fault/recovery experiment"
+    },
+    "absolute_gradient_tolerance": 2e-06
+  },
+  "normal": {
+    "status": "passed",
+    "label": "normal",
+    "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+    "run_id": "ab6c588836bf46deb8b1616eca2bcdbd",
+    "mode": "external-loss",
+    "requested_cards": 2,
+    "initial_members": 2,
+    "final_members": 2,
+    "steps": 20,
+    "global_batch": 256,
+    "atomic_units": 64,
+    "atomic_samples": 4,
+    "checkpoint_calls": 0,
+    "numeric": {
+      "initial_loss": 4.453125,
+      "final_checkpoint_loss": 0.16766048967838287,
+      "relative_loss_drop": 0.9623499251248544,
+      "max_per_step_global_loss_abs_error": 2.775341272354126e-07,
+      "max_per_step_gradient_norm_abs_error": 4.76837158203125e-07,
+      "max_final_parameter_abs_error": 8.940696716308594e-08,
+      "max_final_adam_state_abs_error": 1.1920928955078125e-07,
+      "parameter_errors": {
+        "weight": 4.470348358154297e-08,
+        "bias": 8.940696716308594e-08
+      },
+      "adam_state_errors": {
+        "weight.step": 0.0,
+        "weight.exp_avg": 5.960464477539063e-08,
+        "weight.exp_avg_sq": 1.1920928955078125e-07,
+        "bias.step": 0.0,
+        "bias.exp_avg": 2.2351741790771484e-08,
+        "bias.exp_avg_sq": 3.725290298461914e-09
+      },
+      "npu_vs_cpu_atol": 0.0002,
+      "npu_vs_cpu_rtol": 0.0002,
+      "final_native_checkpoint_verified": true,
+      "all_final_workers_state_hashes_identical": true,
+      "gradient_comparison_scope": "逐步完整梯度范数与最终参数/Adam对独立CPU全batch参考；CPU atomic oracle另逐参数验证分片梯度。"
+    },
+    "npu_readiness": [
+      {
+        "device": "npu:0",
+        "device_name": "Ascend910B2C",
+        "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+        "visible_devices": 1
+      },
+      {
+        "device": "npu:0",
+        "device_name": "Ascend910B2C",
+        "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+        "visible_devices": 1
+      }
+    ],
+    "actual_unit_coverage": [
+      {
+        "step": 1,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 2,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 3,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 4,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 5,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 6,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 7,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 8,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 9,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 10,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 11,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 12,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 13,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 14,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 15,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 16,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 17,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 18,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 19,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 20,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      }
+    ],
+    "fault": null,
+    "performance": {
+      "warmup_steps_excluded": [
+        1,
+        2
+      ],
+      "fault_step_excluded": null,
+      "first_update_commit_seconds": 1.6471556164324284,
+      "steady_update_command_to_commit_seconds": {
+        "count": 18,
+        "mean": 0.09409815812897351,
+        "median": 0.09674635762348771,
+        "p95_linear": 0.10784546663053333,
+        "min": 0.07626521401107311,
+        "max": 0.11262776888906956
+      },
+      "steady_actual_commit_intervals_including_periodic_inspection_pauses_seconds": {
+        "count": 18,
+        "mean": 0.10550874026699199,
+        "median": 0.10331698274239898,
+        "p95_linear": 0.15004695518873631,
+        "min": 0.08174229878932238,
+        "max": 0.15774020366370678
+      },
+      "steady_actual_commit_intervals_excluding_periodic_inspection_boundaries_seconds": {
+        "count": 15,
+        "mean": 0.09790277015417814,
+        "median": 0.10282518249005079,
+        "p95_linear": 0.10893206065520644,
+        "min": 0.08174229878932238,
+        "max": 0.11290980875492096
+      },
+      "periodic_full_state_inspections": [
+        {
+          "full_states_identical": true,
+          "members": 2,
+          "pause_seconds": 0.035719881765544415,
+          "step": 5,
+          "token": "e0169ac55cfa47e786e28cd0a84e3f9c"
+        },
+        {
+          "full_states_identical": true,
+          "members": 2,
+          "pause_seconds": 0.034261833876371384,
+          "step": 10,
+          "token": "95b41ca61b524e578b181b7d489ee20b"
+        },
+        {
+          "full_states_identical": true,
+          "members": 2,
+          "pause_seconds": 0.030275878496468067,
+          "step": 15,
+          "token": "7f80258973d548349c572678daeac375"
+        },
+        {
+          "full_states_identical": true,
+          "members": 2,
+          "pause_seconds": 0.0253819078207016,
+          "step": 20,
+          "token": "3df0d21d582645daa58ad6f3ef2421a6"
+        }
+      ],
+      "periodic_full_state_inspection_pause_seconds_total": 0.12563950195908546,
+      "loading_seconds_by_worker_same_process_clock": {
+        "w000002": 9.136014938354492,
+        "w000001": 12.650938510894775
+      },
+      "controller_training_started_to_complete_seconds": 3.7349355220794678,
+      "launcher_start_to_training_complete_seconds": 33.20573425292969,
+      "first_submission_intent_to_training_complete_seconds": 28.526909112930298,
+      "launcher_start_to_official_release_exit_seconds": 98.24561619758606,
+      "finalization_last_commit_to_summary_seconds": 0.10731363296508789,
+      "checkpoint_verification_seconds": 0.0005714232102036476,
+      "checkpoint_save_isolated_seconds": null,
+      "checkpoint_timing_limit": "最终化间隔含全状态hash、checkpoint写入及核验；原运行时只保留verify receipt，没有独立save计时。",
+      "worker_phase_seconds_by_worker": {
+        "w000001": {
+          "data_seconds": {
+            "count": 18,
+            "mean": 0.0034074030506114164,
+            "median": 0.0034209229052066803,
+            "p95_linear": 0.003606709325686097,
+            "min": 0.0031556598842144012,
+            "max": 0.0037033595144748688
+          },
+          "backward_seconds": {
+            "count": 18,
+            "mean": 0.009724068662358655,
+            "median": 0.009692293591797352,
+            "p95_linear": 0.010607415670529008,
+            "min": 0.008726170286536217,
+            "max": 0.01094117946922779
+          },
+          "communication_seconds": {
+            "count": 18,
+            "mean": 0.0046409533566070926,
+            "median": 0.0031123324297368526,
+            "p95_linear": 0.013680623238906264,
+            "min": 0.0016344860196113586,
+            "max": 0.013978281058371067
+          },
+          "gradient_buffer_pack_seconds": {
+            "count": 18,
+            "mean": 0.0018531157014270623,
+            "median": 0.001781050581485033,
+            "p95_linear": 0.00215422916226089,
+            "min": 0.0015522921457886696,
+            "max": 0.00215732678771019
+          },
+          "install_clip_optimizer_seconds": {
+            "count": 18,
+            "mean": 0.001332228123727772,
+            "median": 0.0013147019781172276,
+            "p95_linear": 0.0016956573817878949,
+            "min": 0.0009448379278182983,
+            "max": 0.0024196570739150047
+          },
+          "apply_wait_seconds": {
+            "count": 18,
+            "mean": 0.030566658669461805,
+            "median": 0.03157146601006389,
+            "p95_linear": 0.03724593655206263,
+            "min": 0.023930433206260204,
+            "max": 0.03810571879148483
+          },
+          "worker_step_seconds": {
+            "count": 18,
+            "mean": 0.062496146394146815,
+            "median": 0.06289450544863939,
+            "p95_linear": 0.07775560747832058,
+            "min": 0.050896585918962955,
+            "max": 0.08918610028922558
+          }
+        },
+        "w000002": {
+          "data_seconds": {
+            "count": 18,
+            "mean": 0.0035294552540613543,
+            "median": 0.0034330901689827442,
+            "p95_linear": 0.004035831429064273,
+            "min": 0.0032092267647385597,
+            "max": 0.004321940243244171
+          },
+          "backward_seconds": {
+            "count": 18,
+            "mean": 0.009912100620567799,
+            "median": 0.00944827450439334,
+            "p95_linear": 0.01272214907221496,
+            "min": 0.008862864226102829,
+            "max": 0.012995684519410133
+          },
+          "communication_seconds": {
+            "count": 18,
+            "mean": 0.001916937426560455,
+            "median": 0.0017840731889009476,
+            "p95_linear": 0.0026535029988735913,
+            "min": 0.0014921529218554497,
+            "max": 0.0027835043147206306
+          },
+          "gradient_buffer_pack_seconds": {
+            "count": 18,
+            "mean": 0.0017890034553905327,
+            "median": 0.0017545646987855434,
+            "p95_linear": 0.0020370798651129004,
+            "min": 0.0015140166506171227,
+            "max": 0.002152577042579651
+          },
+          "install_clip_optimizer_seconds": {
+            "count": 18,
+            "mean": 0.0012406863065229522,
+            "median": 0.001181584782898426,
+            "p95_linear": 0.0015201789792627094,
+            "min": 0.0009405743330717087,
+            "max": 0.0015918724238872528
+          },
+          "apply_wait_seconds": {
+            "count": 18,
+            "mean": 0.03163151960406038,
+            "median": 0.0313690509647131,
+            "p95_linear": 0.040360136469826086,
+            "min": 0.02374529093503952,
+            "max": 0.051078345626592636
+          },
+          "worker_step_seconds": {
+            "count": 18,
+            "mean": 0.05810905330710941,
+            "median": 0.05762806395068765,
+            "p95_linear": 0.06768303881399332,
+            "min": 0.047123029828071594,
+            "max": 0.07488163933157921
+          }
+        }
+      },
+      "worker_phase_timing_scope": "原worker同步计时，按worker分列；不把不同rank最大阶段相加，不把故障恢复与重叠阶段相加。",
+      "join_performed": false,
+      "original_audit_steady_metric": 0.09409815812897351,
+      "original_audit_steady_metric_limit": "原副本仅排除前两步，故障轮会包含第3步恢复；本记录已另行剔除故障步，且单列真实commit间隔和hash暂停。"
+    },
+    "resources": {
+      "schema": "blind-owned-resource-proof-v1",
+      "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+      "read_only": true,
+      "job_scope": "only IDs in this run ascend_fleet/state.json",
+      "jobs": [
+        {
+          "queried_at": 1793970267.7705395,
+          "job_id": "job-9c588740-5fc0-4777-99cd-b8fa17511a3d",
+          "worker_id": "w000001",
+          "owned_identity_matched": true,
+          "official_status": "job_succeeded",
+          "official_terminal": true,
+          "priority_level": "LOW",
+          "priority_name": "1",
+          "instances": [
+            {
+              "created_at": "1793969735000",
+              "finished_at": "1793969763000",
+              "instance_status": "instance_success",
+              "instance_type": "instance_type_worker",
+              "name": "job-9c588740-5fc0-4777-99cd-b8fa17511a3d-worker-0",
+              "node": "infra-gpu-npu-471.host.shzhisuan.com",
+              "node_status": "READY",
+              "running_time_ms": "25000",
+              "started_at": "1793969738000"
+            }
+          ]
+        },
+        {
+          "queried_at": 1793970268.1205633,
+          "job_id": "job-170463e3-7458-4a2d-80bc-7cd103aa6d74",
+          "worker_id": "w000002",
+          "owned_identity_matched": true,
+          "official_status": "job_succeeded",
+          "official_terminal": true,
+          "priority_level": "LOW",
+          "priority_name": "1",
+          "instances": [
+            {
+              "created_at": "1793969735000",
+              "finished_at": "1793969762000",
+              "instance_status": "instance_success",
+              "instance_type": "instance_type_worker",
+              "name": "job-170463e3-7458-4a2d-80bc-7cd103aa6d74-worker-0",
+              "node": "infra-gpu-npu-471.host.shzhisuan.com",
+              "node_status": "READY",
+              "running_time_ms": "24000",
+              "started_at": "1793969738000"
+            }
+          ]
+        }
+      ],
+      "launcher_counts": {
+        "active_jobs": 0,
+        "running_jobs": 0,
+        "pending_jobs": 0,
+        "local_requested_reserved_cards": 0
+      },
+      "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/cleanup_receipt.json",
+      "resources_released": true,
+      "no_other_jobs_modified": true
+    },
+    "controller": {
+      "pid": 1997328,
+      "exact_owned_identity_still_live": false
+    },
+    "evidence": {
+      "audit": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-npu-audit.json",
+      "summary": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/probe/summary.json",
+      "official_resource_proof": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-resource-proof.json",
+      "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/cleanup_receipt.json",
+      "source_manifest": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/source_manifest.json"
+    },
+    "blocking_errors": []
+  },
+  "controlled_fault": {
+    "status": "passed",
+    "label": "fault",
+    "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+    "run_id": "76748e278aad4587b595af1327b905b5",
+    "mode": "controlled-fault",
+    "requested_cards": 2,
+    "initial_members": 2,
+    "final_members": 1,
+    "steps": 20,
+    "global_batch": 256,
+    "atomic_units": 64,
+    "atomic_samples": 4,
+    "checkpoint_calls": 0,
+    "numeric": {
+      "initial_loss": 4.453125,
+      "final_checkpoint_loss": 0.16766051948070526,
+      "relative_loss_drop": 0.962349918432403,
+      "max_per_step_global_loss_abs_error": 2.775341272354126e-07,
+      "max_per_step_gradient_norm_abs_error": 4.76837158203125e-07,
+      "max_final_parameter_abs_error": 2.9802322387695312e-08,
+      "max_final_adam_state_abs_error": 2.980232238769531e-07,
+      "parameter_errors": {
+        "weight": 2.9802322387695312e-08,
+        "bias": 2.9802322387695312e-08
+      },
+      "adam_state_errors": {
+        "weight.step": 0.0,
+        "weight.exp_avg": 1.1920928955078125e-07,
+        "weight.exp_avg_sq": 2.980232238769531e-07,
+        "bias.step": 0.0,
+        "bias.exp_avg": 0.0,
+        "bias.exp_avg_sq": 0.0
+      },
+      "npu_vs_cpu_atol": 0.0002,
+      "npu_vs_cpu_rtol": 0.0002,
+      "final_native_checkpoint_verified": true,
+      "all_final_workers_state_hashes_identical": true,
+      "gradient_comparison_scope": "逐步完整梯度范数与最终参数/Adam对独立CPU全batch参考；CPU atomic oracle另逐参数验证分片梯度。"
+    },
+    "npu_readiness": [
+      {
+        "device": "npu:0",
+        "device_name": "Ascend910B2C",
+        "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+        "visible_devices": 1
+      },
+      {
+        "device": "npu:0",
+        "device_name": "Ascend910B2C",
+        "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+        "visible_devices": 1
+      }
+    ],
+    "actual_unit_coverage": [
+      {
+        "step": 1,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 2,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 2,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 3,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 4,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 5,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 6,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 7,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 8,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 9,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 10,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 11,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 12,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 13,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 14,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 15,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 16,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 17,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 18,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 19,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      },
+      {
+        "step": 20,
+        "units": 64,
+        "unique_units": 64,
+        "samples": 256,
+        "members": 1,
+        "original_plus_replay_matches_commit_assignment": true,
+        "checkpoint_calls": 0
+      }
+    ],
+    "fault": {
+      "step": 3,
+      "injection_stage": "victim_full_backward_finished_held_before_collective",
+      "victim": {
+        "pid": 40,
+        "session_id": "9328d10cd865412c891b3017681a3140",
+        "worker_id": "w000002"
+      },
+      "survivor": {
+        "pid": 40,
+        "session_id": "1fb7e09b4d86438fae1ca0fb011921b5",
+        "worker_id": "w000001"
+      },
+      "original_units": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46,
+        48,
+        50,
+        52,
+        54,
+        56,
+        58,
+        60,
+        62
+      ],
+      "replayed_units": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17,
+        19,
+        21,
+        23,
+        25,
+        27,
+        29,
+        31,
+        33,
+        35,
+        37,
+        39,
+        41,
+        43,
+        45,
+        47,
+        49,
+        51,
+        53,
+        55,
+        57,
+        59,
+        61,
+        63
+      ],
+      "replayed_samples": 128,
+      "healthy_pid_session_preserved": true,
+      "full_native_state_gradients_and_pointers_unchanged": true,
+      "healthy_rollback_count": 0,
+      "expected_collective_error": {
+        "message": "npuSynchronizeDevice:torch_npu/csrc/core/npu/NPUStream.cpp:564 NPU function error: FORCE STOP, error code is 107022\n[ERROR] 2026-11-06-13:05:53 (PID:40, Device:0, RankID:0) ERR00100 PTA call acl api failed",
+        "type": "RuntimeError"
+      },
+      "commit_seconds": 1.1625092225149274,
+      "actual_commit_interval_seconds": 1.167541716247797,
+      "worker_recovery_total_seconds": 0.5723667033016682,
+      "recovery_total_overlaps_other_phase_timings": true,
+      "replay_data_seconds": 0.003945481032133102,
+      "replay_backward_seconds": 0.011172210797667503,
+      "repair_evidence": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/reports/w000001/1fb7e09b4d86438fae1ca0fb011921b5/15edd7a1ac2747688cacb2086ce276a6/repair_submitted.json",
+      "recovered_evidence": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/reports/w000001/1fb7e09b4d86438fae1ca0fb011921b5/15edd7a1ac2747688cacb2086ce276a6/recovered.json",
+      "victim_completed_backward_evidence": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/reports/w000002/9328d10cd865412c891b3017681a3140/15edd7a1ac2747688cacb2086ce276a6/local_ready.json",
+      "scope": "受控训练子进程退出，原supervisor存活；不是整个平台作业强制丢失。"
+    },
+    "performance": {
+      "warmup_steps_excluded": [
+        1,
+        2
+      ],
+      "fault_step_excluded": 3,
+      "first_update_commit_seconds": 1.666493097320199,
+      "steady_update_command_to_commit_seconds": {
+        "count": 17,
+        "mean": 0.09475164685179205,
+        "median": 0.09297035448253155,
+        "p95_linear": 0.11972962319850915,
+        "min": 0.07261369749903679,
+        "max": 0.20300959050655365
+      },
+      "steady_actual_commit_intervals_including_periodic_inspection_pauses_seconds": {
+        "count": 17,
+        "mean": 0.10587519566145014,
+        "median": 0.09779488481581211,
+        "p95_linear": 0.14804774671792978,
+        "min": 0.0784522881731391,
+        "max": 0.20770808309316635
+      },
+      "steady_actual_commit_intervals_excluding_periodic_inspection_boundaries_seconds": {
+        "count": 14,
+        "mean": 0.10081734561494418,
+        "median": 0.0948781562037766,
+        "p95_linear": 0.1407798596192151,
+        "min": 0.0784522881731391,
+        "max": 0.20770808309316635
+      },
+      "periodic_full_state_inspections": [
+        {
+          "full_states_identical": true,
+          "members": 1,
+          "pause_seconds": 0.030404801480472088,
+          "step": 5,
+          "token": "6e591631550a4ee7a4ec97212b47243f"
+        },
+        {
+          "full_states_identical": true,
+          "members": 1,
+          "pause_seconds": 0.03052337933331728,
+          "step": 10,
+          "token": "ef7aef9fb44b4f4297e9819f51a2ba21"
+        },
+        {
+          "full_states_identical": true,
+          "members": 1,
+          "pause_seconds": 0.030325328931212425,
+          "step": 15,
+          "token": "9cd6d57808924700b282a3a44048c9ac"
+        },
+        {
+          "full_states_identical": true,
+          "members": 1,
+          "pause_seconds": 0.03082339558750391,
+          "step": 20,
+          "token": "3c9c8b1d802b4a77b37eb889187f7356"
+        }
+      ],
+      "periodic_full_state_inspection_pause_seconds_total": 0.1220769053325057,
+      "loading_seconds_by_worker_same_process_clock": {
+        "w000002": 5.221453666687012,
+        "w000001": 9.427552938461304
+      },
+      "controller_training_started_to_complete_seconds": 4.921779632568359,
+      "launcher_start_to_training_complete_seconds": 30.184722661972046,
+      "first_submission_intent_to_training_complete_seconds": 26.681381702423096,
+      "launcher_start_to_official_release_exit_seconds": 96.91335201263428,
+      "finalization_last_commit_to_summary_seconds": 0.10929656028747559,
+      "checkpoint_verification_seconds": 0.0005462057888507843,
+      "checkpoint_save_isolated_seconds": null,
+      "checkpoint_timing_limit": "最终化间隔含全状态hash、checkpoint写入及核验；原运行时只保留verify receipt，没有独立save计时。",
+      "worker_phase_seconds_by_worker": {
+        "w000001": {
+          "data_seconds": {
+            "count": 17,
+            "mean": 0.0069959948168081395,
+            "median": 0.006611856631934643,
+            "p95_linear": 0.008216888085007664,
+            "min": 0.006170613691210747,
+            "max": 0.012055790051817894
+          },
+          "backward_seconds": {
+            "count": 17,
+            "mean": 0.019069554393782336,
+            "median": 0.01873423531651497,
+            "p95_linear": 0.021323162503540515,
+            "min": 0.01760749612003565,
+            "max": 0.023795955814421177
+          },
+          "communication_seconds": {
+            "count": 17,
+            "mean": 0.0030216275002149973,
+            "median": 0.0026998845860362053,
+            "p95_linear": 0.00443664975464344,
+            "min": 0.0020017875358462334,
+            "max": 0.004679957404732704
+          },
+          "gradient_buffer_pack_seconds": {
+            "count": 17,
+            "mean": 0.0018740947741795989,
+            "median": 0.0018616802990436554,
+            "p95_linear": 0.0021794894710183144,
+            "min": 0.0016597025096416473,
+            "max": 0.002186455763876438
+          },
+          "install_clip_optimizer_seconds": {
+            "count": 17,
+            "mean": 0.0014775607954053318,
+            "median": 0.0014701299369335175,
+            "p95_linear": 0.00189919862896204,
+            "min": 0.00115903839468956,
+            "max": 0.0019050436094403267
+          },
+          "apply_wait_seconds": {
+            "count": 17,
+            "mean": 0.018011069582665667,
+            "median": 0.014847834594547749,
+            "p95_linear": 0.02450119312852621,
+            "min": 0.0134897381067276,
+            "max": 0.024639821611344814
+          },
+          "worker_step_seconds": {
+            "count": 17,
+            "mean": 0.06915719944107182,
+            "median": 0.059890625067055225,
+            "p95_linear": 0.0934471430256962,
+            "min": 0.053306070156395435,
+            "max": 0.1817337991669774
+          }
+        }
+      },
+      "worker_phase_timing_scope": "原worker同步计时，按worker分列；不把不同rank最大阶段相加，不把故障恢复与重叠阶段相加。",
+      "join_performed": false,
+      "original_audit_steady_metric": 0.15407151216641068,
+      "original_audit_steady_metric_limit": "原副本仅排除前两步，故障轮会包含第3步恢复；本记录已另行剔除故障步，且单列真实commit间隔和hash暂停。"
+    },
+    "resources": {
+      "schema": "blind-owned-resource-proof-v1",
+      "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+      "read_only": true,
+      "job_scope": "only IDs in this run ascend_fleet/state.json",
+      "jobs": [
+        {
+          "queried_at": 1793970505.8822424,
+          "job_id": "job-5a4aab18-6650-4dcf-a149-724564be4d03",
+          "worker_id": "w000001",
+          "owned_identity_matched": true,
+          "official_status": "job_succeeded",
+          "official_terminal": true,
+          "priority_level": "LOW",
+          "priority_name": "1",
+          "instances": [
+            {
+              "created_at": "1793970334000",
+              "finished_at": "1793970361000",
+              "instance_status": "instance_success",
+              "instance_type": "instance_type_worker",
+              "name": "job-5a4aab18-6650-4dcf-a149-724564be4d03-worker-0",
+              "node": "infra-gpu-npu-471.host.shzhisuan.com",
+              "node_status": "READY",
+              "running_time_ms": "24000",
+              "started_at": "1793970337000"
+            }
+          ]
+        },
+        {
+          "queried_at": 1793970506.2366612,
+          "job_id": "job-78972594-c277-47fa-9a15-a625f4726b5f",
+          "worker_id": "w000002",
+          "owned_identity_matched": true,
+          "official_status": "job_succeeded",
+          "official_terminal": true,
+          "priority_level": "LOW",
+          "priority_name": "1",
+          "instances": [
+            {
+              "created_at": "1793970334000",
+              "finished_at": "1793970356000",
+              "instance_status": "instance_success",
+              "instance_type": "instance_type_worker",
+              "name": "job-78972594-c277-47fa-9a15-a625f4726b5f-worker-0",
+              "node": "infra-gpu-npu-471.host.shzhisuan.com",
+              "node_status": "READY",
+              "running_time_ms": "19000",
+              "started_at": "1793970337000"
+            }
+          ]
+        }
+      ],
+      "launcher_counts": {
+        "active_jobs": 0,
+        "running_jobs": 0,
+        "pending_jobs": 0,
+        "local_requested_reserved_cards": 0
+      },
+      "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/cleanup_receipt.json",
+      "resources_released": true,
+      "no_other_jobs_modified": true
+    },
+    "controller": {
+      "pid": 2379274,
+      "exact_owned_identity_still_live": false
+    },
+    "evidence": {
+      "audit": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-real-npu-audit.json",
+      "summary": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe/summary.json",
+      "official_resource_proof": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-resource-proof.json",
+      "cleanup_receipt": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/cleanup_receipt.json",
+      "source_manifest": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/source_manifest.json"
+    },
+    "blocking_errors": []
+  },
+  "resource_budget": {
+    "authorized_max_concurrent_cards": 2,
+    "observed_peak_owned_reserved_cards": 2,
+    "total_owned_platform_jobs": 4,
+    "runs_executed_sequentially_after_official_release": true,
+    "final_owned_reserved_cards": 0,
+    "all_official_statuses": [
+      "job_succeeded",
+      "job_succeeded",
+      "job_succeeded",
+      "job_succeeded"
+    ],
+    "other_jobs_or_shared_environment_modified": false
+  },
+  "blocking_errors": [],
+  "earliest_blocking_error": null,
+  "expected_fault_error": {
+    "message": "npuSynchronizeDevice:torch_npu/csrc/core/npu/NPUStream.cpp:564 NPU function error: FORCE STOP, error code is 107022\n[ERROR] 2026-11-06-13:05:53 (PID:40, Device:0, RankID:0) ERR00100 PTA call acl api failed",
+    "type": "RuntimeError"
+  },
+  "pitfalls_zh": [
+    "README示例需要替换绝对路径；handoff已给出现成值，未触发额外确认。",
+    "训练COMPLETE与平台释放分开：原launcher等待官方状态传播后调用自有cleanup，留下STOP标记；两轮summary仍passed，最终所有job均job_succeeded。",
+    "原副本audit的steady均值包含第3步故障更新；保留原审计，本记录另外剔除故障步并单列commit实际间隔、hash暂停与恢复耗时。",
+    "故障恢复中出现预期FORCE STOP/107022；原始RuntimeError完整保存在recovered.json，健康状态/梯度/存储指针恢复前后相同并继续完成。",
+    "独立checkpoint写入耗时未单独留存；仅报告最终化间隔及checkpoint verify耗时。"
+  ],
+  "limitations_zh": [
+    "toy是小型确定性FP32回归，不能作为大模型吞吐证明。",
+    "受控故障覆盖APPLY前一次训练子进程退出，supervisor存活且不替补；未测试整作业突失、连续掉卡或Adam写入中点恢复。"
+  ],
+  "command_journal": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-command-journal.jsonl",
+  "execution_steps": [
+    {
+      "step": "provenance",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-c",
+        "import json,os,sys; import fragment_training_kit; import jade_lotus; import torch,numpy; from pathlib import Path; actual=Path(jade_lotus.__file__).resolve(); kit=Path(fragment_training_kit.__file__).resolve().parent; assert actual.is_relative_to(kit/\"vendor\"); print(json.dumps({\"cwd\":os.getcwd(),\"python\":sys.executable,\"PYTHONPATH_present\": \"PYTHONPATH\" in os.environ,\"jade_lotus_file\":str(actual),\"kit_file\":fragment_training_kit.__file__,\"torch_version\":torch.__version__,\"numpy_version\":numpy.__version__,\"source_dirs\":[],\"passed\":True},ensure_ascii=False,indent=2))"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -c 'import json,os,sys; import fragment_training_kit; import jade_lotus; import torch,numpy; from pathlib import Path; actual=Path(jade_lotus.__file__).resolve(); kit=Path(fragment_training_kit.__file__).resolve().parent; assert actual.is_relative_to(kit/\"vendor\"); print(json.dumps({\"cwd\":os.getcwd(),\"python\":sys.executable,\"PYTHONPATH_present\": \"PYTHONPATH\" in os.environ,\"jade_lotus_file\":str(actual),\"kit_file\":fragment_training_kit.__file__,\"torch_version\":torch.__version__,\"numpy_version\":numpy.__version__,\"source_dirs\":[],\"passed\":True},ensure_ascii=False,indent=2))'",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969598.3534725,
+      "ended_at": 1793969600.3498695,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-provenance.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-provenance.stderr.log"
+    },
+    {
+      "step": "package-verify",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/tools/verify_package.py"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/tools/verify_package.py",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969600.3509214,
+      "ended_at": 1793969600.4067953,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-package-verify.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-package-verify.stderr.log"
+    },
+    {
+      "step": "cpu-oracle",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-m",
+        "fragment_training_kit.examples.audit_toy",
+        "--cpu-oracle",
+        "--steps",
+        "20",
+        "--output",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-cpu-oracle.json"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -m fragment_training_kit.examples.audit_toy --cpu-oracle --steps 20 --output /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-cpu-oracle.json",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969600.4071207,
+      "ended_at": 1793969603.7229724,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-cpu-oracle.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-cpu-oracle.stderr.log"
+    },
+    {
+      "step": "prepare",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "prepare",
+        "--config",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/site.json",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py prepare --config /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/site.json --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969665.3079603,
+      "ended_at": 1793969665.5677297,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-prepare.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-prepare.stderr.log"
+    },
+    {
+      "step": "frozen-verify",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "verify",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py verify --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969665.568283,
+      "ended_at": 1793969665.7231402,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-frozen-verify.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-frozen-verify.stderr.log"
+    },
+    {
+      "step": "real-run",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "run",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+        "--cookie-file",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+        "--watch-seconds",
+        "1200"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py run --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies --watch-seconds 1200",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969724.7629232,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-run.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-run.stderr.log",
+      "ended_at": 1793969823.0085394,
+      "returncode": 0
+    },
+    {
+      "step": "real-audit",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-m",
+        "fragment_training_kit.examples.audit_toy",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/probe",
+        "--output",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-npu-audit.json"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -m fragment_training_kit.examples.audit_toy --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/probe --output /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-npu-audit.json",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969835.9736056,
+      "ended_at": 1793969838.9543953,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-audit.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-audit.stderr.log"
+    },
+    {
+      "step": "normal-observe",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "observe",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+        "--cookie-file",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py observe --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969960.8325446,
+      "ended_at": 1793969964.5518134,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-observe.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-observe.stderr.log"
+    },
+    {
+      "step": "normal-final-frozen-verify",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "verify",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py verify --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793969964.5526443,
+      "ended_at": 1793969964.7044065,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-final-frozen-verify.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-final-frozen-verify.stderr.log"
+    },
+    {
+      "step": "normal-official-resource-query",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-c",
+        "import runpy; runpy.run_path('/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-query-owned.py', run_name=\"__main__\")",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1",
+        "--cookie-file",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+        "--output",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-resource-proof.json"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -c 'import runpy; runpy.run_path('\"'\"'/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-query-owned.py'\"'\"', run_name=\"__main__\")' --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies --output /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-resource-proof.json",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970267.674804,
+      "ended_at": 1793970268.8207757,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-official-resource-query.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-official-resource-query.stderr.log"
+    },
+    {
+      "step": "fault-prepare",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "prepare",
+        "--config",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-site.json",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py prepare --config /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-site.json --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970325.4169888,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-prepare.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-prepare.stderr.log",
+      "ended_at": 1793970325.6328437,
+      "returncode": 0
+    },
+    {
+      "step": "fault-frozen-verify",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "verify",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py verify --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970325.6336234,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-frozen-verify.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-frozen-verify.stderr.log",
+      "ended_at": 1793970325.8074508,
+      "returncode": 0
+    },
+    {
+      "step": "fault-run",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "run",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+        "--cookie-file",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+        "--watch-seconds",
+        "1200"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py run --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies --watch-seconds 1200",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970325.8083403,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-run.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-run.stderr.log",
+      "ended_at": 1793970422.7216923,
+      "returncode": 0
+    },
+    {
+      "step": "fault-audit",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-m",
+        "fragment_training_kit.examples.audit_toy",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe",
+        "--output",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-real-npu-audit.json"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -m fragment_training_kit.examples.audit_toy --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/probe --output /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-real-npu-audit.json",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970498.7877002,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-audit.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-audit.stderr.log",
+      "ended_at": 1793970501.9149818,
+      "returncode": 0
+    },
+    {
+      "step": "fault-observe",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "observe",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+        "--cookie-file",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py observe --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970501.9152973,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-observe.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-observe.stderr.log",
+      "ended_at": 1793970505.6298537,
+      "returncode": 0
+    },
+    {
+      "step": "fault-final-frozen-verify",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/launch.py",
+        "verify",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/launch.py verify --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970505.630338,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-final-frozen-verify.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-final-frozen-verify.stderr.log",
+      "ended_at": 1793970505.7883701,
+      "returncode": 0
+    },
+    {
+      "step": "fault-official-resource-query",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-c",
+        "import runpy; runpy.run_path('/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-query-owned.py', run_name=\"__main__\")",
+        "--run-dir",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1",
+        "--cookie-file",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies",
+        "--output",
+        "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-resource-proof.json"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -c 'import runpy; runpy.run_path('\"'\"'/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-query-owned.py'\"'\"', run_name=\"__main__\")' --run-dir /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1 --cookie-file /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/.private/qz.cookies --output /inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-resource-proof.json",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970505.7888436,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-official-resource-query.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-official-resource-query.stderr.log",
+      "ended_at": 1793970506.9218898,
+      "returncode": 0
+    },
+    {
+      "step": "package-final-verify",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "fragment_training_kit/tools/verify_package.py"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python fragment_training_kit/tools/verify_package.py",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/isolated",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970685.9636045,
+      "ended_at": 1793970686.0109005,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-package-final-verify.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-package-final-verify.stderr.log"
+    },
+    {
+      "step": "normal-frozen-provenance",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-c",
+        "import json,os; from pathlib import Path; import fragment_training_kit,jade_lotus; actual=Path(jade_lotus.__file__).resolve(); assert actual==Path.cwd()/\"jade_lotus/__init__.py\"; print(json.dumps({\"cwd\":str(Path.cwd()),\"PYTHONPATH_present\":\"PYTHONPATH\" in os.environ,\"kit_file\":fragment_training_kit.__file__,\"jade_lotus_file\":str(actual),\"passed\":True},ensure_ascii=False,indent=2))"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -c 'import json,os; from pathlib import Path; import fragment_training_kit,jade_lotus; actual=Path(jade_lotus.__file__).resolve(); assert actual==Path.cwd()/\"jade_lotus/__init__.py\"; print(json.dumps({\"cwd\":str(Path.cwd()),\"PYTHONPATH_present\":\"PYTHONPATH\" in os.environ,\"kit_file\":fragment_training_kit.__file__,\"jade_lotus_file\":str(actual),\"passed\":True},ensure_ascii=False,indent=2))'",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-v1/runtime",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970686.011295,
+      "ended_at": 1793970686.0427513,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-frozen-provenance.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-frozen-provenance.stderr.log"
+    },
+    {
+      "step": "fault-frozen-provenance",
+      "argv": [
+        "/opt/ascend-vla/envs/lerobot-npu/bin/python",
+        "-c",
+        "import json,os; from pathlib import Path; import fragment_training_kit,jade_lotus; actual=Path(jade_lotus.__file__).resolve(); assert actual==Path.cwd()/\"jade_lotus/__init__.py\"; print(json.dumps({\"cwd\":str(Path.cwd()),\"PYTHONPATH_present\":\"PYTHONPATH\" in os.environ,\"kit_file\":fragment_training_kit.__file__,\"jade_lotus_file\":str(actual),\"passed\":True},ensure_ascii=False,indent=2))"
+      ],
+      "command": "/opt/ascend-vla/envs/lerobot-npu/bin/python -c 'import json,os; from pathlib import Path; import fragment_training_kit,jade_lotus; actual=Path(jade_lotus.__file__).resolve(); assert actual==Path.cwd()/\"jade_lotus/__init__.py\"; print(json.dumps({\"cwd\":str(Path.cwd()),\"PYTHONPATH_present\":\"PYTHONPATH\" in os.environ,\"kit_file\":fragment_training_kit.__file__,\"jade_lotus_file\":str(actual),\"passed\":True},ensure_ascii=False,indent=2))'",
+      "cwd": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-toy-low2-fault-v1/runtime",
+      "environment": {
+        "PYTHONPATH": "removed",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TORCH_DEVICE_BACKEND_AUTOLOAD": "0"
+      },
+      "started_at": 1793970686.0431259,
+      "ended_at": 1793970686.07623,
+      "returncode": 0,
+      "stdout": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-frozen-provenance.stdout.log",
+      "stderr": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-frozen-provenance.stderr.log"
+    }
+  ],
+  "detailed_metrics": [
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-detailed-metrics.json",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-detailed-metrics.json"
+  ],
+  "evidence_sha256": {
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-understanding-and-plan.json": "1bfe6c1ac727f604c236ff8ae9e9cdbefa90227ea03cf94306eb72e2312998e8",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-plan.json": "792f5bf9a760e359acd88eb7d3a486ad552d5669bc80de515f0cf36c56ab406d",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-source-fingerprint.json": "07f93d547146cac11b385c2f3e9b00162d171935f1890941294dec3cf693458e",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-cpu-oracle.json": "44b2913ef50e17c3b832376577ee516206ed244e99f3fdd99d9d49dd5f123e5b",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-real-npu-audit.json": "e3f3d4a5c74b709e2ce59b832a585f3e468805c04605afe88d7e7c8edb61b5f2",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-real-npu-audit.json": "a5c15b12ce96308b9c25ae1db37f3be91b48a44ed2b2f0eaa84fbf2d87367fde",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-resource-proof.json": "c3f79f4205d6e140a6dad136db3a49f664c9399691f904c55ecf91ba89f51715",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-resource-proof.json": "13a4748b84b9f1e5efe09b2f0fd2b7743c4e1203a6fb950de437d981a16501c1",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-command-journal.jsonl": "ad62e2f90b46da76ceca690b544c51188363c988db6559ad29d9da0da05d680d",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-normal-detailed-metrics.json": "0876dfd3c7387902efe3f8c49656b698f8c4f2725300c71989cf51569ef1df66",
+    "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/artifacts/fragment-training-kit-20261106/blind-fault-detailed-metrics.json": "21da17c2dce8da63d94437114400a2b968bbbb7da62c1cf3913a3be8d67b0396"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "run": "blind-toy-low2-v1",
+      "vendor_files_equal": 45,
+      "adapter_and_model_identical": true
+    },
+    {
+      "run": "blind-toy-low2-fault-v1",
+      "vendor_files_equal": 45,
+      "adapter_and_model_identical": true
+    },
+    {
+      "run": "release-prepare-only",
+      "vendor_files_equal": 45,
+      "adapter_and_model_identical": true
+    }
+  ],
+  "scope": "Actual training controller, resident runtime, adapter math and toy model identical in both real blind runs and final release prepare. Later release changes affect metadata preflight, audit and documentation."
+}

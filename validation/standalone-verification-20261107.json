@@ -1,0 +1,112 @@
+{
+  "started_at": "2026-11-07T03:15:10.942178+00:00",
+  "verification_root": "/tmp/fragment-training-standalone-20261107-vfot80hx",
+  "npu_jobs_created": 0,
+  "keepalive_stopped_by_this_task": false,
+  "keepalive_before": {
+    "pid": 192046,
+    "state": "paused",
+    "workers": []
+  },
+  "manifest_verification": {
+    "returncode": 0,
+    "stdout_tail": "{\"passed\": true, \"runtime_sources_verified\": 45, \"release_files_verified\": 404}\n",
+    "stderr_tail": ""
+  },
+  "isolated_pytest": {
+    "returncode": 0,
+    "stdout_tail": ".........................................                                [100%]\n41 passed in 3.00s\n",
+    "stderr_tail": ""
+  },
+  "standalone_functional_probe": {
+    "returncode": 0,
+    "stdout_tail": "tatus\": \"passed\", \"audit_mode\": \"archived_evidence\", \"npu_training_rerun\": false, \"initial_loss\": 4.453125, \"final_checkpoint_loss\": 0.16766051948070526, \"full_native_checkpoint_verified\": true}}, \"prepare_only\": {\"prepared\": true, \"run_dir\": \"/tmp/fragment-training-standalone-20261107-vfot80hx/new-runs/prepare-only\", \"submitted\": false, \"cards\": 2, \"steps\": 20, \"frozen_files\": 60, \"mode\": \"external-loss\", \"initial_intent_limit\": 2, \"arbitrary_fleet_refill_joins_supported\": false}, \"frozen_verification\": {\"verified\": true, \"frozen_files\": 60}, \"synthetic_site_not_a_platform_submission\": true}\n",
+    "stderr_tail": ""
+  },
+  "functional_probe": {
+    "independent_imports": {
+      "fragment_training_kit": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/__init__.py",
+      "jade_lotus": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/__init__.py",
+      "jade_lotus.platform": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/platform.py",
+      "jade_lotus.runtime": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/runtime.py",
+      "jade_lotus.ascend_platform": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/ascend_platform.py",
+      "jade_lotus.jobs": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/jobs.py",
+      "jade_lotus.fleet": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/fleet.py",
+      "jade_lotus.ascend_fleet": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/ascend_fleet.py",
+      "fragment_training_kit.launch": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/launch.py",
+      "fragment_training_kit.adapters": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/adapters.py",
+      "fragment_training_kit.examples.toy_regression": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/examples/toy_regression.py",
+      "fragment_training_kit.examples.audit_toy": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/examples/audit_toy.py",
+      "jade_lotus.protocol": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/protocol.py",
+      "jade_lotus.coordinator": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/coordinator.py",
+      "jade_lotus.resident_state": "/tmp/fragment-training-standalone-20261107-vfot80hx/fragment_training_kit/vendor/jade_lotus/resident_state.py"
+    },
+    "original_directory_access_forbidden": true,
+    "external_pythonpath_removed": true,
+    "cpu_oracle": {
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766051948070526,
+      "gradient_math_passed": true
+    },
+    "archived_evidence_audits": {
+      "normal": {
+        "status": "passed",
+        "audit_mode": "archived_evidence",
+        "npu_training_rerun": false,
+        "initial_loss": 4.453125,
+        "final_checkpoint_loss": 0.16766048967838287,
+        "full_native_checkpoint_verified": true
+      },
+      "fault": {
+        "status": "passed",
+        "audit_mode": "archived_evidence",
+        "npu_training_rerun": false,
+        "initial_loss": 4.453125,
+        "final_checkpoint_loss": 0.16766051948070526,
+        "full_native_checkpoint_verified": true
+      }
+    },
+    "prepare_only": {
+      "prepared": true,
+      "run_dir": "/tmp/fragment-training-standalone-20261107-vfot80hx/new-runs/prepare-only",
+      "submitted": false,
+      "cards": 2,
+      "steps": 20,
+      "frozen_files": 60,
+      "mode": "external-loss",
+      "initial_intent_limit": 2,
+      "arbitrary_fleet_refill_joins_supported": false
+    },
+    "frozen_verification": {
+      "verified": true,
+      "frozen_files": 60
+    },
+    "synthetic_site_not_a_platform_submission": true
+  },
+  "frozen_runtime_imports": {
+    "returncode": 0,
+    "stdout_tail": "{\"all_runtime_imports_local\": true, \"runtime\": \"/tmp/fragment-training-standalone-20261107-vfot80hx/new-runs/prepare-only/runtime\", \"module_count\": 2}\n",
+    "stderr_tail": ""
+  },
+  "frozen_import_proof": {
+    "all_runtime_imports_local": true,
+    "runtime": "/tmp/fragment-training-standalone-20261107-vfot80hx/new-runs/prepare-only/runtime",
+    "module_count": 2
+  },
+  "status": "passed",
+  "task_pause_file_removed": true,
+  "finished_at": "2026-11-07T03:15:17.386809+00:00",
+  "keepalive_after": {
+    "pid": 192046,
+    "state": "paused",
+    "workers": [],
+    "updated_at": "2026-11-07T03:17:21.557575+00:00"
+  },
+  "keepalive_monitor_alive_after": true,
+  "task_pause_file_absent_after": true,
+  "pytest_tests_passed": 41,
+  "runtime_sources_unchanged": 45,
+  "note": "Standalone directory and saved-evidence CPU verification only; no new NPU training and no platform jobs submitted. Original NPU training evidence is preserved separately.",
+  "other_task_pause_files_present_after": true,
+  "keepalive_cleanup_note": "This task removed only its own pause file. The monitor remains alive with no workers, waiting on another task-owned pause file; no forced restart and no unrelated pause files removed."
+}
