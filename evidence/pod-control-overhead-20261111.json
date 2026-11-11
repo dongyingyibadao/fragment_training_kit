@@ -1,0 +1,130 @@
+{
+  "legacy": {
+    "steps6_10": [
+      {
+        "step": 6,
+        "commit_interval_seconds": 1.749801855534315,
+        "commit_seconds": 1.7395288310945034,
+        "backward_seconds": 0.5663100890815258,
+        "communication_seconds": 0.43830837681889534,
+        "data_seconds": 0.008878365159034729,
+        "gradient_buffer_pack_seconds": 0.017187885008752346,
+        "install_clip_optimizer_seconds": 0.24641680344939232
+      },
+      {
+        "step": 7,
+        "commit_interval_seconds": 1.7953651761636138,
+        "commit_seconds": 1.7872475469484925,
+        "backward_seconds": 0.5953813157975674,
+        "communication_seconds": 0.391301017254591,
+        "data_seconds": 0.0071649812161922455,
+        "gradient_buffer_pack_seconds": 0.01872660592198372,
+        "install_clip_optimizer_seconds": 0.249610785394907
+      },
+      {
+        "step": 8,
+        "commit_interval_seconds": 1.8119643395766616,
+        "commit_seconds": 1.8032648842781782,
+        "backward_seconds": 0.5279470421373844,
+        "communication_seconds": 0.43553582206368446,
+        "data_seconds": 0.006642758846282959,
+        "gradient_buffer_pack_seconds": 0.017234496772289276,
+        "install_clip_optimizer_seconds": 0.2549511343240738
+      },
+      {
+        "step": 9,
+        "commit_interval_seconds": 1.7980145178735256,
+        "commit_seconds": 1.7906168904155493,
+        "backward_seconds": 0.5283281430602074,
+        "communication_seconds": 0.39667148515582085,
+        "data_seconds": 0.0072820596396923065,
+        "gradient_buffer_pack_seconds": 0.020982734858989716,
+        "install_clip_optimizer_seconds": 0.375380527228117
+      },
+      {
+        "step": 10,
+        "commit_interval_seconds": 1.6563344178721309,
+        "commit_seconds": 1.6481791567057371,
+        "backward_seconds": 0.5267468765377998,
+        "communication_seconds": 0.4059351906180382,
+        "data_seconds": 0.007693897932767868,
+        "gradient_buffer_pack_seconds": 0.01751917810179293,
+        "install_clip_optimizer_seconds": 0.2605505436658859
+      }
+    ],
+    "means": {
+      "commit_interval_seconds": 1.7622960614040495,
+      "commit_seconds": 1.7537674618884922,
+      "backward_seconds": 0.5489426933228969,
+      "communication_seconds": 0.413550378382206,
+      "data_seconds": 0.007532412558794022,
+      "gradient_buffer_pack_seconds": 0.0183301801327616,
+      "install_clip_optimizer_seconds": 0.2773819588124752
+    }
+  },
+  "pod": {
+    "steps6_10": [
+      {
+        "step": 6,
+        "commit_interval_seconds": 2.5652074133977294,
+        "commit_seconds": 2.556009338237345,
+        "backward_seconds": 0.5273361839354038,
+        "communication_seconds": 0.43604595214128494,
+        "data_seconds": 0.006700582802295685,
+        "gradient_buffer_pack_seconds": 0.017923646606504917,
+        "install_clip_optimizer_seconds": 0.4209803268313408
+      },
+      {
+        "step": 7,
+        "commit_interval_seconds": 2.450941577553749,
+        "commit_seconds": 2.442768664099276,
+        "backward_seconds": 0.5264081060886383,
+        "communication_seconds": 0.4009528309106827,
+        "data_seconds": 0.009631553664803505,
+        "gradient_buffer_pack_seconds": 0.016640178859233856,
+        "install_clip_optimizer_seconds": 0.28105815313756466
+      },
+      {
+        "step": 8,
+        "commit_interval_seconds": 2.6169125391170382,
+        "commit_seconds": 2.6015820736065507,
+        "backward_seconds": 0.526459950953722,
+        "communication_seconds": 0.3677635081112385,
+        "data_seconds": 0.007794152945280075,
+        "gradient_buffer_pack_seconds": 0.01761741191148758,
+        "install_clip_optimizer_seconds": 0.44136500731110573
+      },
+      {
+        "step": 9,
+        "commit_interval_seconds": 2.3769852416589856,
+        "commit_seconds": 2.362759741023183,
+        "backward_seconds": 0.5280710905790329,
+        "communication_seconds": 0.4148900508880615,
+        "data_seconds": 0.0073289647698402405,
+        "gradient_buffer_pack_seconds": 0.019152477383613586,
+        "install_clip_optimizer_seconds": 0.295005158521235
+      },
+      {
+        "step": 10,
+        "commit_interval_seconds": 2.8713734233751893,
+        "commit_seconds": 2.7402640972286463,
+        "backward_seconds": 0.5251898067072034,
+        "communication_seconds": 0.37514955550432205,
+        "data_seconds": 0.006753071211278439,
+        "gradient_buffer_pack_seconds": 0.016392726451158524,
+        "install_clip_optimizer_seconds": 0.44104103930294514
+      }
+    ],
+    "means": {
+      "commit_interval_seconds": 2.576284039020538,
+      "commit_seconds": 2.5406767828390002,
+      "backward_seconds": 0.5266930276528001,
+      "communication_seconds": 0.39896037951111796,
+      "data_seconds": 0.007641665078699589,
+      "gradient_buffer_pack_seconds": 0.017545288242399693,
+      "install_clip_optimizer_seconds": 0.3758899370208383
+    }
+  },
+  "scope": "Same step6\u201310, each phase uses maximum rank, then mean; different hosts/times; phase values must not be summed. New optimizer timer includes progress/test-gate IO.",
+  "limits": "No per-file operation timing; stage and file-count evidence implicates control/FS overhead but cannot allocate exact causality."
+}

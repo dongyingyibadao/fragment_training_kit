@@ -177,6 +177,22 @@ def resolve_site(source):
         for key in ("resident_rng_scheme", "resident_precision_contract"):
             if not isinstance(training.get(key), str) or not training[key].strip():
                 raise ValueError(f"Generic adapters require a nonempty {key} before preparation")
+    pod_enabled = training.get("resident_pod_recovery", False)
+    if type(pod_enabled) is not bool:
+        raise ValueError("resident_pod_recovery must be boolean")
+    if type(training.get("resident_pod_allow_test_holds", False)) is not bool:
+        raise ValueError("resident_pod_allow_test_holds must be boolean")
+    if pod_enabled:
+        if site["mode"] != "external-loss" or site["replacement"]:
+            raise ValueError("Pod recovery requires external-loss and no legacy replacement")
+        if site["active_cards"] != site["cards"] or training.get("resident_topology_switches"):
+            raise ValueError("Pod recovery currently uses only the active pool; legacy cohort switching is separate")
+        maximum = training.get("resident_pod_max_recoveries", 64)
+        if type(maximum) is not int or not 1 <= maximum <= 256:
+            raise ValueError("resident_pod_max_recoveries must be in 1..256")
+        timeout = training.get("resident_pod_step_timeout", site["phase_timeout"] * 4)
+        if type(timeout) not in (int, float) or not 1 <= timeout <= 86400:
+            raise ValueError("resident_pod_step_timeout must be in 1..86400 seconds")
     site["training_config"] = training
     if site["active_cards"] < site["cards"]:
         training["resident_topology_slots"] = site["cards"]

@@ -9,6 +9,7 @@
 4. 读 [平台接入](docs/03_platform_and_resources.md)，确认 inventory 的镜像、项目、单卡规格、LOW 优先级和共享预算。
 5. 依次执行 prepare → verify → run → audit → observe/cleanup，读 [验收方法](docs/04_validation_and_performance.md)。
 6. 若使用整机/碎卡混合申请，读 [拓扑优化与实验](docs/09_topology_training.md)。`cards` 是含候选的物理池预算，`active_cards` 是初始训练成员；`job_layout` 必须覆盖物理池。节点计划不等于已指定节点，候选初载完成也不等于最新模型/Adam已对齐。不要把分层通信基准误当作已接入故障恢复的训练后端。
+7. 需要整作业或连续掉卡恢复时，读 [分阶段恢复](docs/10_pod_loss_recovery.md)。这是显式启用的活动池缩组路径，与旧候选切换互斥；新卡累计 16 张后在线同步/接入仍属后续工作。使用页面中本轮真实故障证据判断支持范围。
 
 首轮建议两张卡、20 次更新。使用新的绝对路径作为 run directory；先完成无注入的正常短跑，再单独做有界受控失联实验。成功标记、最终完整状态一致、数值参考和平台官方终态缺一不可。不要把终端没有报错当成验收。
 

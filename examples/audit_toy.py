@@ -97,6 +97,22 @@ def _close(actual, expected, label, *, atol=2e-4, rtol=2e-4):
         raise AssertionError(f"{label}: actual={actual}, expected={expected}")
 
 
+def _member_identities(members):
+    if not isinstance(members, list) or not 1 <= len(members) <= 64:
+        raise ValueError("Expected a nonempty bounded exact member list")
+    identities = set()
+    workers = set()
+    for member in members:
+        if (not isinstance(member, dict)
+                or any(not isinstance(member.get(key), str) or not member[key] for key in ("worker_id", "session_id"))
+                or type(member.get("pid")) is not int or member["pid"] < 1
+                or member["worker_id"] in workers):
+            raise ValueError("Expected unique exact member identities")
+        workers.add(member["worker_id"])
+        identities.add(tuple(member[key] for key in ("worker_id", "session_id", "pid")))
+    return identities
+
+
 def _archived_path(root, *parts):
     """Resolve an explicit local mapping, refusing traversal and escaping links."""
     for part in parts:
@@ -152,12 +168,30 @@ def audit_run(directory, *, archived_evidence=False):
     model, optimizer, oracle, final_loss = reference(config, spec["steps"])
     observed = []
     for commit, expected in zip(summary["commits"], oracle, strict=True):
+        survivors = _member_identities(commit["members"])
+        prepared_members = commit.get("prepared_members", commit["members"])
+        prepared_identities = _member_identities(prepared_members)
+        if not survivors.issubset(prepared_identities):
+            raise ValueError("Commit survivors are not exact prepared members")
         assigned = [unit for units in commit["assignments"].values() for unit in units]
         if (commit["step"] != expected["step"] or commit["samples"] != 256
                 or commit.get("atomic_units") != 64 or sorted(assigned) != list(range(64))
-                or set(commit["assignments"]) != {m["worker_id"] for m in commit["members"]}):
+                or set(commit["assignments"]) != {m["worker_id"] for m in prepared_members}):
             raise ValueError("Commit sequence/global batch differs")
         total_loss, norms = 0., []
+        if commit.get("pod_recovery"):
+            # The frozen pre-APPLY group supplied every atomic unit. A member
+            # lost after authorization still contributed to the global SUM;
+            # inspect its immutable reduced report rather than recomputing it.
+            for member in commit["prepared_members"]:
+                prepared = json.loads(evidence_path("reports", member["worker_id"], member["session_id"],
+                    commit["reduction_token"], "pod_reduced.json").read_text())
+                if (prepared["run_id"] != spec["run_id"] or prepared["token"] != commit["reduction_token"]
+                        or prepared["base_step"] != commit["step"]-1
+                        or any(prepared[k] != member[k] for k in ("worker_id","session_id","pid"))
+                        or sorted(prepared["local"]["units"]) != sorted(commit["assignments"][member["worker_id"]])):
+                    raise ValueError("Pod prepared contribution has stale identity/coverage")
+                total_loss += prepared["local"]["loss_contribution"]
         for member in commit["members"]:
             parts = ("reports", member["worker_id"], member["session_id"], commit["token"])
             record = json.loads(evidence_path(*parts, "updated.json").read_text())
@@ -165,7 +199,10 @@ def audit_run(directory, *, archived_evidence=False):
                     or record["run_id"] != spec["run_id"] or record["token"] != commit["token"]
                     or any(record[key] != member[key] for key in ("worker_id", "session_id", "pid"))):
                 raise ValueError("Incorrect completed step or activation recomputation")
-            total_loss += record["local"]["loss_contribution"]
+            if not commit.get("pod_recovery"):
+                total_loss += record["local"]["loss_contribution"]
+            elif record.get("optimizer_applications") != 1 or record.get("reduction_token") != commit["reduction_token"]:
+                raise ValueError("Pod optimizer applied a different reduction or more than once")
             computed_units = list(record["local"]["units"])
             repair = evidence_path(*parts, "repair_submitted.json")
             if repair.exists():
@@ -197,7 +234,14 @@ def audit_run(directory, *, archived_evidence=False):
                           "boundary_step": spec["steps"]} if archived_evidence else None)
     receipt = load_native_state(actual, actual_optimizer, checkpoint, expected_step=spec["steps"],
                                 expected_metadata=expected_metadata)
-    for member in summary["commits"][-1]["members"]:
+    final_members = summary.get("final_member_identities", summary["commits"][-1]["members"])
+    final_identities = _member_identities(final_members)
+    final_count = summary.get("final_members", len(final_members))
+    if (not final_identities.issubset(_member_identities(summary["commits"][-1]["members"]))
+            or type(final_count) is not int or final_count != len(final_members)):
+        raise ValueError("Final members differ from the last commit or final member count")
+    final_hashes = set()
+    for member in final_members:
         root = evidence_path("reports", member["worker_id"], member["session_id"])
         if archived_evidence:
             finals = []
@@ -212,8 +256,15 @@ def audit_run(directory, *, archived_evidence=False):
         if len(finals) != 1:
             raise ValueError("Expected one full final-state report per final member")
         final = json.loads(finals[0].read_text())
+        if (final.get("run_id") != spec["run_id"] or final.get("phase") != "finished"
+                or final.get("token") != finals[0].parent.name
+                or any(final.get(key) != member[key] for key in ("worker_id", "session_id", "pid"))):
+            raise ValueError("Final report has a stale run/session/token identity")
         if final["completed_step"] != spec["steps"] or any(final[key] != receipt[key] for key in ("model_sha256", "optimizer_sha256")):
             raise ValueError("Checkpoint does not match an actual final worker state")
+        final_hashes.add(final["optimizer_config_sha256"])
+    if len(final_hashes) != 1:
+        raise ValueError("Final optimizer configuration hashes differ")
     parameter_errors, moment_errors = {}, {}
     for (name, parameter), (actual_name, value) in zip(model.named_parameters(), actual.named_parameters(), strict=True):
         assert name == actual_name
@@ -230,6 +281,9 @@ def audit_run(directory, *, archived_evidence=False):
     if not actual_final_loss < observed[0]["loss"] * .5:
         raise AssertionError("Toy objective did not decrease by at least 50 percent")
     recovery_steps = ({summary["fault"]["base_step"] + 1} if "fault" in summary else set())
+    recovery_steps.update(row["step"]+1 for row in summary.get("pod_recovery_events", [])
+                          if 0 <= row["step"] < spec["steps"])
+    recovery_steps.update(commit["step"] for commit in summary["commits"] if commit.get("forward_recovery"))
     switch_steps = {row["first_new_commit"] for row in summary.get("topology_switches", [])
                     if row.get("status") == "committed"}
     transition_steps = recovery_steps | switch_steps
@@ -259,7 +313,9 @@ def audit_run(directory, *, archived_evidence=False):
             "recovery_updates": [r for r in observed if r["step"] in recovery_steps],
             "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups, recovery update and first update after cohort switches excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
             "steps_observed": observed,
-            "actual_fault_occurred": "fault" in summary,
+            "actual_fault_occurred": "fault" in summary or bool(summary.get("pod_recovery_events")),
+            "pod_recovery_enabled": spec.get("pod_recovery", False),
+            "pod_recovery_events": summary.get("pod_recovery_events", []),
             "limitations": ["Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.",
                             "Saved-evidence audit does not rerun HCCL; real failure injection is reported separately."]}
 

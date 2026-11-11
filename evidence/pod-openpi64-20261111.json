@@ -1,0 +1,1265 @@
+{
+  "schema": "fragment-openpi-pod-recovery-audit-v1",
+  "status": "passed",
+  "run_name": "pod-openpi64-loss30-20261111-v3",
+  "initial_cards": 64,
+  "final_cards": 48,
+  "steps": 30,
+  "global_batch": 256,
+  "activation_recomputation": false,
+  "optimizer_on_npu": true,
+  "each_survivor_applied_once": true,
+  "global_sample_coverage_verified": true,
+  "all_losses_and_gradient_norms_finite": true,
+  "all_final_model_and_adam_hashes_identical": true,
+  "checkpoint_payload_sha256_verified": true,
+  "checkpoint_payload_bytes": 20946116788,
+  "resources_released": true,
+  "timing": {
+    "healthy64_steps6_10": {
+      "commit_seconds": {
+        "samples": 5,
+        "mean": 2.5406767828390002,
+        "median": 2.556009338237345,
+        "min": 2.362759741023183,
+        "max": 2.7402640972286463
+      },
+      "commit_interval_seconds": {
+        "samples": 5,
+        "mean": 2.576284039020538,
+        "median": 2.5652074133977294,
+        "min": 2.3769852416589856,
+        "max": 2.8713734233751893
+      },
+      "rank_max_backward_seconds": {
+        "samples": 5,
+        "mean": 0.5266930276528001,
+        "median": 0.526459950953722,
+        "min": 0.5251898067072034,
+        "max": 0.5280710905790329
+      },
+      "rank_max_communication_seconds": {
+        "samples": 5,
+        "mean": 0.39896037951111796,
+        "median": 0.4009528309106827,
+        "min": 0.3677635081112385,
+        "max": 0.43604595214128494
+      },
+      "rank_max_data_seconds": {
+        "samples": 5,
+        "mean": 0.007641665078699589,
+        "median": 0.0073289647698402405,
+        "min": 0.006700582802295685,
+        "max": 0.009631553664803505
+      },
+      "rank_max_gradient_buffer_pack_seconds": {
+        "samples": 5,
+        "mean": 0.017545288242399693,
+        "median": 0.01761741191148758,
+        "min": 0.016392726451158524,
+        "max": 0.019152477383613586
+      },
+      "rank_max_install_clip_optimizer_seconds": {
+        "samples": 5,
+        "mean": 0.3758899370208383,
+        "median": 0.4209803268313408,
+        "min": 0.28105815313756466,
+        "max": 0.44136500731110573
+      },
+      "rank_max_state_preservation_hash_seconds": {
+        "samples": 5,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      }
+    },
+    "healthy48_steps12_30": {
+      "commit_seconds": {
+        "samples": 19,
+        "mean": 3.2468238782725836,
+        "median": 2.6072216229513288,
+        "min": 2.4685174068436027,
+        "max": 14.50715160369873
+      },
+      "commit_interval_seconds": {
+        "samples": 19,
+        "mean": 3.278158960520829,
+        "median": 2.6296162316575646,
+        "min": 2.5004188185557723,
+        "max": 14.53093791846186
+      },
+      "rank_max_backward_seconds": {
+        "samples": 19,
+        "mean": 1.0624405822079432,
+        "median": 1.0609442852437496,
+        "min": 1.057903666049242,
+        "max": 1.0700438655912876
+      },
+      "rank_max_communication_seconds": {
+        "samples": 19,
+        "mean": 0.3276647468538661,
+        "median": 0.3132733143866062,
+        "min": 0.28634241968393326,
+        "max": 0.4187229126691818
+      },
+      "rank_max_data_seconds": {
+        "samples": 19,
+        "mean": 0.013004597276449203,
+        "median": 0.011567536741495132,
+        "min": 0.009296968579292297,
+        "max": 0.030911117792129517
+      },
+      "rank_max_gradient_buffer_pack_seconds": {
+        "samples": 19,
+        "mean": 0.01656919698181905,
+        "median": 0.01613422855734825,
+        "min": 0.014571007341146469,
+        "max": 0.02096090093255043
+      },
+      "rank_max_install_clip_optimizer_seconds": {
+        "samples": 19,
+        "mean": 0.2868566701286717,
+        "median": 0.2690715603530407,
+        "min": 0.24543941020965576,
+        "max": 0.4254334270954132
+      },
+      "rank_max_state_preservation_hash_seconds": {
+        "samples": 19,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      }
+    }
+  },
+  "fault_update": {
+    "step": 11,
+    "members": 48,
+    "loss": 0.08874435594771057,
+    "grad_norm": 0.5319055914878845,
+    "commit_seconds": 104.44957852549851,
+    "commit_interval_seconds": 104.46301516983658,
+    "rank_max_backward_seconds": 1.0597821474075317,
+    "rank_max_communication_seconds": 99.81532878428698,
+    "rank_max_data_seconds": 1.1840018145740032,
+    "rank_max_gradient_buffer_pack_seconds": 0.033711161464452744,
+    "rank_max_install_clip_optimizer_seconds": 0.2527354024350643,
+    "rank_max_state_preservation_hash_seconds": 0.0
+  },
+  "from_stop_response_to_recovered_commit_seconds": 99.32862210273743,
+  "initial_loss": 0.09407126903533936,
+  "last_loss": 0.06838087568758056,
+  "steps_observed": [
+    {
+      "step": 1,
+      "members": 64,
+      "loss": 0.09407126903533936,
+      "grad_norm": 0.5346421599388123,
+      "commit_seconds": 44.52946774009615,
+      "commit_interval_seconds": 44.52947124838829,
+      "rank_max_backward_seconds": 26.400501247495413,
+      "rank_max_communication_seconds": 2.852785114198923,
+      "rank_max_data_seconds": 0.2563023082911968,
+      "rank_max_gradient_buffer_pack_seconds": 0.08842529729008675,
+      "rank_max_install_clip_optimizer_seconds": 2.49556852504611,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 2,
+      "members": 64,
+      "loss": 0.09404077054932714,
+      "grad_norm": 0.5342665910720825,
+      "commit_seconds": 2.430852657184005,
+      "commit_interval_seconds": 2.437608325853944,
+      "rank_max_backward_seconds": 0.5381241291761398,
+      "rank_max_communication_seconds": 0.3905155807733536,
+      "rank_max_data_seconds": 0.00912744551897049,
+      "rank_max_gradient_buffer_pack_seconds": 0.023770746774971485,
+      "rank_max_install_clip_optimizer_seconds": 0.29937109258025885,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 3,
+      "members": 64,
+      "loss": 0.09103028266690671,
+      "grad_norm": 0.5156243443489075,
+      "commit_seconds": 2.8522666040807962,
+      "commit_interval_seconds": 2.858537010848522,
+      "rank_max_backward_seconds": 0.5276933014392853,
+      "rank_max_communication_seconds": 0.38222112506628036,
+      "rank_max_data_seconds": 0.006729971617460251,
+      "rank_max_gradient_buffer_pack_seconds": 0.020753109827637672,
+      "rank_max_install_clip_optimizer_seconds": 0.4903278611600399,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 4,
+      "members": 64,
+      "loss": 0.099613664788194,
+      "grad_norm": 0.5478071570396423,
+      "commit_seconds": 2.4630187582224607,
+      "commit_interval_seconds": 2.473745792172849,
+      "rank_max_backward_seconds": 0.5333225205540657,
+      "rank_max_communication_seconds": 0.36502085253596306,
+      "rank_max_data_seconds": 0.007742799818515778,
+      "rank_max_gradient_buffer_pack_seconds": 0.02064979076385498,
+      "rank_max_install_clip_optimizer_seconds": 0.33405565842986107,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 5,
+      "members": 64,
+      "loss": 0.09647779405349866,
+      "grad_norm": 0.5381919145584106,
+      "commit_seconds": 2.4691171273589134,
+      "commit_interval_seconds": 2.477919029071927,
+      "rank_max_backward_seconds": 0.5298305302858353,
+      "rank_max_communication_seconds": 0.37391939759254456,
+      "rank_max_data_seconds": 0.006247662007808685,
+      "rank_max_gradient_buffer_pack_seconds": 0.016198288649320602,
+      "rank_max_install_clip_optimizer_seconds": 0.2906590048223734,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 6,
+      "members": 64,
+      "loss": 0.09869489120319486,
+      "grad_norm": 0.5454375743865967,
+      "commit_seconds": 2.556009338237345,
+      "commit_interval_seconds": 2.5652074133977294,
+      "rank_max_backward_seconds": 0.5273361839354038,
+      "rank_max_communication_seconds": 0.43604595214128494,
+      "rank_max_data_seconds": 0.006700582802295685,
+      "rank_max_gradient_buffer_pack_seconds": 0.017923646606504917,
+      "rank_max_install_clip_optimizer_seconds": 0.4209803268313408,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 7,
+      "members": 64,
+      "loss": 0.09081346431048587,
+      "grad_norm": 0.5316066741943359,
+      "commit_seconds": 2.442768664099276,
+      "commit_interval_seconds": 2.450941577553749,
+      "rank_max_backward_seconds": 0.5264081060886383,
+      "rank_max_communication_seconds": 0.4009528309106827,
+      "rank_max_data_seconds": 0.009631553664803505,
+      "rank_max_gradient_buffer_pack_seconds": 0.016640178859233856,
+      "rank_max_install_clip_optimizer_seconds": 0.28105815313756466,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 8,
+      "members": 64,
+      "loss": 0.09052961884299293,
+      "grad_norm": 0.5305119752883911,
+      "commit_seconds": 2.6015820736065507,
+      "commit_interval_seconds": 2.6169125391170382,
+      "rank_max_backward_seconds": 0.526459950953722,
+      "rank_max_communication_seconds": 0.3677635081112385,
+      "rank_max_data_seconds": 0.007794152945280075,
+      "rank_max_gradient_buffer_pack_seconds": 0.01761741191148758,
+      "rank_max_install_clip_optimizer_seconds": 0.44136500731110573,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 9,
+      "members": 64,
+      "loss": 0.09057529584970325,
+      "grad_norm": 0.5361504554748535,
+      "commit_seconds": 2.362759741023183,
+      "commit_interval_seconds": 2.3769852416589856,
+      "rank_max_backward_seconds": 0.5280710905790329,
+      "rank_max_communication_seconds": 0.4148900508880615,
+      "rank_max_data_seconds": 0.0073289647698402405,
+      "rank_max_gradient_buffer_pack_seconds": 0.019152477383613586,
+      "rank_max_install_clip_optimizer_seconds": 0.295005158521235,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 10,
+      "members": 64,
+      "loss": 0.10382059606490657,
+      "grad_norm": 0.5517294406890869,
+      "commit_seconds": 2.7402640972286463,
+      "commit_interval_seconds": 2.8713734233751893,
+      "rank_max_backward_seconds": 0.5251898067072034,
+      "rank_max_communication_seconds": 0.37514955550432205,
+      "rank_max_data_seconds": 0.006753071211278439,
+      "rank_max_gradient_buffer_pack_seconds": 0.016392726451158524,
+      "rank_max_install_clip_optimizer_seconds": 0.44104103930294514,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 11,
+      "members": 48,
+      "loss": 0.08874435594771057,
+      "grad_norm": 0.5319055914878845,
+      "commit_seconds": 104.44957852549851,
+      "commit_interval_seconds": 104.46301516983658,
+      "rank_max_backward_seconds": 1.0597821474075317,
+      "rank_max_communication_seconds": 99.81532878428698,
+      "rank_max_data_seconds": 1.1840018145740032,
+      "rank_max_gradient_buffer_pack_seconds": 0.033711161464452744,
+      "rank_max_install_clip_optimizer_seconds": 0.2527354024350643,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 12,
+      "members": 48,
+      "loss": 0.0909375396440737,
+      "grad_norm": 0.5171536207199097,
+      "commit_seconds": 14.50715160369873,
+      "commit_interval_seconds": 14.53093791846186,
+      "rank_max_backward_seconds": 1.062562134116888,
+      "rank_max_communication_seconds": 0.32314446195960045,
+      "rank_max_data_seconds": 0.014088720083236694,
+      "rank_max_gradient_buffer_pack_seconds": 0.017738673835992813,
+      "rank_max_install_clip_optimizer_seconds": 0.4254334270954132,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 13,
+      "members": 48,
+      "loss": 0.0844093487248756,
+      "grad_norm": 0.5172247290611267,
+      "commit_seconds": 2.617062303237617,
+      "commit_interval_seconds": 2.636000631377101,
+      "rank_max_backward_seconds": 1.0640069544315338,
+      "rank_max_communication_seconds": 0.31359798461198807,
+      "rank_max_data_seconds": 0.012693166732788086,
+      "rank_max_gradient_buffer_pack_seconds": 0.01618306338787079,
+      "rank_max_install_clip_optimizer_seconds": 0.24601924046874046,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 14,
+      "members": 48,
+      "loss": 0.08357608871301636,
+      "grad_norm": 0.5067697763442993,
+      "commit_seconds": 2.6072216229513288,
+      "commit_interval_seconds": 2.6284873858094215,
+      "rank_max_backward_seconds": 1.0653129257261753,
+      "rank_max_communication_seconds": 0.3019867092370987,
+      "rank_max_data_seconds": 0.010852053761482239,
+      "rank_max_gradient_buffer_pack_seconds": 0.014577630907297134,
+      "rank_max_install_clip_optimizer_seconds": 0.2822522968053818,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 15,
+      "members": 48,
+      "loss": 0.09153914847411215,
+      "grad_norm": 0.5324220657348633,
+      "commit_seconds": 2.5041466802358627,
+      "commit_interval_seconds": 2.530787706375122,
+      "rank_max_backward_seconds": 1.058499250560999,
+      "rank_max_communication_seconds": 0.309414517134428,
+      "rank_max_data_seconds": 0.010584495961666107,
+      "rank_max_gradient_buffer_pack_seconds": 0.018728341907262802,
+      "rank_max_install_clip_optimizer_seconds": 0.26634005084633827,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 16,
+      "members": 48,
+      "loss": 0.09076822194037959,
+      "grad_norm": 0.5281543731689453,
+      "commit_seconds": 2.5383950443938375,
+      "commit_interval_seconds": 2.566754030995071,
+      "rank_max_backward_seconds": 1.062763825058937,
+      "rank_max_communication_seconds": 0.30380144715309143,
+      "rank_max_data_seconds": 0.014989618211984634,
+      "rank_max_gradient_buffer_pack_seconds": 0.01658076047897339,
+      "rank_max_install_clip_optimizer_seconds": 0.2689653970301151,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 17,
+      "members": 48,
+      "loss": 0.08572663087397814,
+      "grad_norm": 0.5084084272384644,
+      "commit_seconds": 2.609941339120269,
+      "commit_interval_seconds": 2.6296162316575646,
+      "rank_max_backward_seconds": 1.0609442852437496,
+      "rank_max_communication_seconds": 0.3058580197393894,
+      "rank_max_data_seconds": 0.030911117792129517,
+      "rank_max_gradient_buffer_pack_seconds": 0.016226381063461304,
+      "rank_max_install_clip_optimizer_seconds": 0.3088337928056717,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 18,
+      "members": 48,
+      "loss": 0.0864449716755189,
+      "grad_norm": 0.5024694204330444,
+      "commit_seconds": 2.8681130902841687,
+      "commit_interval_seconds": 2.8933341205120087,
+      "rank_max_backward_seconds": 1.060907781124115,
+      "rank_max_communication_seconds": 0.3218217119574547,
+      "rank_max_data_seconds": 0.018095392733812332,
+      "rank_max_gradient_buffer_pack_seconds": 0.015777111053466797,
+      "rank_max_install_clip_optimizer_seconds": 0.3272158242762089,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 19,
+      "members": 48,
+      "loss": 0.08390142751159146,
+      "grad_norm": 0.49848711490631104,
+      "commit_seconds": 2.8903500139713287,
+      "commit_interval_seconds": 2.916583025828004,
+      "rank_max_backward_seconds": 1.0597627572715282,
+      "rank_max_communication_seconds": 0.398701798170805,
+      "rank_max_data_seconds": 0.013541817665100098,
+      "rank_max_gradient_buffer_pack_seconds": 0.014841433614492416,
+      "rank_max_install_clip_optimizer_seconds": 0.256272129714489,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 20,
+      "members": 48,
+      "loss": 0.0789193048258312,
+      "grad_norm": 0.48682448267936707,
+      "commit_seconds": 2.4685174068436027,
+      "commit_interval_seconds": 2.5004188185557723,
+      "rank_max_backward_seconds": 1.0602054670453072,
+      "rank_max_communication_seconds": 0.3070802614092827,
+      "rank_max_data_seconds": 0.010435909032821655,
+      "rank_max_gradient_buffer_pack_seconds": 0.0158674493432045,
+      "rank_max_install_clip_optimizer_seconds": 0.2501509375870228,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 21,
+      "members": 48,
+      "loss": 0.08171659195795655,
+      "grad_norm": 0.5003097057342529,
+      "commit_seconds": 2.49246743042022,
+      "commit_interval_seconds": 2.530176660977304,
+      "rank_max_backward_seconds": 1.0598020777106285,
+      "rank_max_communication_seconds": 0.325084675103426,
+      "rank_max_data_seconds": 0.011983931064605713,
+      "rank_max_gradient_buffer_pack_seconds": 0.015754476189613342,
+      "rank_max_install_clip_optimizer_seconds": 0.24543941020965576,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 22,
+      "members": 48,
+      "loss": 0.07636886631371453,
+      "grad_norm": 0.48391231894493103,
+      "commit_seconds": 2.513526397757232,
+      "commit_interval_seconds": 2.549268402159214,
+      "rank_max_backward_seconds": 1.0602282285690308,
+      "rank_max_communication_seconds": 0.34137754142284393,
+      "rank_max_data_seconds": 0.00972289964556694,
+      "rank_max_gradient_buffer_pack_seconds": 0.015750620514154434,
+      "rank_max_install_clip_optimizer_seconds": 0.2550415173172951,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 23,
+      "members": 48,
+      "loss": 0.0825125741539523,
+      "grad_norm": 0.49255284667015076,
+      "commit_seconds": 2.815986767411232,
+      "commit_interval_seconds": 2.842270642518997,
+      "rank_max_backward_seconds": 1.0614070743322372,
+      "rank_max_communication_seconds": 0.33389556035399437,
+      "rank_max_data_seconds": 0.010228000581264496,
+      "rank_max_gradient_buffer_pack_seconds": 0.014571007341146469,
+      "rank_max_install_clip_optimizer_seconds": 0.3519442453980446,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 24,
+      "members": 48,
+      "loss": 0.0758294845581986,
+      "grad_norm": 0.4910925328731537,
+      "commit_seconds": 2.607719397172332,
+      "commit_interval_seconds": 2.6433305330574512,
+      "rank_max_backward_seconds": 1.0594357401132584,
+      "rank_max_communication_seconds": 0.3081248700618744,
+      "rank_max_data_seconds": 0.011985674500465393,
+      "rank_max_gradient_buffer_pack_seconds": 0.014948517084121704,
+      "rank_max_install_clip_optimizer_seconds": 0.2565142512321472,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 25,
+      "members": 48,
+      "loss": 0.07370822073426098,
+      "grad_norm": 0.48213937878608704,
+      "commit_seconds": 2.63507183175534,
+      "commit_interval_seconds": 2.6721767922863364,
+      "rank_max_backward_seconds": 1.0700438655912876,
+      "rank_max_communication_seconds": 0.41452766582369804,
+      "rank_max_data_seconds": 0.011567536741495132,
+      "rank_max_gradient_buffer_pack_seconds": 0.017370767891407013,
+      "rank_max_install_clip_optimizer_seconds": 0.27029942721128464,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 26,
+      "members": 48,
+      "loss": 0.07594732596771792,
+      "grad_norm": 0.44951412081718445,
+      "commit_seconds": 2.479155657812953,
+      "commit_interval_seconds": 2.5094526670873165,
+      "rank_max_backward_seconds": 1.0607088841497898,
+      "rank_max_communication_seconds": 0.3088124245405197,
+      "rank_max_data_seconds": 0.010575305670499802,
+      "rank_max_gradient_buffer_pack_seconds": 0.01923367753624916,
+      "rank_max_install_clip_optimizer_seconds": 0.286704383790493,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 27,
+      "members": 48,
+      "loss": 0.07557846768759191,
+      "grad_norm": 0.46812906861305237,
+      "commit_seconds": 2.5352436108514667,
+      "commit_interval_seconds": 2.5858825854957104,
+      "rank_max_backward_seconds": 1.065457634627819,
+      "rank_max_communication_seconds": 0.3132733143866062,
+      "rank_max_data_seconds": 0.010397858917713165,
+      "rank_max_gradient_buffer_pack_seconds": 0.01613422855734825,
+      "rank_max_install_clip_optimizer_seconds": 0.2690715603530407,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 28,
+      "members": 48,
+      "loss": 0.07327931479085237,
+      "grad_norm": 0.4634721875190735,
+      "commit_seconds": 2.579807705245912,
+      "commit_interval_seconds": 2.62810183968395,
+      "rank_max_backward_seconds": 1.0667004734277725,
+      "rank_max_communication_seconds": 0.28634241968393326,
+      "rank_max_data_seconds": 0.013670716434717178,
+      "rank_max_gradient_buffer_pack_seconds": 0.018655937165021896,
+      "rank_max_install_clip_optimizer_seconds": 0.29993802681565285,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 29,
+      "members": 48,
+      "loss": 0.07195566536393017,
+      "grad_norm": 0.4450331926345825,
+      "commit_seconds": 2.8199562821537256,
+      "commit_interval_seconds": 2.853216888383031,
+      "rank_max_backward_seconds": 1.069718036800623,
+      "rank_max_communication_seconds": 0.4187229126691818,
+      "rank_max_data_seconds": 0.011466164141893387,
+      "rank_max_gradient_buffer_pack_seconds": 0.02096090093255043,
+      "rank_max_install_clip_optimizer_seconds": 0.3256092183291912,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    },
+    {
+      "step": 30,
+      "members": 48,
+      "loss": 0.06838087568758056,
+      "grad_norm": 0.4404298663139343,
+      "commit_seconds": 2.59981950186193,
+      "commit_interval_seconds": 2.6382233686745167,
+      "rank_max_backward_seconds": 1.057903666049242,
+      "rank_max_communication_seconds": 0.2900618948042393,
+      "rank_max_data_seconds": 0.009296968579292297,
+      "rank_max_gradient_buffer_pack_seconds": 0.014913763850927353,
+      "rank_max_install_clip_optimizer_seconds": 0.25823159515857697,
+      "rank_max_state_preservation_hash_seconds": 0.0
+    }
+  ],
+  "controller_total_seconds": 533.9272012710571,
+  "startup_to_training_seconds": 92.27593970298767,
+  "final_export_and_inspection_seconds": 207.23935532569885,
+  "pod_recovery_events": [
+    {
+      "lost": [
+        {
+          "pid": 57,
+          "session_id": "12da490a34a446ef89ac872c2d09aeed",
+          "worker_id": "w000049"
+        },
+        {
+          "pid": 58,
+          "session_id": "bf7a0689233642798b6d545dc97598ec",
+          "worker_id": "w000050"
+        },
+        {
+          "pid": 59,
+          "session_id": "35dc1c5a2bc54ca0b30b788e1b967e64",
+          "worker_id": "w000051"
+        },
+        {
+          "pid": 60,
+          "session_id": "23b718945d7a47328b418bbcce03f0db",
+          "worker_id": "w000052"
+        },
+        {
+          "pid": 61,
+          "session_id": "01329372318a45ab9c62736db28761c9",
+          "worker_id": "w000053"
+        },
+        {
+          "pid": 62,
+          "session_id": "4fa4a72b64ac4c8f8503ba079014a3e3",
+          "worker_id": "w000054"
+        },
+        {
+          "pid": 63,
+          "session_id": "78400d41689a4cc9b5ff415dbd786cb7",
+          "worker_id": "w000055"
+        },
+        {
+          "pid": 64,
+          "session_id": "ab972370e41b42f0b9a558b4c39a82b0",
+          "worker_id": "w000056"
+        },
+        {
+          "pid": 65,
+          "session_id": "7720aae349654b5db918915d9e08960c",
+          "worker_id": "w000057"
+        },
+        {
+          "pid": 66,
+          "session_id": "814e1091645544e8a7399f3aaad8e607",
+          "worker_id": "w000058"
+        },
+        {
+          "pid": 67,
+          "session_id": "d97386ac1ea84076a37030096728a308",
+          "worker_id": "w000059"
+        },
+        {
+          "pid": 68,
+          "session_id": "95bd381f260449df9cabda9cc325e43d",
+          "worker_id": "w000060"
+        },
+        {
+          "pid": 69,
+          "session_id": "6962eb99836d4bafbfc0ee8b61eedac6",
+          "worker_id": "w000061"
+        },
+        {
+          "pid": 70,
+          "session_id": "8716057c785b4132b0ba8e5133782fd7",
+          "worker_id": "w000062"
+        },
+        {
+          "pid": 71,
+          "session_id": "209f1d6bb51e41639aa1d827dc587d81",
+          "worker_id": "w000063"
+        },
+        {
+          "pid": 72,
+          "session_id": "85f6fbbf809d4c0c842d9eac2953a710",
+          "worker_id": "w000064"
+        }
+      ],
+      "number": 1,
+      "reason": "replay_missing_ready_owners",
+      "step": 10,
+      "survivors": [
+        {
+          "pid": 57,
+          "session_id": "50ea1ce393e54e229bc276bdd614d5cf",
+          "worker_id": "w000001"
+        },
+        {
+          "pid": 61,
+          "session_id": "5722a888aca443039a171c841fa44d1d",
+          "worker_id": "w000002"
+        },
+        {
+          "pid": 58,
+          "session_id": "ac94997db9024563a0fe1291e4ff3238",
+          "worker_id": "w000003"
+        },
+        {
+          "pid": 59,
+          "session_id": "3efc42b7cab347edab2fd6f56e3f6536",
+          "worker_id": "w000004"
+        },
+        {
+          "pid": 60,
+          "session_id": "db2fb49ccec14b238ac1357de45bea9b",
+          "worker_id": "w000005"
+        },
+        {
+          "pid": 62,
+          "session_id": "93f8eca9f0e249678be857ec3b0c89a1",
+          "worker_id": "w000006"
+        },
+        {
+          "pid": 63,
+          "session_id": "16f0111b95cd456aab57f9463f5b95d5",
+          "worker_id": "w000007"
+        },
+        {
+          "pid": 64,
+          "session_id": "0db6fd9d15c747ee8a648fa8d4e14bc4",
+          "worker_id": "w000008"
+        },
+        {
+          "pid": 65,
+          "session_id": "c423222eee9843a3a3c73b1229b75737",
+          "worker_id": "w000009"
+        },
+        {
+          "pid": 66,
+          "session_id": "8d3c273d96ff4df8b318954780dea611",
+          "worker_id": "w000010"
+        },
+        {
+          "pid": 68,
+          "session_id": "4ba6251eaeaf4980b5121d17cc78d35d",
+          "worker_id": "w000011"
+        },
+        {
+          "pid": 67,
+          "session_id": "d252101dc0d647309ea5a0821098eedb",
+          "worker_id": "w000012"
+        },
+        {
+          "pid": 69,
+          "session_id": "7dd4b468affa4ee19d110b8f3aeb0d50",
+          "worker_id": "w000013"
+        },
+        {
+          "pid": 70,
+          "session_id": "ddaa62fefe0f4a1aa5275182c5c3f8ed",
+          "worker_id": "w000014"
+        },
+        {
+          "pid": 71,
+          "session_id": "ced73e7a798149e0a5effdc37b2aa218",
+          "worker_id": "w000015"
+        },
+        {
+          "pid": 72,
+          "session_id": "af170fa1ae7b4f8da1a7c7946a5b0854",
+          "worker_id": "w000016"
+        },
+        {
+          "pid": 60,
+          "session_id": "be96753ee0534bab948d322c909983e1",
+          "worker_id": "w000017"
+        },
+        {
+          "pid": 57,
+          "session_id": "87bb06ab437a4c3a921655bca9f248f1",
+          "worker_id": "w000018"
+        },
+        {
+          "pid": 58,
+          "session_id": "003f4bf638a64283bb280bc882191bea",
+          "worker_id": "w000019"
+        },
+        {
+          "pid": 59,
+          "session_id": "23d91e9135f44cf5864112c910ebcf07",
+          "worker_id": "w000020"
+        },
+        {
+          "pid": 61,
+          "session_id": "cf9dfb68947f40a69027ce46a6b09775",
+          "worker_id": "w000021"
+        },
+        {
+          "pid": 62,
+          "session_id": "48d016472330422d86d231266bad5b64",
+          "worker_id": "w000022"
+        },
+        {
+          "pid": 63,
+          "session_id": "12e771caa86044b496398d5f7257f770",
+          "worker_id": "w000023"
+        },
+        {
+          "pid": 64,
+          "session_id": "a06637811b1e4fcaa0d6ad6ce5fe9e3c",
+          "worker_id": "w000024"
+        },
+        {
+          "pid": 65,
+          "session_id": "b65a2f6c30914e928f118ce55359e5e5",
+          "worker_id": "w000025"
+        },
+        {
+          "pid": 66,
+          "session_id": "e3cd4ca669f84cca83201fee5a9467cf",
+          "worker_id": "w000026"
+        },
+        {
+          "pid": 67,
+          "session_id": "330861f3a64a4742be9891a8df96e90f",
+          "worker_id": "w000027"
+        },
+        {
+          "pid": 68,
+          "session_id": "c154cf7ae82a4fcc84716e103deec104",
+          "worker_id": "w000028"
+        },
+        {
+          "pid": 69,
+          "session_id": "6f5d6cc920064907aeb4f00bb50738fd",
+          "worker_id": "w000029"
+        },
+        {
+          "pid": 70,
+          "session_id": "c643c1bf145c42bb9f43d4bbc99a4713",
+          "worker_id": "w000030"
+        },
+        {
+          "pid": 71,
+          "session_id": "317e9174c42a47beb29045a4300be203",
+          "worker_id": "w000031"
+        },
+        {
+          "pid": 72,
+          "session_id": "9b64ece2b4404c19a3d9dd5ef9aaaf8a",
+          "worker_id": "w000032"
+        },
+        {
+          "pid": 57,
+          "session_id": "4f68e5ac0a914db9a27995db0b820250",
+          "worker_id": "w000033"
+        },
+        {
+          "pid": 58,
+          "session_id": "19d9e77851ea4311b0308d256bbad508",
+          "worker_id": "w000034"
+        },
+        {
+          "pid": 59,
+          "session_id": "b95dc2dd694447f3be2bd4ebf64aba54",
+          "worker_id": "w000035"
+        },
+        {
+          "pid": 60,
+          "session_id": "04a3609d22c84436a93af3eff72023a8",
+          "worker_id": "w000036"
+        },
+        {
+          "pid": 61,
+          "session_id": "974fa77f258340f4bd733a1cb509823d",
+          "worker_id": "w000037"
+        },
+        {
+          "pid": 62,
+          "session_id": "c5f1e263094d4ea48f6c0c063bd8f7a3",
+          "worker_id": "w000038"
+        },
+        {
+          "pid": 63,
+          "session_id": "175ad93fcc83431d94fb409fb0cab9a7",
+          "worker_id": "w000039"
+        },
+        {
+          "pid": 65,
+          "session_id": "6b84e6ac8c984af0b7344fc768138300",
+          "worker_id": "w000040"
+        },
+        {
+          "pid": 64,
+          "session_id": "b15c8d46d2fa4753bfc7ed8e34cebc04",
+          "worker_id": "w000041"
+        },
+        {
+          "pid": 66,
+          "session_id": "1e0f6cd97b9c454db6f144985a59fc57",
+          "worker_id": "w000042"
+        },
+        {
+          "pid": 67,
+          "session_id": "cfbbe8431d4041cf925359f9f32f257d",
+          "worker_id": "w000043"
+        },
+        {
+          "pid": 68,
+          "session_id": "d6256986e1464466b1643cc2320dd5cf",
+          "worker_id": "w000044"
+        },
+        {
+          "pid": 69,
+          "session_id": "55e999612edc490fadfa2cae2e4ab986",
+          "worker_id": "w000045"
+        },
+        {
+          "pid": 70,
+          "session_id": "1f1865fae39e49629c4cc13f08b343f6",
+          "worker_id": "w000046"
+        },
+        {
+          "pid": 71,
+          "session_id": "b61c19c8d76c4c5aa5d6cabb2834afff",
+          "worker_id": "w000047"
+        },
+        {
+          "pid": 72,
+          "session_id": "cc7338f299a74e6faec3530d704772d8",
+          "worker_id": "w000048"
+        }
+      ]
+    },
+    {
+      "lost": [
+        {
+          "pid": 57,
+          "session_id": "12da490a34a446ef89ac872c2d09aeed",
+          "worker_id": "w000049"
+        },
+        {
+          "pid": 58,
+          "session_id": "bf7a0689233642798b6d545dc97598ec",
+          "worker_id": "w000050"
+        },
+        {
+          "pid": 59,
+          "session_id": "35dc1c5a2bc54ca0b30b788e1b967e64",
+          "worker_id": "w000051"
+        },
+        {
+          "pid": 60,
+          "session_id": "23b718945d7a47328b418bbcce03f0db",
+          "worker_id": "w000052"
+        },
+        {
+          "pid": 61,
+          "session_id": "01329372318a45ab9c62736db28761c9",
+          "worker_id": "w000053"
+        },
+        {
+          "pid": 62,
+          "session_id": "4fa4a72b64ac4c8f8503ba079014a3e3",
+          "worker_id": "w000054"
+        },
+        {
+          "pid": 63,
+          "session_id": "78400d41689a4cc9b5ff415dbd786cb7",
+          "worker_id": "w000055"
+        },
+        {
+          "pid": 64,
+          "session_id": "ab972370e41b42f0b9a558b4c39a82b0",
+          "worker_id": "w000056"
+        },
+        {
+          "pid": 65,
+          "session_id": "7720aae349654b5db918915d9e08960c",
+          "worker_id": "w000057"
+        },
+        {
+          "pid": 66,
+          "session_id": "814e1091645544e8a7399f3aaad8e607",
+          "worker_id": "w000058"
+        },
+        {
+          "pid": 67,
+          "session_id": "d97386ac1ea84076a37030096728a308",
+          "worker_id": "w000059"
+        },
+        {
+          "pid": 68,
+          "session_id": "95bd381f260449df9cabda9cc325e43d",
+          "worker_id": "w000060"
+        },
+        {
+          "pid": 69,
+          "session_id": "6962eb99836d4bafbfc0ee8b61eedac6",
+          "worker_id": "w000061"
+        },
+        {
+          "pid": 70,
+          "session_id": "8716057c785b4132b0ba8e5133782fd7",
+          "worker_id": "w000062"
+        },
+        {
+          "pid": 71,
+          "session_id": "209f1d6bb51e41639aa1d827dc587d81",
+          "worker_id": "w000063"
+        },
+        {
+          "pid": 72,
+          "session_id": "85f6fbbf809d4c0c842d9eac2953a710",
+          "worker_id": "w000064"
+        }
+      ],
+      "number": 2,
+      "reason": "rebuild_group",
+      "step": 10,
+      "survivors": [
+        {
+          "pid": 57,
+          "session_id": "50ea1ce393e54e229bc276bdd614d5cf",
+          "worker_id": "w000001"
+        },
+        {
+          "pid": 61,
+          "session_id": "5722a888aca443039a171c841fa44d1d",
+          "worker_id": "w000002"
+        },
+        {
+          "pid": 58,
+          "session_id": "ac94997db9024563a0fe1291e4ff3238",
+          "worker_id": "w000003"
+        },
+        {
+          "pid": 59,
+          "session_id": "3efc42b7cab347edab2fd6f56e3f6536",
+          "worker_id": "w000004"
+        },
+        {
+          "pid": 60,
+          "session_id": "db2fb49ccec14b238ac1357de45bea9b",
+          "worker_id": "w000005"
+        },
+        {
+          "pid": 62,
+          "session_id": "93f8eca9f0e249678be857ec3b0c89a1",
+          "worker_id": "w000006"
+        },
+        {
+          "pid": 63,
+          "session_id": "16f0111b95cd456aab57f9463f5b95d5",
+          "worker_id": "w000007"
+        },
+        {
+          "pid": 64,
+          "session_id": "0db6fd9d15c747ee8a648fa8d4e14bc4",
+          "worker_id": "w000008"
+        },
+        {
+          "pid": 65,
+          "session_id": "c423222eee9843a3a3c73b1229b75737",
+          "worker_id": "w000009"
+        },
+        {
+          "pid": 66,
+          "session_id": "8d3c273d96ff4df8b318954780dea611",
+          "worker_id": "w000010"
+        },
+        {
+          "pid": 68,
+          "session_id": "4ba6251eaeaf4980b5121d17cc78d35d",
+          "worker_id": "w000011"
+        },
+        {
+          "pid": 67,
+          "session_id": "d252101dc0d647309ea5a0821098eedb",
+          "worker_id": "w000012"
+        },
+        {
+          "pid": 69,
+          "session_id": "7dd4b468affa4ee19d110b8f3aeb0d50",
+          "worker_id": "w000013"
+        },
+        {
+          "pid": 70,
+          "session_id": "ddaa62fefe0f4a1aa5275182c5c3f8ed",
+          "worker_id": "w000014"
+        },
+        {
+          "pid": 71,
+          "session_id": "ced73e7a798149e0a5effdc37b2aa218",
+          "worker_id": "w000015"
+        },
+        {
+          "pid": 72,
+          "session_id": "af170fa1ae7b4f8da1a7c7946a5b0854",
+          "worker_id": "w000016"
+        },
+        {
+          "pid": 60,
+          "session_id": "be96753ee0534bab948d322c909983e1",
+          "worker_id": "w000017"
+        },
+        {
+          "pid": 57,
+          "session_id": "87bb06ab437a4c3a921655bca9f248f1",
+          "worker_id": "w000018"
+        },
+        {
+          "pid": 58,
+          "session_id": "003f4bf638a64283bb280bc882191bea",
+          "worker_id": "w000019"
+        },
+        {
+          "pid": 59,
+          "session_id": "23d91e9135f44cf5864112c910ebcf07",
+          "worker_id": "w000020"
+        },
+        {
+          "pid": 61,
+          "session_id": "cf9dfb68947f40a69027ce46a6b09775",
+          "worker_id": "w000021"
+        },
+        {
+          "pid": 62,
+          "session_id": "48d016472330422d86d231266bad5b64",
+          "worker_id": "w000022"
+        },
+        {
+          "pid": 63,
+          "session_id": "12e771caa86044b496398d5f7257f770",
+          "worker_id": "w000023"
+        },
+        {
+          "pid": 64,
+          "session_id": "a06637811b1e4fcaa0d6ad6ce5fe9e3c",
+          "worker_id": "w000024"
+        },
+        {
+          "pid": 65,
+          "session_id": "b65a2f6c30914e928f118ce55359e5e5",
+          "worker_id": "w000025"
+        },
+        {
+          "pid": 66,
+          "session_id": "e3cd4ca669f84cca83201fee5a9467cf",
+          "worker_id": "w000026"
+        },
+        {
+          "pid": 67,
+          "session_id": "330861f3a64a4742be9891a8df96e90f",
+          "worker_id": "w000027"
+        },
+        {
+          "pid": 68,
+          "session_id": "c154cf7ae82a4fcc84716e103deec104",
+          "worker_id": "w000028"
+        },
+        {
+          "pid": 69,
+          "session_id": "6f5d6cc920064907aeb4f00bb50738fd",
+          "worker_id": "w000029"
+        },
+        {
+          "pid": 70,
+          "session_id": "c643c1bf145c42bb9f43d4bbc99a4713",
+          "worker_id": "w000030"
+        },
+        {
+          "pid": 71,
+          "session_id": "317e9174c42a47beb29045a4300be203",
+          "worker_id": "w000031"
+        },
+        {
+          "pid": 72,
+          "session_id": "9b64ece2b4404c19a3d9dd5ef9aaaf8a",
+          "worker_id": "w000032"
+        },
+        {
+          "pid": 57,
+          "session_id": "4f68e5ac0a914db9a27995db0b820250",
+          "worker_id": "w000033"
+        },
+        {
+          "pid": 58,
+          "session_id": "19d9e77851ea4311b0308d256bbad508",
+          "worker_id": "w000034"
+        },
+        {
+          "pid": 59,
+          "session_id": "b95dc2dd694447f3be2bd4ebf64aba54",
+          "worker_id": "w000035"
+        },
+        {
+          "pid": 60,
+          "session_id": "04a3609d22c84436a93af3eff72023a8",
+          "worker_id": "w000036"
+        },
+        {
+          "pid": 61,
+          "session_id": "974fa77f258340f4bd733a1cb509823d",
+          "worker_id": "w000037"
+        },
+        {
+          "pid": 62,
+          "session_id": "c5f1e263094d4ea48f6c0c063bd8f7a3",
+          "worker_id": "w000038"
+        },
+        {
+          "pid": 63,
+          "session_id": "175ad93fcc83431d94fb409fb0cab9a7",
+          "worker_id": "w000039"
+        },
+        {
+          "pid": 65,
+          "session_id": "6b84e6ac8c984af0b7344fc768138300",
+          "worker_id": "w000040"
+        },
+        {
+          "pid": 64,
+          "session_id": "b15c8d46d2fa4753bfc7ed8e34cebc04",
+          "worker_id": "w000041"
+        },
+        {
+          "pid": 66,
+          "session_id": "1e0f6cd97b9c454db6f144985a59fc57",
+          "worker_id": "w000042"
+        },
+        {
+          "pid": 67,
+          "session_id": "cfbbe8431d4041cf925359f9f32f257d",
+          "worker_id": "w000043"
+        },
+        {
+          "pid": 68,
+          "session_id": "d6256986e1464466b1643cc2320dd5cf",
+          "worker_id": "w000044"
+        },
+        {
+          "pid": 69,
+          "session_id": "55e999612edc490fadfa2cae2e4ab986",
+          "worker_id": "w000045"
+        },
+        {
+          "pid": 70,
+          "session_id": "1f1865fae39e49629c4cc13f08b343f6",
+          "worker_id": "w000046"
+        },
+        {
+          "pid": 71,
+          "session_id": "b61c19c8d76c4c5aa5d6cabb2834afff",
+          "worker_id": "w000047"
+        },
+        {
+          "pid": 72,
+          "session_id": "cc7338f299a74e6faec3530d704772d8",
+          "worker_id": "w000048"
+        }
+      ]
+    }
+  ],
+  "hosts": {
+    "w000001": [
+      "infra-gpu-npu-386.host.shzhisuan.com"
+    ],
+    "w000002": [
+      "infra-gpu-npu-323.host.shzhisuan.com"
+    ],
+    "w000003": [
+      "infra-gpu-npu-068.host.shzhisuan.com"
+    ],
+    "w000004": [
+      "infra-gpu-npu-471.host.shzhisuan.com"
+    ]
+  },
+  "evidence_sha256": {
+    "summary": "410e2da32edb3da8eed6868072a9283623cf72ad528931d4b2c5a694368a6519",
+    "source_manifest": "9a1dc7f6f6e8ae81a6e2201aa81f67a1d823ea7071d03e70d319b8bce5b91cea",
+    "checkpoint_manifest": "d2dfead9b0240219bb7283f6697adb1ae6df884404c17ef54c419a9301280786",
+    "injection": "42b6dfcebc28ba83079a663cc6791867ab1795b6c54a1ddeae25d93845319feb"
+  },
+  "limitations": [
+    "30 steps are a short recovery acceptance, not long-run stability or LIBERO quality.",
+    "OpenPI loss is finite trajectory evidence; strict independent full-gradient/Adam numerical proof uses the toy experiments.",
+    "Healthy64 has only five measured samples; historical baseline used other hosts/times.",
+    "Fault duration includes independent test-gate and platform StopJob latency; normal-step timings exclude the injected step.",
+    "Independent all-rank phase maxima may overlap; do not sum them into step time."
+  ]
+}

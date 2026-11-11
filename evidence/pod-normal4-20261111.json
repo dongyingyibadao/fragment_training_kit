@@ -1,0 +1,342 @@
+{
+  "status": "passed",
+  "scope": "real NPU saved run vs independent full-global-batch CPU AdamW oracle",
+  "audit_mode": "live_run",
+  "npu_training_rerun": false,
+  "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/runs/pod-toy4-normal20-20261111-v2/probe",
+  "steps": 20,
+  "cards_requested": 4,
+  "initial_active_cards": 4,
+  "physical_pool_slots": 4,
+  "global_batch": 256,
+  "npu_readiness_evidence": [
+    {
+      "allocated_devices": 2,
+      "device": "npu:0",
+      "device_index": 0,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 2
+    },
+    {
+      "allocated_devices": 2,
+      "device": "npu:1",
+      "device_index": 1,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 2
+    },
+    {
+      "allocated_devices": 2,
+      "device": "npu:0",
+      "device_index": 0,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 2
+    },
+    {
+      "allocated_devices": 2,
+      "device": "npu:1",
+      "device_index": 1,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 2
+    }
+  ],
+  "initial_loss": 4.453125,
+  "final_checkpoint_loss": 0.16766051948070526,
+  "relative_loss_drop": 0.962349918432403,
+  "gradient_and_optimizer_reference_passed": true,
+  "full_native_checkpoint_verified": true,
+  "all_final_workers_state_hashes_identical": true,
+  "parameter_max_abs_errors": {
+    "weight": 2.9802322387695312e-08,
+    "bias": 0.0
+  },
+  "adam_state_max_abs_errors": {
+    "weight.step": 0.0,
+    "weight.exp_avg": 5.960464477539063e-08,
+    "weight.exp_avg_sq": 1.1920928955078125e-07,
+    "bias.step": 0.0,
+    "bias.exp_avg": 7.450580596923828e-09,
+    "bias.exp_avg_sq": 3.725290298461914e-09
+  },
+  "steady_commit_seconds_mean": 0.1576546959889432,
+  "steady_commit_seconds_median": 0.1526701720431447,
+  "steady_commit_interval_seconds_mean": 0.16914643031648463,
+  "steady_commit_samples": 18,
+  "steady_excluded_recovery_steps": [],
+  "steady_excluded_switch_steps": [],
+  "topology_switches": [],
+  "recovery_updates": [],
+  "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups, recovery update and first update after cohort switches excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
+  "steps_observed": [
+    {
+      "step": 1,
+      "loss": 4.453125,
+      "gradient_norms": [
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018
+      ],
+      "commit_seconds": 1.8045089859515429,
+      "commit_interval_seconds": 1.804510610178113,
+      "members": 4
+    },
+    {
+      "step": 2,
+      "loss": 3.913124982267618,
+      "gradient_norms": [
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848
+      ],
+      "commit_seconds": 0.2787075396627188,
+      "commit_interval_seconds": 0.28293986339122057,
+      "members": 4
+    },
+    {
+      "step": 3,
+      "loss": 3.419124638661742,
+      "gradient_norms": [
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725
+      ],
+      "commit_seconds": 0.15279019251465797,
+      "commit_interval_seconds": 0.15596561785787344,
+      "members": 4
+    },
+    {
+      "step": 4,
+      "loss": 2.9713952112942934,
+      "gradient_norms": [
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919
+      ],
+      "commit_seconds": 0.1429947903379798,
+      "commit_interval_seconds": 0.1469488525763154,
+      "members": 4
+    },
+    {
+      "step": 5,
+      "loss": 2.5696950666606426,
+      "gradient_norms": [
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045
+      ],
+      "commit_seconds": 0.1556569468230009,
+      "commit_interval_seconds": 0.16002116072922945,
+      "members": 4
+    },
+    {
+      "step": 6,
+      "loss": 2.212986620143056,
+      "gradient_norms": [
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712
+      ],
+      "commit_seconds": 0.1511607337743044,
+      "commit_interval_seconds": 0.19794486556202173,
+      "members": 4
+    },
+    {
+      "step": 7,
+      "loss": 1.8991276200395077,
+      "gradient_norms": [
+        2.756176710128784,
+        2.756176710128784,
+        2.756176710128784,
+        2.756176710128784
+      ],
+      "commit_seconds": 0.15642867423593998,
+      "commit_interval_seconds": 0.16075335629284382,
+      "members": 4
+    },
+    {
+      "step": 8,
+      "loss": 1.6247425370384008,
+      "gradient_norms": [
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732
+      ],
+      "commit_seconds": 0.1537290783599019,
+      "commit_interval_seconds": 0.15831776894629002,
+      "members": 4
+    },
+    {
+      "step": 9,
+      "loss": 1.3855662269052118,
+      "gradient_norms": [
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075
+      ],
+      "commit_seconds": 0.14763668552041054,
+      "commit_interval_seconds": 0.15126801282167435,
+      "members": 4
+    },
+    {
+      "step": 10,
+      "loss": 1.1772332713007927,
+      "gradient_norms": [
+        2.1700074672698975,
+        2.1700074672698975,
+        2.1700074672698975,
+        2.1700074672698975
+      ],
+      "commit_seconds": 0.15237580705434084,
+      "commit_interval_seconds": 0.15711520425975323,
+      "members": 4
+    },
+    {
+      "step": 11,
+      "loss": 0.9959730820264667,
+      "gradient_norms": [
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508
+      ],
+      "commit_seconds": 0.1472768634557724,
+      "commit_interval_seconds": 0.18806338869035244,
+      "members": 4
+    },
+    {
+      "step": 12,
+      "loss": 0.8387740494217724,
+      "gradient_norms": [
+        1.8316922187805176,
+        1.8316922187805176,
+        1.8316922187805176,
+        1.8316922187805176
+      ],
+      "commit_seconds": 0.15255015157163143,
+      "commit_interval_seconds": 0.15664054453372955,
+      "members": 4
+    },
+    {
+      "step": 13,
+      "loss": 0.7031749687157571,
+      "gradient_norms": [
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808
+      ],
+      "commit_seconds": 0.16118564270436764,
+      "commit_interval_seconds": 0.16572037618607283,
+      "members": 4
+    },
+    {
+      "step": 14,
+      "loss": 0.5870292498730123,
+      "gradient_norms": [
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349
+      ],
+      "commit_seconds": 0.15845788083970547,
+      "commit_interval_seconds": 0.162572979927063,
+      "members": 4
+    },
+    {
+      "step": 15,
+      "loss": 0.4883754765614867,
+      "gradient_norms": [
+        1.3976774215698242,
+        1.3976774215698242,
+        1.3976774215698242,
+        1.3976774215698242
+      ],
+      "commit_seconds": 0.2523221019655466,
+      "commit_interval_seconds": 0.2571131456643343,
+      "members": 4
+    },
+    {
+      "step": 16,
+      "loss": 0.4053899992723018,
+      "gradient_norms": [
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526
+      ],
+      "commit_seconds": 0.15832327492535114,
+      "commit_interval_seconds": 0.2051304243505001,
+      "members": 4
+    },
+    {
+      "step": 17,
+      "loss": 0.3363640927709639,
+      "gradient_norms": [
+        1.159938097000122,
+        1.159938097000122,
+        1.159938097000122,
+        1.159938097000122
+      ],
+      "commit_seconds": 0.1588261816650629,
+      "commit_interval_seconds": 0.1637914478778839,
+      "members": 4
+    },
+    {
+      "step": 18,
+      "loss": 0.27967225608881563,
+      "gradient_norms": [
+        1.0576810836791992,
+        1.0576810836791992,
+        1.0576810836791992,
+        1.0576810836791992
+      ],
+      "commit_seconds": 0.14688358455896378,
+      "commit_interval_seconds": 0.15144144371151924,
+      "members": 4
+    },
+    {
+      "step": 19,
+      "loss": 0.23372406529961154,
+      "gradient_norms": [
+        0.9669002890586853,
+        0.9669002890586853,
+        0.9669002890586853,
+        0.9669002890586853
+      ],
+      "commit_seconds": 0.15197862591594458,
+      "commit_interval_seconds": 0.16016681026667356,
+      "members": 4
+    },
+    {
+      "step": 20,
+      "loss": 0.19692136556841433,
+      "gradient_norms": [
+        0.8875164985656738,
+        0.8875164985656738,
+        0.8875164985656738,
+        0.8875164985656738
+      ],
+      "commit_seconds": 0.13720731157809496,
+      "commit_interval_seconds": 0.1456603454425931,
+      "members": 4
+    }
+  ],
+  "actual_fault_occurred": false,
+  "pod_recovery_enabled": true,
+  "pod_recovery_events": [],
+  "limitations": [
+    "Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.",
+    "Saved-evidence audit does not rerun HCCL; real failure injection is reported separately."
+  ]
+}

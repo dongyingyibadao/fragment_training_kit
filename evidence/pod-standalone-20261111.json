@@ -1,0 +1,41 @@
+{
+  "schema": "fragment-pod-standalone-check-v1",
+  "temporary_root": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/.cache/ascend-keepalive/tmp/fragment-pod-standalone-mlf_4b_v",
+  "source_runtime_set_sha256": "835bb6f483498bf9ca23bbb7d93f1af0020df7bac566c339d8c0562612250451",
+  "original_project_reads_forbidden": true,
+  "external_pythonpath_removed": true,
+  "platform_jobs_created": 0,
+  "checks": {
+    "hashes": {
+      "returncode": 0,
+      "seconds": 0.21651434898376465,
+      "stdout_tail": "{\"passed\": true, \"runtime_sources_verified\": 53, \"release_files_verified\": 443}\n",
+      "stderr_tail": ""
+    },
+    "tests": {
+      "returncode": 0,
+      "seconds": 19.892256259918213,
+      "stdout_tail": "...... [ 61%]\n........................................................................ [ 77%]\n........................................................................ [ 92%]\n.................................                                        [100%]\n=============================== warnings summary ===============================\n../../../../../../../../../../opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63\n  /opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n    import pynvml  # type: ignore[import]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n465 passed, 1 warning in 18.77s\n",
+      "stderr_tail": ""
+    },
+    "cpu_oracle": {
+      "returncode": 0,
+      "seconds": 2.4679551124572754,
+      "stdout_tail": "  \"gradient_norm\": 1.6771106719970703\n    },\n    {\n      \"step\": 14,\n      \"loss_before_update\": 0.5870292782783508,\n      \"gradient_norm\": 1.5323567390441895\n    },\n    {\n      \"step\": 15,\n      \"loss_before_update\": 0.4883755147457123,\n      \"gradient_norm\": 1.3976774215698242\n    },\n    {\n      \"step\": 16,\n      \"loss_before_update\": 0.40539002418518066,\n      \"gradient_norm\": 1.2734049558639526\n    },\n    {\n      \"step\": 17,\n      \"loss_before_update\": 0.33636409044265747,\n      \"gradient_norm\": 1.1599379777908325\n    },\n    {\n      \"step\": 18,\n      \"loss_before_update\": 0.2796722650527954,\n      \"gradient_norm\": 1.0576810836791992\n    },\n    {\n      \"step\": 19,\n      \"loss_before_update\": 0.23372408747673035,\n      \"gradient_norm\": 0.9669004678726196\n    },\n    {\n      \"step\": 20,\n      \"loss_before_update\": 0.19692134857177734,\n      \"gradient_norm\": 0.887516438961029\n    }\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "normal_archive": {
+      "returncode": 0,
+      "seconds": 2.3882391452789307,
+      "stdout_tail": "12819,\n      \"members\": 2\n    },\n    {\n      \"step\": 19,\n      \"loss\": 0.2337240757769905,\n      \"gradient_norms\": [\n        0.9669004082679749,\n        0.9669004082679749\n      ],\n      \"commit_seconds\": 0.09582638368010521,\n      \"commit_interval_seconds\": 0.10282518249005079,\n      \"members\": 2\n    },\n    {\n      \"step\": 20,\n      \"loss\": 0.19692136932280846,\n      \"gradient_norms\": [\n        0.8875163793563843,\n        0.8875163793563843\n      ],\n      \"commit_seconds\": 0.08347873948514462,\n      \"commit_interval_seconds\": 0.09164378233253956,\n      \"members\": 2\n    }\n  ],\n  \"actual_fault_occurred\": false,\n  \"pod_recovery_enabled\": false,\n  \"pod_recovery_events\": [],\n  \"limitations\": [\n    \"Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.\",\n    \"Saved-evidence audit does not rerun HCCL; real failure injection is reported separately.\"\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "fault_archive": {
+      "returncode": 0,
+      "seconds": 2.29473614692688,
+      "stdout_tail": "9359841347,\n      \"commit_interval_seconds\": 0.08983172010630369,\n      \"members\": 1\n    },\n    {\n      \"step\": 19,\n      \"loss\": 0.23372410098090768,\n      \"gradient_norms\": [\n        0.9669004678726196\n      ],\n      \"commit_seconds\": 0.07261369749903679,\n      \"commit_interval_seconds\": 0.0784522881731391,\n      \"members\": 1\n    },\n    {\n      \"step\": 20,\n      \"loss\": 0.1969213449920062,\n      \"gradient_norms\": [\n        0.887516438961029\n      ],\n      \"commit_seconds\": 0.09549727104604244,\n      \"commit_interval_seconds\": 0.10130145121365786,\n      \"members\": 1\n    }\n  ],\n  \"actual_fault_occurred\": true,\n  \"pod_recovery_enabled\": false,\n  \"pod_recovery_events\": [],\n  \"limitations\": [\n    \"Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.\",\n    \"Saved-evidence audit does not rerun HCCL; real failure injection is reported separately.\"\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    }
+  },
+  "passed": true
+}

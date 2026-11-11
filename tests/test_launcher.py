@@ -95,6 +95,17 @@ def test_python_invocation_preserves_virtualenv_symlink(tmp_path):
     assert launch.absolute_file(str(path), "python") == str(path)
 
 
+@pytest.mark.parametrize("value", [1, "false", None, []])
+def test_fault_hold_flag_rejected_before_any_run_creation(prepared, tmp_path, value):
+    _, config, site, _ = prepared
+    site["training_config"]["resident_pod_allow_test_holds"] = value
+    launch.write(config, site)
+    run = tmp_path / "invalid-fault-gate"
+    with pytest.raises(ValueError, match="resident_pod_allow_test_holds"):
+        launch.prepare(config, run)
+    assert not run.exists()
+
+
 @pytest.mark.parametrize("key", ["resident_rng_scheme", "resident_precision_contract"])
 @pytest.mark.parametrize("value", [None, "", "   ", 7])
 def test_custom_adapter_identity_is_rejected_before_preparation(prepared, tmp_path, key, value):

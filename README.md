@@ -8,6 +8,8 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 
 **整机与碎卡混合优化：** 新增节点资源规划、每作业 1/2/4/8/16 卡、固定候选池的延迟申请与步边界接入。4×16 OpenPI 30 步短训实际提交间隔均值 **1.767 秒**；600 步小模型自动切入/定时切回及严格 CPU 数值参考通过。默认 HCCL 大梯度通信约 0.108 秒，手工分层在本轮反而更慢。功能、结果和恢复限制见 [09 混合训练](docs/09_topology_training.md)。这是有界实验验收，不代表整 pod 抢占后已能自动无损恢复。
 
+**整组失联恢复（显式启用）：** `feature/pod-loss-recovery` 新增分阶段活动池缩组，真实小模型通过 48→32→16 连续整组失联、部分成员已执行 Adam 后失联、checkpoint 导出换源及严格 CPU 数值参考。OpenPI 完成 64→48 卡、global256、无重算的 30 步短跑；该路径本轮健康 64 卡约 **2.576 秒/步**，控制开销高于历史路径。补卡攒满 16 张再同步接入尚未实现。启用方法、故障证据、性能与边界见 [10](docs/10_pod_loss_recovery.md)。
+
 ## 目录与读取顺序
 
 | 入口 | 解决的问题 |
@@ -21,6 +23,7 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 | [06 本次接入验收](docs/06_handoff_acceptance.md) | 不继承对话的agent的真实短跑结果 |
 | [07 独立项目与依赖](docs/07_standalone_project.md) | 目录迁移、外部输入、历史证据和验证范围 |
 | [08 拓扑执行计划](docs/08_topology_execution_plan.md)、[09 混合训练](docs/09_topology_training.md) | 节点规划、多卡作业、timeout对照、候选切换与限制 |
+| [10 整组与连续掉卡恢复](docs/10_pod_loss_recovery.md) | 显式启用的分阶段缩组、部分 APPLY 检查、checkpoint 换源与验收边界 |
 | `adapters.py`、[模型模板](examples/model_adapter_template.py) | 可修改的模型接入点 |
 | [toy代码](examples/toy_regression.py)、[数值审计](examples/audit_toy.py) | 无外部数据、CPU参考与真实NPU短训练 |
 | [站点示例](config/site.example.json)、`launch.py` | prepare/verify/run/observe/cleanup |

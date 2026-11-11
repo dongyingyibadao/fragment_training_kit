@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Experimental OpenPI resident fault probe, separate from production training.
 
-A CPU controller coordinates separately allocated LOW single-NPU supervisors.
-Only a supervisor may kill its own child.  The probe preserves healthy local
-contributions when a controlled loss occurs before optimizer application.  It
-supports one detected loss before optimizer authorization through CPU-supervisor counters
-and exits. It has no durable gradient acceptance or recovery for loss during
-optimizer application. NPU recovery remains experimental until
-this exact model/optimizer/gradient integration passes on real hardware.
+A CPU controller coordinates LOW single- or multi-NPU job supervisors.
+The default path supports one pre-APPLY loss. The opt-in pod recovery path
+splits compute/replay/reduction/APPLY, retains healthy local gradients across
+repeated losses, and checks complete surviving state before forwarding an
+already-authorized update. This is not controller-restart recovery or durable
+gradient storage. Hardware acceptance is recorded separately for each path.
 """
 from __future__ import annotations
 
@@ -999,6 +998,10 @@ def child(args):
         from jade_lotus.topology_cohort_runtime import CommittedBoundaryLease
         boundary_lease = CommittedBoundaryLease(spec["phase_timeout"])
         group, completed_step, previous, parked = None, initial_state["completed_step"], None, False
+        pod_worker = None
+        if spec.get("pod_recovery"):
+            from jade_lotus.pod_worker_runtime import PodWorker
+            pod_worker = PodWorker(sys.modules[__name__], run, spec, member, engine, optimizer, progress, prefetch)
         while True:
             idle_timeout = boundary_lease.remaining()
             progress("idle_boundary", timeout_seconds=idle_timeout)
@@ -1034,12 +1037,18 @@ def child(args):
                 progress("init_group")
                 _init_group(dist, group, member, spec["collective_timeout"])
                 _record(run, spec, member, previous, "initialized", generation=group["generation"])
+            elif action.startswith("pod_"):
+                if pod_worker is None:
+                    raise ValueError("Pod commands require the explicit recovery contract")
+                group, completed_step = pod_worker.execute(command, group, completed_step)
             elif action == "step":
                 if group is None or command["base_step"] != completed_step:
                     raise ValueError("Cannot train an unaligned native optimizer")
                 group = _worker_step(run, spec, member, command, engine, optimizer, group, progress, prefetch)
                 completed_step += 1
             elif action == "export":
+                if pod_worker is not None:
+                    pod_worker._test_gate(command)
                 if command["expected_step"] != completed_step:
                     raise ValueError("Export boundary step mismatch")
                 progress("export_native_state")
@@ -1488,7 +1497,24 @@ def controller(args):
         value = config.get(key, 0)
         if type(value) is not int or value < 0:
             raise ValueError(f"{key} must be a nonnegative integer")
+    pod_enabled = config.get("resident_pod_recovery", False)
+    if type(pod_enabled) is not bool:
+        raise ValueError("resident_pod_recovery must be boolean")
+    if pod_enabled and (not args.external_loss or not args.no_replacement):
+        raise ValueError("Pod recovery requires external-loss and no legacy single-card replacement")
+    max_recoveries = config.get("resident_pod_max_recoveries", 64)
+    if type(max_recoveries) is not int or not 1 <= max_recoveries <= 256:
+        raise ValueError("resident_pod_max_recoveries must be in 1..256")
+    step_timeout = config.get("resident_pod_step_timeout", args.phase_timeout * 4)
+    import math
+    if type(step_timeout) not in (int,float) or not math.isfinite(step_timeout) or not 1 <= step_timeout <= 86400:
+        raise ValueError("resident_pod_step_timeout must be finite in 1..86400")
+    test_holds = config.get("resident_pod_allow_test_holds", False)
+    if type(test_holds) is not bool:
+        raise ValueError("resident_pod_allow_test_holds must be boolean")
     topology_slots = validate_topology_config(config, args.cards, start_step=start_step, steps=args.steps)
+    if pod_enabled and (topology_slots != args.cards or config.get("resident_topology_switches")):
+        raise ValueError("Pod recovery currently uses the active pool only; legacy cohort switching is a separate contract")
     workers = [f"w{rank + 1:06d}" for rank in range(topology_slots)]
     initial_workers = workers[:args.cards]
     spec = {"schema": SCHEMA, "run_id": uuid.uuid4().hex, "config": str(args.config.resolve()),
@@ -1505,13 +1531,16 @@ def controller(args):
             "rng_scheme": config.get("resident_rng_scheme", "torch-atomic4-preprocess-cpu-noise-inverse-beta-v1"),
             "join_transport": args.join_transport,
             "external_loss": args.external_loss, "audit_before_collective": args.audit_before_collective,
+            "pod_recovery": pod_enabled, "pod_max_recoveries": max_recoveries,
+            "pod_step_timeout": step_timeout, "pod_allow_test_holds": test_holds,
             "heartbeat_timeout": args.heartbeat_timeout,
             "communication_diagnostics": args.communication_diagnostics,
             "communication_diagnostics_steps": args.communication_diagnostics_steps,
             "control_poll_seconds": args.control_poll_seconds,
             "control_poll_scope": "hot gates only, capped by each gate's existing interval; heartbeat and supervisor unchanged",
-            "external_recovery_scope": "one frozen-session loss before optimizer authorization; wait healthy local gradients, replay whole lost assignment",
-            "second_loss_during_repair_supported": False,
+            "external_recovery_scope": ("bounded repeated multi-session loss; preserve completed local ownership before APPLY; verify surviving full model/Adam then forward-commit after APPLY"
+                                        if pod_enabled else "one frozen-session loss before optimizer authorization; wait healthy local gradients, replay whole lost assignment"),
+            "second_loss_during_repair_supported": pod_enabled,
             "experimental_component": True, "production_recovery_verified": False,
             "precision_contract": config.get("resident_precision_contract", "native BF16/FP32 parameters and matching Adam moments; no FP32 master"),
             "fault_injection_mode": "independent_external_injector" if args.external_loss else "hold_final_rank_after_complete_backward_then_kill",
@@ -1523,7 +1552,7 @@ def controller(args):
                "single_card_loss_during_optimizer_apply_verified": False,
                "durable_gradient_acceptance_verified": False}
     _write(run / "summary.json", summary)
-    watch, topology = None, None
+    watch, topology, pod = None, None, None
     members, nonactive_errors = [], set()
     def checked_wait(readiness, label, *, hot_control=False, fatal_members=None, timeout_seconds=None):
         def check():
@@ -1536,6 +1565,9 @@ def controller(args):
             errors = list((run / "errors").glob("*.json"))
             for path in errors:
                 record = _read(path)
+                if pod is not None and record and any(key.worker_id == record.get("worker_id")
+                        and key.session_id == record.get("session_id") for key in pod.watch.detector.fenced_sessions):
+                    continue
                 if topology_slots == args.cards or not record or record.get("worker_id") in fatal_ids:
                     raise RuntimeError(f"Worker failed: {path}")
                 if str(path) not in nonactive_errors:
@@ -1543,6 +1575,10 @@ def controller(args):
                     summary.setdefault("topology_candidate_failures", []).append({"evidence": str(path),
                         "worker_id": record.get("worker_id"), "active_group_continued": True})
             for path in (run / "exits").glob("*.json"):
+                if pod is not None:
+                    ended = _read(path)
+                    if ended and any(key.matches_supervisor_record(ended) for key in pod.watch.detector.fenced_sessions):
+                        continue
                 record = _read(path)
                 if watch is not None and record and any(key.matches_supervisor_record(record) for key in watch.detector.fenced_sessions):
                     continue  # An exact persisted loss is already being repaired.
@@ -1595,7 +1631,7 @@ def controller(args):
         group = _group(members, 0)
         token = _send(run, spec, members, "init", group=group)
         wait_reports(members, token, "initialized")
-        if args.external_loss:
+        if args.external_loss and not pod_enabled:
             watch = ControllerLiveness(run, spec)
             watch.register_ready(members, receipt=f"initialized-group-{group['generation']}")
         if topology_slots > args.cards or config.get("resident_topology_switches"):
@@ -1605,97 +1641,109 @@ def controller(args):
                 make_group=_group, persist=lambda state: _write(run / "topology" / "state.json", state),
                 metadata=lambda boundary: _boundary_metadata(spec, boundary))
             topology.start(members, group)
+        if pod_enabled:
+            from jade_lotus.pod_controller_runtime import PodController
+            pod = PodController(sys.modules[__name__], run, spec, members, summary)
         summary.update(stage="training", training_started_at=time.time())
         _write(run / "summary.json", summary)
         previous_commit = time.monotonic()
         for step in range(start_step, args.steps):
             commit_started, commit_started_at = time.monotonic(), time.time()
-            mapping = assignments(members)
-            fault = not args.external_loss and step + 1 == args.fault_step
-            token = uuid.uuid4().hex
-            detector_token = token
-            if watch is not None:
-                if any(n.newly_fenced and n.session.worker_id in {m["worker_id"] for m in members}
-                       for n in watch.poll()):
-                    raise RuntimeError("Unsupported loss at the idle/update boundary")
-                watch.begin_step(token, base_step=step, generation=group["generation"],
-                                          sessions=[watch.keys[m["worker_id"]] for m in members])
-                watch.advance_phase(token, "reducing")
-            _send(run, spec, members, "step", token=token, group=group, base_step=step, expected_step=step,
-                          assignments=mapping, fault_victim=victim if fault else None)
-            if fault:
-                submitted = wait_reports(members, token, "submitted")
-                if any(record["generation"] != group["generation"] or record["base_step"] != step for record in submitted.values()):
-                    raise ValueError("Collective submission fence mismatch")
-                victim_submission = submitted[victim["worker_id"]]
-                if (victim_submission.get("held_before_collective") is not True
-                        or victim_submission["collectives"] != 0
-                        or victim_submission["local"]["units"] != mapping[victim["worker_id"]]):
-                    raise ValueError("Victim must finish its complete bundle and hold before HCCL")
-                if any(record.get("held_before_collective") or record["collectives"] <= 0
-                       for worker, record in submitted.items() if worker != victim["worker_id"]):
-                    raise ValueError("Every healthy rank must submit its complete communication batch before kill")
-                kill = {"schema": SCHEMA, "run_id": spec["run_id"], "action": "kill_own_child",
-                        "token": token, **_identity(victim)}
-                _write(run / "supervisor_commands" / f"{victim['worker_id']}.json", kill)
-                exit_record = checked_wait(lambda: _read(run / "exits" / f"{victim['worker_id']}-{victim['session_id']}.json"), "victim exit")
-                if not exit_record.get("killed_by_controller") or exit_record.get("kill_directive") != kill:
-                    raise ValueError("Supervisor did not confirm the exact own-child kill")
-                members = [member for member in members if not _same_identity(member, victim)]
-                _write(run / "abort" / f"{token}.json",
-                    {"action": "abort_collective", "run_id": spec["run_id"], "token": token,
-                     "base_step": step, "generation": group["generation"], "members": members,
-                     "confirmed_peer_exit": True, "victim": _identity(victim)})
-                if not args.no_replacement:
-                    _write(run / "supervisor_commands" / f"{victim['worker_id']}.json",
-                           {"run_id": spec["run_id"], "session_id": victim["session_id"], "action": "replace"})
-                recovered = wait_reports(members, token, "recovered")
-                if not all(record.get("full_native_state_and_gradient_unchanged") for record in recovered.values()):
-                    raise AssertionError("Healthy state preservation was not verified")
-                mapping, replay = repair_assignments(mapping, victim["worker_id"], members)
-                group = _group(members, group["generation"] + 1, port=recovered[members[0]["worker_id"]]["next_port"])
-                _write(run / "recovery" / f"{token}.json", {"run_id": spec["run_id"], "token": token,
-                       "base_step": step, "group": group, "assignments": mapping, "replay": replay})
-                summary["fault"] = {"base_step": step, "victim": _identity(victim),
-                    "healthy_processes_preserved": len(members), "healthy_full_native_state_and_gradients_verified": True,
-                    "only_lost_bundle_replayed": replay,
-                    "fault_injection_stage": "victim_full_backward_finished_held_before_collective",
-                    "pending_collective_guaranteed_by_missing_rank": True}
-            if watch is not None:
-                members, group, mapping, detector_token, lost, fault_record = _external_reduced_or_recover(
-                    run, spec, members, group, mapping, token, step, watch, wait_reports,
-                    already_lost="fault" in summary)
-                if lost is not None:
-                    victim = lost
-                    summary["fault"] = fault_record
-                    _write(run / "summary.json", summary)
-            reduced = wait_reports(members, token, "reduced")
-            if any(record["base_step"] != step or record["generation"] != group["generation"] for record in reduced.values()):
-                raise ValueError("Reduced-gradient generation/base-step mismatch")
-            validate_coverage(mapping)
-            if watch is not None:
-                if watch.poll():
-                    raise RuntimeError("Loss raced the prepared optimizer boundary; recovery_required")
-                watch.advance_phase(detector_token, "prepared")
-                watch.advance_phase(detector_token, "applying")
-                _write(run / "controller_phase.json", {"run_id": spec["run_id"], "token": token,
-                       "detector_token": detector_token, "base_step": step, "generation": group["generation"],
-                       "phase": "applying", "loss_requires_full_state_recovery": True})
-            _write(run / "apply" / f"{token}.json", {"run_id": spec["run_id"], "token": token,
-                    "base_step": step, "generation": group["generation"], "members": members})
-            updated = wait_reports(members, token, "updated")
-            if any(record["completed_step"] != step + 1 or record["checkpoint_calls"] != 0 for record in updated.values()):
-                raise AssertionError("Native optimizer step or recomputation ledger mismatch")
-            if watch is not None:
-                watch.advance_phase(detector_token, "committing")
-                watch.finish_step(detector_token, committed_state_receipt=f"all-updated/{token}")
+            pod_commit = None
+            if pod is not None:
+                members, group, pod_commit = pod.run_step(members, group, step)
+                mapping, token = pod_commit["assignments"], pod_commit["token"]
+                summary["pod_recovery_events"] = pod.events[:]
+                summary["pod_recovery_enabled"] = True
+            else:
+                mapping = assignments(members)
+                fault = not args.external_loss and step + 1 == args.fault_step
+                token = uuid.uuid4().hex
+                detector_token = token
+                if watch is not None:
+                    if any(n.newly_fenced and n.session.worker_id in {m["worker_id"] for m in members}
+                           for n in watch.poll()):
+                        raise RuntimeError("Unsupported loss at the idle/update boundary")
+                    watch.begin_step(token, base_step=step, generation=group["generation"],
+                                              sessions=[watch.keys[m["worker_id"]] for m in members])
+                    watch.advance_phase(token, "reducing")
+                _send(run, spec, members, "step", token=token, group=group, base_step=step, expected_step=step,
+                              assignments=mapping, fault_victim=victim if fault else None)
+                if fault:
+                    submitted = wait_reports(members, token, "submitted")
+                    if any(record["generation"] != group["generation"] or record["base_step"] != step for record in submitted.values()):
+                        raise ValueError("Collective submission fence mismatch")
+                    victim_submission = submitted[victim["worker_id"]]
+                    if (victim_submission.get("held_before_collective") is not True
+                            or victim_submission["collectives"] != 0
+                            or victim_submission["local"]["units"] != mapping[victim["worker_id"]]):
+                        raise ValueError("Victim must finish its complete bundle and hold before HCCL")
+                    if any(record.get("held_before_collective") or record["collectives"] <= 0
+                           for worker, record in submitted.items() if worker != victim["worker_id"]):
+                        raise ValueError("Every healthy rank must submit its complete communication batch before kill")
+                    kill = {"schema": SCHEMA, "run_id": spec["run_id"], "action": "kill_own_child",
+                            "token": token, **_identity(victim)}
+                    _write(run / "supervisor_commands" / f"{victim['worker_id']}.json", kill)
+                    exit_record = checked_wait(lambda: _read(run / "exits" / f"{victim['worker_id']}-{victim['session_id']}.json"), "victim exit")
+                    if not exit_record.get("killed_by_controller") or exit_record.get("kill_directive") != kill:
+                        raise ValueError("Supervisor did not confirm the exact own-child kill")
+                    members = [member for member in members if not _same_identity(member, victim)]
+                    _write(run / "abort" / f"{token}.json",
+                        {"action": "abort_collective", "run_id": spec["run_id"], "token": token,
+                         "base_step": step, "generation": group["generation"], "members": members,
+                         "confirmed_peer_exit": True, "victim": _identity(victim)})
+                    if not args.no_replacement:
+                        _write(run / "supervisor_commands" / f"{victim['worker_id']}.json",
+                               {"run_id": spec["run_id"], "session_id": victim["session_id"], "action": "replace"})
+                    recovered = wait_reports(members, token, "recovered")
+                    if not all(record.get("full_native_state_and_gradient_unchanged") for record in recovered.values()):
+                        raise AssertionError("Healthy state preservation was not verified")
+                    mapping, replay = repair_assignments(mapping, victim["worker_id"], members)
+                    group = _group(members, group["generation"] + 1, port=recovered[members[0]["worker_id"]]["next_port"])
+                    _write(run / "recovery" / f"{token}.json", {"run_id": spec["run_id"], "token": token,
+                           "base_step": step, "group": group, "assignments": mapping, "replay": replay})
+                    summary["fault"] = {"base_step": step, "victim": _identity(victim),
+                        "healthy_processes_preserved": len(members), "healthy_full_native_state_and_gradients_verified": True,
+                        "only_lost_bundle_replayed": replay,
+                        "fault_injection_stage": "victim_full_backward_finished_held_before_collective",
+                        "pending_collective_guaranteed_by_missing_rank": True}
+                if watch is not None:
+                    members, group, mapping, detector_token, lost, fault_record = _external_reduced_or_recover(
+                        run, spec, members, group, mapping, token, step, watch, wait_reports,
+                        already_lost="fault" in summary)
+                    if lost is not None:
+                        victim = lost
+                        summary["fault"] = fault_record
+                        _write(run / "summary.json", summary)
+                reduced = wait_reports(members, token, "reduced")
+                if any(record["base_step"] != step or record["generation"] != group["generation"] for record in reduced.values()):
+                    raise ValueError("Reduced-gradient generation/base-step mismatch")
+                validate_coverage(mapping)
+                if watch is not None:
+                    if watch.poll():
+                        raise RuntimeError("Loss raced the prepared optimizer boundary; recovery_required")
+                    watch.advance_phase(detector_token, "prepared")
+                    watch.advance_phase(detector_token, "applying")
+                    _write(run / "controller_phase.json", {"run_id": spec["run_id"], "token": token,
+                           "detector_token": detector_token, "base_step": step, "generation": group["generation"],
+                           "phase": "applying", "loss_requires_full_state_recovery": True})
+                _write(run / "apply" / f"{token}.json", {"run_id": spec["run_id"], "token": token,
+                        "base_step": step, "generation": group["generation"], "members": members})
+                updated = wait_reports(members, token, "updated")
+                if any(record["completed_step"] != step + 1 or record["checkpoint_calls"] != 0 for record in updated.values()):
+                    raise AssertionError("Native optimizer step or recomputation ledger mismatch")
+                if watch is not None:
+                    watch.advance_phase(detector_token, "committing")
+                    watch.finish_step(detector_token, committed_state_receipt=f"all-updated/{token}")
             committed_at = time.monotonic()
             summary["commits"].append({"step": step + 1, "generation": group["generation"],
                     "members": [_identity(member) for member in members], "assignments": mapping,
                     "atomic_units": 64, "samples": 256, "token": token, "time": time.time(),
                     "commit_seconds": committed_at - commit_started,
                     "commit_interval_seconds": committed_at - previous_commit,
-                    "command_started_at": commit_started_at})
+                    "command_started_at": commit_started_at,
+                    **({key:value for key,value in pod_commit.items() if key not in {"token","assignments","samples","atomic_units"}}
+                       if pod_commit is not None else {})})
             previous_commit = committed_at
             _publish_commit(run, summary, summary["commits"][-1], window=config.get("resident_summary_window", 0))
             if topology is not None:
@@ -1703,10 +1751,20 @@ def controller(args):
             checkpoint_every = config.get("resident_checkpoint_every", 0)
             verify_every = config.get("resident_verify_every", 0)
             stability_boundary = bool(resume) and step + 1 == start_step + 2000
-            if (checkpoint_every and (step + 1) % checkpoint_every == 0) or stability_boundary:
-                _periodic_checkpoint(run, spec, members, step + 1, summary, wait_reports)
-            if (verify_every and (step + 1) % verify_every == 0) or stability_boundary:
-                _inspect_boundary(run, spec, members, step + 1, summary, wait_reports)
+            do_checkpoint = bool((checkpoint_every and (step + 1) % checkpoint_every == 0) or stability_boundary)
+            do_inspect = bool((verify_every and (step + 1) % verify_every == 0) or stability_boundary)
+            if pod is not None and (do_checkpoint or do_inspect):
+                members, group, checkpoint_record, inspection_record = pod.checkpoint_boundary(
+                    members, group, step + 1, export=do_checkpoint)
+                if checkpoint_record:
+                    summary.setdefault("checkpoints", []).append(checkpoint_record)
+                summary.setdefault("state_inspections", []).append(inspection_record)
+                _write(run / "summary.json", summary)
+            elif pod is None:
+                if do_checkpoint:
+                    _periodic_checkpoint(run, spec, members, step + 1, summary, wait_reports)
+                if do_inspect:
+                    _inspect_boundary(run, spec, members, step + 1, summary, wait_reports)
             if topology is not None and step + 1 < args.steps:
                 try:
                     request = _read(run / "topology" / "switch_request.json")
@@ -1789,6 +1847,18 @@ def controller(args):
                         "healthy_commits_during_initial_model_load": [commit["step"] for commit in summary["commits"]
                             if ready.get("started_at", float("inf")) <= commit["time"] <= ready.get("loaded_at", 0)]}
                     _write(run / "summary.json", summary)
+        if pod is not None:
+            members, checkpoint, final = pod.finalize(members, group, args.steps,
+                checkpoint=config.get("resident_final_state") == "checkpoint")
+            if checkpoint:
+                summary["final_checkpoint"] = checkpoint
+            summary.update(status="passed", completed_at=time.time(), final_states_identical=True,
+                final_members=len(members), healthy_rollback_count=0,
+                final_member_identities=[_identity(member) for member in members],
+                pod_recovery_events=pod.events[:], pod_recovery_enabled=True,
+                initial_members=[_identity(member) for member in original_members])
+            _write(run / "summary.json", summary)
+            return 0
         if config.get("resident_final_state") == "checkpoint":
             state_metadata = {"run_id": spec["run_id"], "boundary_step": args.steps,
                               "config_sha256": spec["config_sha256"], "global_batch": 256,
@@ -1848,7 +1918,7 @@ def controller(args):
         return 0
     except BaseException:
         summary.update(status="failed", error=traceback.format_exc(), failed_at=time.time())
-        if ((watch is not None and watch.detector.phase in ("applying", "committing", "recovery_required"))
+        if ((pod is not None) or (watch is not None and watch.detector.phase in ("applying", "committing", "recovery_required"))
                 or isinstance(sys.exc_info()[1], CohortRecoveryRequired)
                 or (topology is not None and topology.recovery_required)):
             summary["recovery_required"] = True

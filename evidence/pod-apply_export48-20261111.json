@@ -1,0 +1,1567 @@
+{
+  "status": "passed",
+  "scope": "real NPU saved run vs independent full-global-batch CPU AdamW oracle",
+  "audit_mode": "live_run",
+  "npu_training_rerun": false,
+  "run_dir": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/Steadfast_as_the_Jade_Lotus/runs/pod-toy48-apply-export20-20261111-v1/probe",
+  "steps": 20,
+  "cards_requested": 48,
+  "initial_active_cards": 48,
+  "physical_pool_slots": 48,
+  "global_batch": 256,
+  "npu_readiness_evidence": [
+    {
+      "allocated_devices": 16,
+      "device": "npu:0",
+      "device_index": 0,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:1",
+      "device_index": 1,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:2",
+      "device_index": 2,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:3",
+      "device_index": 3,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:4",
+      "device_index": 4,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:5",
+      "device_index": 5,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:6",
+      "device_index": 6,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:7",
+      "device_index": 7,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:8",
+      "device_index": 8,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:9",
+      "device_index": 9,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:10",
+      "device_index": 10,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:11",
+      "device_index": 11,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:12",
+      "device_index": 12,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:13",
+      "device_index": 13,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:14",
+      "device_index": 14,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:15",
+      "device_index": 15,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:0",
+      "device_index": 0,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:1",
+      "device_index": 1,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:2",
+      "device_index": 2,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:3",
+      "device_index": 3,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:4",
+      "device_index": 4,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:5",
+      "device_index": 5,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:6",
+      "device_index": 6,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:7",
+      "device_index": 7,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:8",
+      "device_index": 8,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:9",
+      "device_index": 9,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:10",
+      "device_index": 10,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:11",
+      "device_index": 11,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:12",
+      "device_index": 12,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:13",
+      "device_index": 13,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:14",
+      "device_index": 14,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:15",
+      "device_index": 15,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:0",
+      "device_index": 0,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:1",
+      "device_index": 1,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:2",
+      "device_index": 2,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:3",
+      "device_index": 3,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:4",
+      "device_index": 4,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:5",
+      "device_index": 5,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:6",
+      "device_index": 6,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:7",
+      "device_index": 7,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:8",
+      "device_index": 8,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:9",
+      "device_index": 9,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:10",
+      "device_index": 10,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:11",
+      "device_index": 11,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:12",
+      "device_index": 12,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:13",
+      "device_index": 13,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:14",
+      "device_index": 14,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    },
+    {
+      "allocated_devices": 16,
+      "device": "npu:15",
+      "device_index": 15,
+      "device_name": "Ascend910B2C",
+      "resident_adapter": "fragment_training_kit.examples.toy_regression:create_engine",
+      "visible_devices": 16
+    }
+  ],
+  "initial_loss": 4.453125,
+  "final_checkpoint_loss": 0.16766048967838287,
+  "relative_loss_drop": 0.9623499251248544,
+  "gradient_and_optimizer_reference_passed": true,
+  "full_native_checkpoint_verified": true,
+  "all_final_workers_state_hashes_identical": true,
+  "parameter_max_abs_errors": {
+    "weight": 5.960464477539063e-08,
+    "bias": 8.940696716308594e-08
+  },
+  "adam_state_max_abs_errors": {
+    "weight.step": 0.0,
+    "weight.exp_avg": 6.891787052154541e-08,
+    "weight.exp_avg_sq": 1.1920928955078125e-07,
+    "bias.step": 0.0,
+    "bias.exp_avg": 2.2351741790771484e-08,
+    "bias.exp_avg_sq": 7.450580596923828e-09
+  },
+  "steady_commit_seconds_mean": 0.584008258942049,
+  "steady_commit_seconds_median": 0.42760258354246616,
+  "steady_commit_interval_seconds_mean": 0.623757962603122,
+  "steady_commit_samples": 16,
+  "steady_excluded_recovery_steps": [
+    5,
+    6
+  ],
+  "steady_excluded_switch_steps": [],
+  "topology_switches": [],
+  "recovery_updates": [
+    {
+      "step": 5,
+      "loss": 2.569694991223514,
+      "gradient_norms": [
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045
+      ],
+      "commit_seconds": 51.0991397080943,
+      "commit_interval_seconds": 51.10597237199545,
+      "members": 32
+    },
+    {
+      "step": 6,
+      "loss": 2.212986594066024,
+      "gradient_norms": [
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712
+      ],
+      "commit_seconds": 1.4754512589424849,
+      "commit_interval_seconds": 45.38241123594344,
+      "members": 16
+    }
+  ],
+  "timing_scope": "Commit duration and actual commit interval reported separately; first two warmups, recovery update and first update after cohort switches excluded from steady values. Intervals may include earlier checkpoint/inspection boundaries.",
+  "steps_observed": [
+    {
+      "step": 1,
+      "loss": 4.453125,
+      "gradient_norms": [
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018,
+        4.220486164093018
+      ],
+      "commit_seconds": 4.779484270140529,
+      "commit_interval_seconds": 4.779487677849829,
+      "members": 48
+    },
+    {
+      "step": 2,
+      "loss": 3.913124982267618,
+      "gradient_norms": [
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848,
+        3.9563241004943848
+      ],
+      "commit_seconds": 1.415786941535771,
+      "commit_interval_seconds": 1.4209086392074823,
+      "members": 48
+    },
+    {
+      "step": 3,
+      "loss": 3.419124634936452,
+      "gradient_norms": [
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725,
+        3.6981751918792725
+      ],
+      "commit_seconds": 1.5402710335329175,
+      "commit_interval_seconds": 1.5461678048595786,
+      "members": 48
+    },
+    {
+      "step": 4,
+      "loss": 2.971395214088261,
+      "gradient_norms": [
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919,
+        3.447547197341919
+      ],
+      "commit_seconds": 1.5482764784246683,
+      "commit_interval_seconds": 1.5542317107319832,
+      "members": 48
+    },
+    {
+      "step": 5,
+      "loss": 2.569694991223514,
+      "gradient_norms": [
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045,
+        3.2060534954071045
+      ],
+      "commit_seconds": 51.0991397080943,
+      "commit_interval_seconds": 51.10597237199545,
+      "members": 32
+    },
+    {
+      "step": 6,
+      "loss": 2.212986594066024,
+      "gradient_norms": [
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712,
+        2.975221872329712
+      ],
+      "commit_seconds": 1.4754512589424849,
+      "commit_interval_seconds": 45.38241123594344,
+      "members": 16
+    },
+    {
+      "step": 7,
+      "loss": 1.8991274854633957,
+      "gradient_norms": [
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205,
+        2.756176471710205
+      ],
+      "commit_seconds": 0.4284463105723262,
+      "commit_interval_seconds": 0.4408644698560238,
+      "members": 16
+    },
+    {
+      "step": 8,
+      "loss": 1.6247424993198365,
+      "gradient_norms": [
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732,
+        2.5493075847625732
+      ],
+      "commit_seconds": 0.4524820912629366,
+      "commit_interval_seconds": 0.4609745070338249,
+      "members": 16
+    },
+    {
+      "step": 9,
+      "loss": 1.38556615030393,
+      "gradient_norms": [
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075,
+        2.354201555252075
+      ],
+      "commit_seconds": 0.42675885651260614,
+      "commit_interval_seconds": 0.43606007006019354,
+      "members": 16
+    },
+    {
+      "step": 10,
+      "loss": 1.1772331986576319,
+      "gradient_norms": [
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184,
+        2.1700072288513184
+      ],
+      "commit_seconds": 0.4229719489812851,
+      "commit_interval_seconds": 0.4327947860583663,
+      "members": 16
+    },
+    {
+      "step": 11,
+      "loss": 0.9959730739938095,
+      "gradient_norms": [
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508,
+        1.9959688186645508
+      ],
+      "commit_seconds": 0.42330854944884777,
+      "commit_interval_seconds": 0.7076874496415257,
+      "members": 16
+    },
+    {
+      "step": 12,
+      "loss": 0.838774022180587,
+      "gradient_norms": [
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228,
+        1.831692099571228
+      ],
+      "commit_seconds": 0.4252011040225625,
+      "commit_interval_seconds": 0.4383366974070668,
+      "members": 16
+    },
+    {
+      "step": 13,
+      "loss": 0.7031749597517774,
+      "gradient_norms": [
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808,
+        1.6771105527877808
+      ],
+      "commit_seconds": 0.4469697019085288,
+      "commit_interval_seconds": 0.46509648207575083,
+      "members": 16
+    },
+    {
+      "step": 14,
+      "loss": 0.5870292612817138,
+      "gradient_norms": [
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349,
+        1.5323566198349
+      ],
+      "commit_seconds": 0.42446601763367653,
+      "commit_interval_seconds": 0.43647136352956295,
+      "members": 16
+    },
+    {
+      "step": 15,
+      "loss": 0.4883754439651966,
+      "gradient_norms": [
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347,
+        1.3976773023605347
+      ],
+      "commit_seconds": 0.5720507176592946,
+      "commit_interval_seconds": 0.592594251036644,
+      "members": 16
+    },
+    {
+      "step": 16,
+      "loss": 0.4053899929858744,
+      "gradient_norms": [
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526,
+        1.2734049558639526
+      ],
+      "commit_seconds": 0.42512635234743357,
+      "commit_interval_seconds": 0.5807024762034416,
+      "members": 16
+    },
+    {
+      "step": 17,
+      "loss": 0.3363640691386536,
+      "gradient_norms": [
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325,
+        1.1599379777908325
+      ],
+      "commit_seconds": 0.41953632328659296,
+      "commit_interval_seconds": 0.4395231883972883,
+      "members": 16
+    },
+    {
+      "step": 18,
+      "loss": 0.27967217878904194,
+      "gradient_norms": [
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306,
+        1.0576807260513306
+      ],
+      "commit_seconds": 0.41581301484256983,
+      "commit_interval_seconds": 0.436532948166132,
+      "members": 16
+    },
+    {
+      "step": 19,
+      "loss": 0.23372402042150497,
+      "gradient_norms": [
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405,
+        0.9669002294540405
+      ],
+      "commit_seconds": 0.43698047287762165,
+      "commit_interval_seconds": 0.4595012776553631,
+      "members": 16
+    },
+    {
+      "step": 20,
+      "loss": 0.1969213344855234,
+      "gradient_norms": [
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843,
+        0.8875163793563843
+      ],
+      "commit_seconds": 0.5354731697589159,
+      "commit_interval_seconds": 0.5525879189372063,
+      "members": 16
+    }
+  ],
+  "actual_fault_occurred": true,
+  "pod_recovery_enabled": true,
+  "pod_recovery_events": [
+    {
+      "lost": [
+        {
+          "pid": 57,
+          "session_id": "49d78d4f90f74d2ebf1717a1242c7fe9",
+          "worker_id": "w000033"
+        },
+        {
+          "pid": 58,
+          "session_id": "2d2ce0e2d29847a39d2497393649d20a",
+          "worker_id": "w000034"
+        },
+        {
+          "pid": 56,
+          "session_id": "32e91926af9d4bcf8d466a27d2af13e8",
+          "worker_id": "w000035"
+        },
+        {
+          "pid": 59,
+          "session_id": "cf3da1c80c914e2e866a1ec00d00e014",
+          "worker_id": "w000036"
+        },
+        {
+          "pid": 60,
+          "session_id": "c3631809ce094dcb8657d0dff28f72c0",
+          "worker_id": "w000037"
+        },
+        {
+          "pid": 61,
+          "session_id": "081158e062124c51abc907cb0f39e555",
+          "worker_id": "w000038"
+        },
+        {
+          "pid": 62,
+          "session_id": "985d6c74b85140a98e1215dab3bedf7d",
+          "worker_id": "w000039"
+        },
+        {
+          "pid": 63,
+          "session_id": "6df4ced52eac4682b78a9caa6ba1e25a",
+          "worker_id": "w000040"
+        },
+        {
+          "pid": 64,
+          "session_id": "faab2362c9b1457f976c75be573e1927",
+          "worker_id": "w000041"
+        },
+        {
+          "pid": 65,
+          "session_id": "80879e68797f4956b56fc326f0af4c01",
+          "worker_id": "w000042"
+        },
+        {
+          "pid": 66,
+          "session_id": "4ba1c55516c0409e95e2d1e1aacc3b11",
+          "worker_id": "w000043"
+        },
+        {
+          "pid": 67,
+          "session_id": "ee49c446a9d745bb944f8ceb8ffae57d",
+          "worker_id": "w000044"
+        },
+        {
+          "pid": 68,
+          "session_id": "bb691bd34b504b66bd0594463f0212e7",
+          "worker_id": "w000045"
+        },
+        {
+          "pid": 69,
+          "session_id": "62a2204daaf64f3eb60d397d9843348e",
+          "worker_id": "w000046"
+        },
+        {
+          "pid": 70,
+          "session_id": "235965be61d5443e95bff5c2d1c14af0",
+          "worker_id": "w000047"
+        },
+        {
+          "pid": 71,
+          "session_id": "54528f180a3842ae822ff9cde1a10f67",
+          "worker_id": "w000048"
+        }
+      ],
+      "number": 1,
+      "reason": "rebuild_group",
+      "step": 5,
+      "survivors": [
+        {
+          "pid": 57,
+          "session_id": "442f64d8bd984fa7b7462f284aa8f400",
+          "worker_id": "w000001"
+        },
+        {
+          "pid": 58,
+          "session_id": "b6631f3c43a6464a81d946ed1758381c",
+          "worker_id": "w000002"
+        },
+        {
+          "pid": 60,
+          "session_id": "4873f8cce5c54235b04b74e8732ca534",
+          "worker_id": "w000003"
+        },
+        {
+          "pid": 61,
+          "session_id": "d063e0e8c727482b86146340cabb0661",
+          "worker_id": "w000004"
+        },
+        {
+          "pid": 59,
+          "session_id": "1faf339f520f4ae0be06169370f29b41",
+          "worker_id": "w000005"
+        },
+        {
+          "pid": 56,
+          "session_id": "cb58b80d8d0a4bb3b524b8f75263e19f",
+          "worker_id": "w000006"
+        },
+        {
+          "pid": 62,
+          "session_id": "f069fb61dfcc480680e6536f11f72431",
+          "worker_id": "w000007"
+        },
+        {
+          "pid": 63,
+          "session_id": "4e478cb54326462d8aaf7181b940db98",
+          "worker_id": "w000008"
+        },
+        {
+          "pid": 64,
+          "session_id": "28003cc3916a4838807b03e07a760697",
+          "worker_id": "w000009"
+        },
+        {
+          "pid": 65,
+          "session_id": "6a3eeb68b9c34cb4839f1e54273a9d52",
+          "worker_id": "w000010"
+        },
+        {
+          "pid": 66,
+          "session_id": "a7499e3ff631465a8b518a160883ddb3",
+          "worker_id": "w000011"
+        },
+        {
+          "pid": 67,
+          "session_id": "5005b9d74ae44b70a9ffec50be3b5cd8",
+          "worker_id": "w000012"
+        },
+        {
+          "pid": 68,
+          "session_id": "829869f7bea34f0e9c6b9415c34d6905",
+          "worker_id": "w000013"
+        },
+        {
+          "pid": 69,
+          "session_id": "b1ea8402a00a41b28e768007dec04bcf",
+          "worker_id": "w000014"
+        },
+        {
+          "pid": 70,
+          "session_id": "fa99eb3852f14f87a2e7be5a206b2197",
+          "worker_id": "w000015"
+        },
+        {
+          "pid": 71,
+          "session_id": "4077e46108a74b7088363f022d847c7f",
+          "worker_id": "w000016"
+        },
+        {
+          "pid": 63,
+          "session_id": "0142c50d76a546058ae363b8d03dc1cb",
+          "worker_id": "w000017"
+        },
+        {
+          "pid": 64,
+          "session_id": "937c5c3d6ce4492d90ea3edc11a7cf7a",
+          "worker_id": "w000018"
+        },
+        {
+          "pid": 66,
+          "session_id": "16fa0c5ffb9b4d63a0a0978acb521426",
+          "worker_id": "w000019"
+        },
+        {
+          "pid": 65,
+          "session_id": "19004de0f1a440efa8979a3ca375b1bb",
+          "worker_id": "w000020"
+        },
+        {
+          "pid": 67,
+          "session_id": "f1c960356bab4f84a3ca0609b9f2b417",
+          "worker_id": "w000021"
+        },
+        {
+          "pid": 68,
+          "session_id": "e19c1137de5e40598ee055fa8c4e040e",
+          "worker_id": "w000022"
+        },
+        {
+          "pid": 69,
+          "session_id": "59097bddc7e744db9782e317907d6d0e",
+          "worker_id": "w000023"
+        },
+        {
+          "pid": 70,
+          "session_id": "45b6a4ea07434eb383fb3cc34d3f73b9",
+          "worker_id": "w000024"
+        },
+        {
+          "pid": 71,
+          "session_id": "13b4393c4e0b48e9bb1ec8605c93ce17",
+          "worker_id": "w000025"
+        },
+        {
+          "pid": 72,
+          "session_id": "74768d1d96b547b1927342320cbc198b",
+          "worker_id": "w000026"
+        },
+        {
+          "pid": 73,
+          "session_id": "0000db768b0f44e988af9121c5c0ad42",
+          "worker_id": "w000027"
+        },
+        {
+          "pid": 74,
+          "session_id": "9b2ddc98b1d348468b32951ef7d9ebb1",
+          "worker_id": "w000028"
+        },
+        {
+          "pid": 75,
+          "session_id": "175f5811743442ef9cb8ed555a98022a",
+          "worker_id": "w000029"
+        },
+        {
+          "pid": 76,
+          "session_id": "559f94c06c374ce19dd8cb0a44310253",
+          "worker_id": "w000030"
+        },
+        {
+          "pid": 77,
+          "session_id": "5501c8a5749246179b7e225651c04c4a",
+          "worker_id": "w000031"
+        },
+        {
+          "pid": 78,
+          "session_id": "004cfee4d92449058ea88aa533ec3588",
+          "worker_id": "w000032"
+        }
+      ]
+    },
+    {
+      "lost": [
+        {
+          "pid": 57,
+          "session_id": "442f64d8bd984fa7b7462f284aa8f400",
+          "worker_id": "w000001"
+        },
+        {
+          "pid": 58,
+          "session_id": "b6631f3c43a6464a81d946ed1758381c",
+          "worker_id": "w000002"
+        },
+        {
+          "pid": 60,
+          "session_id": "4873f8cce5c54235b04b74e8732ca534",
+          "worker_id": "w000003"
+        },
+        {
+          "pid": 61,
+          "session_id": "d063e0e8c727482b86146340cabb0661",
+          "worker_id": "w000004"
+        },
+        {
+          "pid": 59,
+          "session_id": "1faf339f520f4ae0be06169370f29b41",
+          "worker_id": "w000005"
+        },
+        {
+          "pid": 56,
+          "session_id": "cb58b80d8d0a4bb3b524b8f75263e19f",
+          "worker_id": "w000006"
+        },
+        {
+          "pid": 62,
+          "session_id": "f069fb61dfcc480680e6536f11f72431",
+          "worker_id": "w000007"
+        },
+        {
+          "pid": 63,
+          "session_id": "4e478cb54326462d8aaf7181b940db98",
+          "worker_id": "w000008"
+        },
+        {
+          "pid": 64,
+          "session_id": "28003cc3916a4838807b03e07a760697",
+          "worker_id": "w000009"
+        },
+        {
+          "pid": 65,
+          "session_id": "6a3eeb68b9c34cb4839f1e54273a9d52",
+          "worker_id": "w000010"
+        },
+        {
+          "pid": 66,
+          "session_id": "a7499e3ff631465a8b518a160883ddb3",
+          "worker_id": "w000011"
+        },
+        {
+          "pid": 67,
+          "session_id": "5005b9d74ae44b70a9ffec50be3b5cd8",
+          "worker_id": "w000012"
+        },
+        {
+          "pid": 68,
+          "session_id": "829869f7bea34f0e9c6b9415c34d6905",
+          "worker_id": "w000013"
+        },
+        {
+          "pid": 69,
+          "session_id": "b1ea8402a00a41b28e768007dec04bcf",
+          "worker_id": "w000014"
+        },
+        {
+          "pid": 70,
+          "session_id": "fa99eb3852f14f87a2e7be5a206b2197",
+          "worker_id": "w000015"
+        },
+        {
+          "pid": 71,
+          "session_id": "4077e46108a74b7088363f022d847c7f",
+          "worker_id": "w000016"
+        }
+      ],
+      "number": 2,
+      "reason": "rebuild_group",
+      "step": 5,
+      "survivors": [
+        {
+          "pid": 63,
+          "session_id": "0142c50d76a546058ae363b8d03dc1cb",
+          "worker_id": "w000017"
+        },
+        {
+          "pid": 64,
+          "session_id": "937c5c3d6ce4492d90ea3edc11a7cf7a",
+          "worker_id": "w000018"
+        },
+        {
+          "pid": 66,
+          "session_id": "16fa0c5ffb9b4d63a0a0978acb521426",
+          "worker_id": "w000019"
+        },
+        {
+          "pid": 65,
+          "session_id": "19004de0f1a440efa8979a3ca375b1bb",
+          "worker_id": "w000020"
+        },
+        {
+          "pid": 67,
+          "session_id": "f1c960356bab4f84a3ca0609b9f2b417",
+          "worker_id": "w000021"
+        },
+        {
+          "pid": 68,
+          "session_id": "e19c1137de5e40598ee055fa8c4e040e",
+          "worker_id": "w000022"
+        },
+        {
+          "pid": 69,
+          "session_id": "59097bddc7e744db9782e317907d6d0e",
+          "worker_id": "w000023"
+        },
+        {
+          "pid": 70,
+          "session_id": "45b6a4ea07434eb383fb3cc34d3f73b9",
+          "worker_id": "w000024"
+        },
+        {
+          "pid": 71,
+          "session_id": "13b4393c4e0b48e9bb1ec8605c93ce17",
+          "worker_id": "w000025"
+        },
+        {
+          "pid": 72,
+          "session_id": "74768d1d96b547b1927342320cbc198b",
+          "worker_id": "w000026"
+        },
+        {
+          "pid": 73,
+          "session_id": "0000db768b0f44e988af9121c5c0ad42",
+          "worker_id": "w000027"
+        },
+        {
+          "pid": 74,
+          "session_id": "9b2ddc98b1d348468b32951ef7d9ebb1",
+          "worker_id": "w000028"
+        },
+        {
+          "pid": 75,
+          "session_id": "175f5811743442ef9cb8ed555a98022a",
+          "worker_id": "w000029"
+        },
+        {
+          "pid": 76,
+          "session_id": "559f94c06c374ce19dd8cb0a44310253",
+          "worker_id": "w000030"
+        },
+        {
+          "pid": 77,
+          "session_id": "5501c8a5749246179b7e225651c04c4a",
+          "worker_id": "w000031"
+        },
+        {
+          "pid": 78,
+          "session_id": "004cfee4d92449058ea88aa533ec3588",
+          "worker_id": "w000032"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.",
+    "Saved-evidence audit does not rerun HCCL; real failure injection is reported separately."
+  ]
+}

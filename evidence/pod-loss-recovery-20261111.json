@@ -1,0 +1,291 @@
+{
+  "schema": "fragment-pod-loss-acceptance-v1",
+  "date": "2026-11-11",
+  "timezone": "Asia/Shanghai",
+  "status": "passed",
+  "backup_ref": "backup/pre-pod-recovery-20261111",
+  "backup_commit": "3f1bd25689f7ae92e4977885dc844d16f7c2ba1f",
+  "feature_branch": "feature/pod-loss-recovery",
+  "authorized_shared_card_limit": 64,
+  "runtime_source_set_sha256": "835bb6f483498bf9ca23bbb7d93f1af0020df7bac566c339d8c0562612250451",
+  "cpu_regression": {
+    "passed": 465,
+    "log_sha256": "4f2eb999851893fc990d7c62075cd74650e5fe3db8dfce9d87ecaf7dfc2c371f"
+  },
+  "cases": [
+    {
+      "name": "normal4",
+      "run_name": "pod-toy4-normal20-20261111-v2",
+      "initial_cards": 4,
+      "final_cards": 4,
+      "steps": 20,
+      "global_batch": 256,
+      "activation_recomputation": false,
+      "normal_step_member_counts": [
+        4
+      ],
+      "faults": [],
+      "forward_recovery_commits": [],
+      "checkpoint_steps": [],
+      "all_final_model_and_adam_states_identical": true,
+      "official_terminal_jobs": [
+        {
+          "job_id": "job-814cc0cf-61f3-40b3-8523-dc28cdbe5902",
+          "status": "job_succeeded"
+        },
+        {
+          "job_id": "job-6aa5a322-b69b-43c8-9808-5b148ae94634",
+          "status": "job_succeeded"
+        }
+      ],
+      "resources_released": true,
+      "audit_file": "pod-normal4-20261111.json",
+      "source_evidence_sha256": {
+        "audit": "585c4fa9330435ac92caed81a7d4798b9170dc843781774330ccae91096125a7",
+        "summary": "3511583bc47976a5952b1f3e6ee0df4c1305dfbdbd6264ec449774feccb24ef4",
+        "source_manifest": "26bdfc531f19ada0c8e0cacff949abe89e2d772d7e99a238539aad426e7092fa",
+        "cleanup": "5ba4333c47515bc90aabece574d3bed96baa3e4d34649a66355035c317a044b8"
+      },
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766051948070526,
+      "parameter_max_abs_error": 2.9802322387695312e-08,
+      "adam_max_abs_error": 1.1920928955078125e-07,
+      "strict_cpu_reference_passed": true
+    },
+    {
+      "name": "repeated48",
+      "run_name": "pod-toy48-loss20-20261111-v3",
+      "initial_cards": 48,
+      "final_cards": 16,
+      "steps": 20,
+      "global_batch": 256,
+      "activation_recomputation": false,
+      "normal_step_member_counts": [
+        16,
+        48
+      ],
+      "faults": [
+        {
+          "number": 1,
+          "stage": "pod_reduce",
+          "base_or_boundary_step": 4,
+          "job_id": "job-0626c276-9a61-4339-8c57-7a5a4cbb272c",
+          "cards_stopped": 16,
+          "exact_held_sessions": 16,
+          "peer_phase_verified": "pod_submitted",
+          "peer_report_count": 32,
+          "stop_response_to_next_commit_seconds": 89.83457565307617,
+          "receipt_sha256": "b42c39f7b11ae533623132d4688fc1e9e91b97cf39515cd4fa3dad87f2fb1dad"
+        },
+        {
+          "number": 2,
+          "stage": "pod_replay",
+          "base_or_boundary_step": 4,
+          "job_id": "job-e21e9ba2-cd37-40b4-be7c-555833fb746b",
+          "cards_stopped": 16,
+          "exact_held_sessions": 16,
+          "peer_phase_verified": "pod_local",
+          "peer_report_count": 16,
+          "stop_response_to_next_commit_seconds": 41.394519329071045,
+          "receipt_sha256": "fecfa36a34127ec5898f8309d627e02ebe94848acb4ea5e06becdea98026f5a6"
+        }
+      ],
+      "forward_recovery_commits": [],
+      "checkpoint_steps": [],
+      "all_final_model_and_adam_states_identical": true,
+      "official_terminal_jobs": [
+        {
+          "job_id": "job-e21e9ba2-cd37-40b4-be7c-555833fb746b",
+          "status": "job_stopped"
+        },
+        {
+          "job_id": "job-9eb625e1-9ad3-4740-9131-463ddcb72670",
+          "status": "job_succeeded"
+        },
+        {
+          "job_id": "job-0626c276-9a61-4339-8c57-7a5a4cbb272c",
+          "status": "job_stopped"
+        }
+      ],
+      "resources_released": true,
+      "audit_file": "pod-repeated48-20261111.json",
+      "source_evidence_sha256": {
+        "audit": "b8b06e1ae858d79c490e31002796357e68dd6531aede29c631fff42156f22db1",
+        "summary": "0ce9300eb2ac8532c097d7113d2cae905a6c1e99f1be64475eb52d1da44b6e9e",
+        "source_manifest": "9cba32fece0169432833699f112561cb468aeed5b30e58e542c0ebf7cb00ca57",
+        "cleanup": "368c064aaef4370648bc8dfee6a77370dba4dbebd9db010a2dafcb9a4af249cb"
+      },
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766050457954407,
+      "parameter_max_abs_error": 5.960464477539063e-08,
+      "adam_max_abs_error": 1.1920928955078125e-07,
+      "strict_cpu_reference_passed": true
+    },
+    {
+      "name": "apply_export48",
+      "run_name": "pod-toy48-apply-export20-20261111-v1",
+      "initial_cards": 48,
+      "final_cards": 16,
+      "steps": 20,
+      "global_batch": 256,
+      "activation_recomputation": false,
+      "normal_step_member_counts": [
+        16,
+        32,
+        48
+      ],
+      "faults": [
+        {
+          "number": 1,
+          "stage": "pod_apply",
+          "base_or_boundary_step": 4,
+          "job_id": "job-61492383-b7a7-451b-8874-dc7dd3836772",
+          "cards_stopped": 16,
+          "exact_held_sessions": 16,
+          "peer_phase_verified": "updated",
+          "peer_report_count": 32,
+          "stop_response_to_next_commit_seconds": 45.961822509765625,
+          "receipt_sha256": "9ea7123ea991d8b096d60592e75c80431f3bec3e2b6184d480aa758366523fec"
+        },
+        {
+          "number": 2,
+          "stage": "export",
+          "base_or_boundary_step": 5,
+          "job_id": "job-33d04699-31eb-460a-988b-25f7c69fb09f",
+          "cards_stopped": 16,
+          "exact_held_sessions": 1,
+          "peer_phase_verified": "committed_boundary",
+          "peer_report_count": 1,
+          "stop_response_to_next_commit_seconds": 41.636510372161865,
+          "receipt_sha256": "7af4425b73ca2c6d77d9cbf0a9fe5fedc49dc036154028803cbc0d8fbcbe0b8d"
+        }
+      ],
+      "forward_recovery_commits": [
+        5
+      ],
+      "checkpoint_steps": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "all_final_model_and_adam_states_identical": true,
+      "official_terminal_jobs": [
+        {
+          "job_id": "job-33d04699-31eb-460a-988b-25f7c69fb09f",
+          "status": "job_stopped"
+        },
+        {
+          "job_id": "job-df57c25e-7a11-436e-826d-f02a8966ecef",
+          "status": "job_succeeded"
+        },
+        {
+          "job_id": "job-61492383-b7a7-451b-8874-dc7dd3836772",
+          "status": "job_stopped"
+        }
+      ],
+      "resources_released": true,
+      "audit_file": "pod-apply_export48-20261111.json",
+      "source_evidence_sha256": {
+        "audit": "c2e3bae6e18ea3b1da9bf275a65c36a15497b4b71753acc128c6b047daa9b55b",
+        "summary": "9404afbd035c71874349a4b6620427a4741c1e779520df1d692c65999be47356",
+        "source_manifest": "bcfb982c5137d5c6b549a673ac599ea8afb48f397dcce6dd7fb44d50d45b2820",
+        "cleanup": "6131062fcd6ab673e02b6a30e13bb78dc7303551be9cf9cbea8f315f11bde600"
+      },
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766048967838287,
+      "parameter_max_abs_error": 8.940696716308594e-08,
+      "adam_max_abs_error": 1.1920928955078125e-07,
+      "strict_cpu_reference_passed": true
+    },
+    {
+      "name": "openpi64",
+      "run_name": "pod-openpi64-loss30-20261111-v3",
+      "initial_cards": 64,
+      "final_cards": 48,
+      "steps": 30,
+      "global_batch": 256,
+      "activation_recomputation": false,
+      "normal_step_member_counts": [
+        48,
+        64
+      ],
+      "faults": [
+        {
+          "number": 1,
+          "stage": "pod_reduce",
+          "base_or_boundary_step": 10,
+          "job_id": "job-d8dd89a4-4d84-4ed0-8c72-6b636ee2c2fb",
+          "cards_stopped": 16,
+          "exact_held_sessions": 16,
+          "peer_phase_verified": "pod_submitted",
+          "peer_report_count": 48,
+          "stop_response_to_next_commit_seconds": 99.32862210273743,
+          "receipt_sha256": "42b6dfcebc28ba83079a663cc6791867ab1795b6c54a1ddeae25d93845319feb"
+        }
+      ],
+      "forward_recovery_commits": [],
+      "checkpoint_steps": [],
+      "all_final_model_and_adam_states_identical": true,
+      "official_terminal_jobs": [
+        {
+          "job_id": "job-56df3478-a1f5-4614-a476-7306298c5dcd",
+          "status": "job_succeeded"
+        },
+        {
+          "job_id": "job-6a0dbec1-add8-43ea-b4b1-fddc33d89cb1",
+          "status": "job_succeeded"
+        },
+        {
+          "job_id": "job-5244d967-02f5-41aa-930b-029688a6328d",
+          "status": "job_succeeded"
+        },
+        {
+          "job_id": "job-d8dd89a4-4d84-4ed0-8c72-6b636ee2c2fb",
+          "status": "job_stopped"
+        }
+      ],
+      "resources_released": true,
+      "audit_file": "pod-openpi64-20261111.json",
+      "source_evidence_sha256": {
+        "audit": "cc3559faa0382e3089db116226f785e021630d827c775f554c8e27c730122cb0",
+        "summary": "410e2da32edb3da8eed6868072a9283623cf72ad528931d4b2c5a694368a6519",
+        "source_manifest": "9a1dc7f6f6e8ae81a6e2201aa81f67a1d823ea7071d03e70d319b8bce5b91cea",
+        "cleanup": "5e991755cc8d71b31b2222d00fd6e5571f503aeade36ae32f731e2b946239975"
+      }
+    }
+  ],
+  "earlier_attempts": [
+    {
+      "run_name": "pod-toy48-loss20-20261111-v1",
+      "reason": "Initial queue+loading exceeded 240s; no injected training failure and no committed steps.",
+      "resources_released": true,
+      "summary_sha256": "80a921062f136b6d8cbecbb9971cbabc1b91f39c018a22ae81a773bc11424ce8",
+      "cleanup_sha256": "78e40268326f7aad8dccef005ae08dc89d3f1880ea2a66dbe3791044c972d498"
+    },
+    {
+      "run_name": "pod-toy48-loss20-20261111-v2",
+      "reason": "Training and CPU oracle passed, but external actor was restarted after it used stale phase members; clean v3 is the primary acceptance.",
+      "resources_released": true,
+      "summary_sha256": "fb4e849ff4c3fe6b7adfa3d620ab74ae5cab6df830f19b301044e015a733073e",
+      "cleanup_sha256": "a1b65fab2003cbc79c129ecf439c538970a9cd8a1b481052f1a781f549bc163d"
+    },
+    {
+      "run_name": "pod-openpi64-loss30-20261111-v2",
+      "reason": "Heartbeat15 falsely fenced 32 sessions during initial compute; first10 commits actually used32. Invalidated and cleaned; not a64-card benchmark or planned fault acceptance.",
+      "resources_released": true,
+      "summary_sha256": "ef184c00c16ecffe8bb035e45fe8637cab46b0096d6dd863345798daacc74088",
+      "cleanup_sha256": "63f501e03fb8cd20b74f3b3298d1997011a98366e2db2c06729b6c4f3e46fa97"
+    }
+  ],
+  "limits": [
+    "Recovery starts after initial READY and first communicator initialization.",
+    "No automatic recovery with no survivor, controller restart, or arbitrary new workers.",
+    "Live refill/admission after accumulating16 cards is a future policy, not implemented.",
+    "Toy has full independent CPU gradient/Adam reference; OpenPI has finite full-batch coverage and complete final-state agreement, not an independent full-model CPU gradient oracle.",
+    "Only20/30-step recovery probes; not2000-step stability or new downstream quality.",
+    "Export-source test holds the selected source before writing, then stops its whole16-card job; mid-write device failures are not a separate hardware acceptance.",
+    "OpenPI normal64 control path is slower than historical; phase timing comparison is from different hosts/times."
+  ],
+  "standalone_verification": "pod-standalone-20261111.json"
+}
