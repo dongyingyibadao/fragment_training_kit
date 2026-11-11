@@ -28,6 +28,7 @@ class PodController:
         self.generation = 0
         self.recoveries, self.events = 0, []
         self.deadline = None
+        self.inflight, self.committed_step = False, spec.get('start_step', 0)
         self.max_recoveries = spec.get('pod_max_recoveries', 64)
         self._persist('ready', expected_step=spec.get('start_step', 0))
 
@@ -38,6 +39,32 @@ class PodController:
                  'members': [self.api._identity(m) for m in self.members], **fields}
         self.api._write(self.run/'pod'/'phase.json', value)
         return value
+
+    def compact_liveness(self, members, group, step):
+        """Retire historical polling only after the split protocol's COMMIT.
+
+        This detector owns heartbeats, not APPLY. Do not impersonate a legacy
+        detector finish_step to reset its view. Keep every irreversible fence.
+        """
+        old = self.watch
+        if self.inflight or step != self.committed_step or old.detector.phase != 'idle':
+            raise PodRecoveryRequired('Pod liveness compaction requires its verified COMMIT boundary')
+        if not self.same(members, group['members']):
+            raise PodRecoveryRequired('Cannot compact a group with unacknowledged membership')
+        from dataclasses import asdict
+        new = self.api.ControllerLiveness(self.run, self.spec,
+            persisted_fences=old.detector.fenced_sessions, used_tokens=old.used_tokens,
+            generation_floor=max(old.generation_floor, group['generation']), epoch=old.detector.epoch,
+            last_committed_step=step)
+        new.seen_exits = set(old.seen_exits)
+        new._persisted_losses = dict(old._persisted_losses)
+        new.register_ready(members, receipt=f'pod-verified-commit/{step}')
+        self.api._write(self.run/'pod'/'liveness'/f'{step:06d}-{group["generation"]:06d}.json', {
+            'run_id': self.spec['run_id'], 'committed_step': step, 'generation': group['generation'],
+            'members': [self.api._identity(m) for m in members],
+            'retained_fenced_sessions': [asdict(k) for k in sorted(old.detector.fenced_sessions, key=repr)]})
+        self.watch = new
+        self.members = list(members)
 
     def live(self, members=None):
         members = list(self.members if members is None else members)
@@ -180,6 +207,9 @@ class PodController:
             current, mapping = surviving, repaired
 
     def run_step(self, members, group, step):
+        if self.inflight or step != self.committed_step:
+            raise PodRecoveryRequired('Pod update must start at its last verified COMMIT')
+        self.inflight = True
         self.deadline = time.monotonic() + self.spec.get('pod_step_timeout', self.spec['phase_timeout'] * 4)
         current = self.live(members)
         if not self.same(current, members):
@@ -273,6 +303,7 @@ class PodController:
         self.members = surviving
         self._persist('updated_verified', completed_step=step+1, root_token=root_token,
                       update_token=update_token, forward_recovery=forward)
+        self.inflight, self.committed_step = False, step + 1
         return surviving, group, {'token': update_token, 'root_token':root_token,
             'assignments':mapping, 'reduction_token':token, 'prepared_members':[self.api._identity(m) for m in prepared_members],
             'prepared_loss_contributions':prepared_loss, 'pod_recovery':True,
@@ -294,8 +325,8 @@ class PodController:
             current, mapping = self.settle(current, repaired, token, step=step, root_token=root_token)
         return current, mapping
 
-    def checkpoint_boundary(self, members, group, step, *, export=False):
-        self.deadline = time.monotonic() + self.spec['phase_timeout'] * 4
+    def checkpoint_boundary(self, members, group, step, *, export=False, deadline=None):
+        self.deadline = time.monotonic() + self.spec['phase_timeout'] * 4 if deadline is None else deadline
         current = self.live(members)
         record = None
         if export:

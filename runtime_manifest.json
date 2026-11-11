@@ -4,7 +4,7 @@
     "jade_lotus/__init__.py": "699ef77707d34b129e1c303c1f30ea97ed1c924be208c3d997d62ad47d5c9225",
     "jade_lotus/array_blob.py": "a9458c6afb4d7d0dd93daec5ab3a6dc5bea722a773dbe176d1492ad648ef9c10",
     "jade_lotus/ascend_eval_policy.py": "dc4b459ca25f0d66cf50d06f72b02fc0710c35bfe9f27c17c66fef1e961583b9",
-    "jade_lotus/ascend_fleet.py": "a965a2319a801cf85b8c3ad7e1c519b3a562fe8fdce7e952ed6edc4acc7c23a2",
+    "jade_lotus/ascend_fleet.py": "9fbea91bcad300f079165af4d7f073d00008dcd0f97979202942c3cd5a4428bd",
     "jade_lotus/ascend_libero_eval.py": "6461d777f60e2958f0faebc512c77e394603c1828ee85d9f8e37441c310e557b",
     "jade_lotus/ascend_nodes.py": "5a7aaf407a0f680db2557797bbc6781a4ab5c55908e481e02d50985ab2075c9f",
     "jade_lotus/ascend_platform.py": "abd0cc74c8c0b7e2a24e88b25a740460c5e2800d491ce22bb11420f96a68f6e5",
@@ -34,10 +34,14 @@
     "jade_lotus/npu_parameter_transfer.py": "a0220948dba81dccf00c0cddd3589ea15f3e55914b23ea89ca24af32383688a2",
     "jade_lotus/numeric_validation.py": "b9c984f85db1aa105a2bb61418c4430f0d5734978a5123af3159205ccdcd0460",
     "jade_lotus/platform.py": "306c666080ab9af404a9866ce5836d5b72bde571db3744fd2b4bb57cec9c1511",
-    "jade_lotus/pod_controller_runtime.py": "b9c9b7f45735d0cfe3acc8ca92a2187f17d0ca0bf6bb24ed5ad959373f85d6a2",
+    "jade_lotus/pod_controller_runtime.py": "b05cc6378158f1c8e95b55d75111931fe7cf1deb96925afc74b7333531255b7e",
     "jade_lotus/pod_recovery.py": "9ffb031721cc5dcad9fbffbb7bb20d6d89b0197140cbb3544e1c1999df8c2e28",
     "jade_lotus/pod_worker_runtime.py": "3a859ad0239ddfab2e2d1936ba6cf7dda91604c6de760c0d2c08a8353d9c4d36",
     "jade_lotus/protocol.py": "4e8a86eca2e0c475a1914b37c3cac70a6380e162f700d86ca721097ae40071f0",
+    "jade_lotus/refill_controller.py": "0a9e13849ce7e09ca7d55f09ef973e71a7879bfd20ec52fcfeae449623b57208",
+    "jade_lotus/refill_fleet.py": "c6c8964883fed085e6eb5d94b0053453feb146d5855baf0da14f6c2f26776d03",
+    "jade_lotus/refill_protocol.py": "08737e36f6ed62c56bf53fa672a307e8e01602fc7fb16cec4144e9f12d2ed3cf",
+    "jade_lotus/refill_state.py": "7b61bb463d5844d7f7c476096c1fc0e4cf05d361ff6f8802370016e48b903953",
     "jade_lotus/resident_data.py": "2c779ca1c5f8adde6b62b74dafb15a0af66dfd0992ce65b080830c993580c838",
     "jade_lotus/resident_liveness.py": "a456548325c736442b555562de202ec757ae1ecd88a3c6f3da0971a98a99f6e5",
     "jade_lotus/resident_membership.py": "3f77d77eeeb7e6593c63ca1e12c722e16b0f0836d8007b3a334210cea9eebb48",
@@ -53,9 +57,9 @@
     "jade_lotus/topology_switch.py": "9196e5b42e2caaf57016181aada0ea302d20bd39df5163693bb9adae288e219d",
     "jade_lotus/train.py": "560c80dfc1272c286ba6141623279cfd433f74709aadf9b879ee256c6ffe6e79",
     "jade_lotus/worker.py": "d57ce032caad58685e9659bc8997ec92ab0b40b50d21255e6240c5338656c24f",
-    "scripts/probe_resident_openpi_fault.py": "8c7987a9999e365a08563f321ad54c7f70e8ea1d3434b9384ca9fd5cb495481d"
+    "scripts/probe_resident_openpi_fault.py": "7e475f5d36387311ef1c3bee65eeee470dfe147c28bebe2dc55e7e1d5b666151"
   },
-  "source_set_sha256": "835bb6f483498bf9ca23bbb7d93f1af0020df7bac566c339d8c0562612250451",
+  "source_set_sha256": "84870ee83de9c8c54fe78118ca704b4c990bdb8ff4d39f144ccfac5db6888d42",
   "scope": "Python sources only. No runs, weights, datasets, inventory, cookie or password files.",
   "openpi": "Optional upstream environment/model/data are supplied separately."
 }

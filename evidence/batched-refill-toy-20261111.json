@@ -1,0 +1,1263 @@
+{
+  "schema": "fragment-batched-refill-toy-public-evidence-v1",
+  "evidence_date_utc": "2026-11-11",
+  "scope": "Compact read-only summary of two completed NPU toy runs, independent saved-run numerical oracles, protocol/checkpoint-byte audits, and regression evidence.",
+  "provenance": {
+    "historical_path_base": "Steadfast_as_the_Jade_Lotus",
+    "historical_paths_are_runtime_dependencies": false,
+    "raw_reports": {
+      "toy64-oracle-v1.json": {
+        "historical_path": "artifacts/batched-refill-20261111/toy64-oracle-v1.json",
+        "sha256": "08d5e729d5827fb760cd71d91dce96d471e345d4ae38293ac7dbbda73afe9b19",
+        "bytes": 301532
+      },
+      "toy64-protocol-v1.json": {
+        "historical_path": "artifacts/batched-refill-20261111/toy64-protocol-v1.json",
+        "sha256": "9225c188b68122b79e2a4b66b83df1ea9a3b5d815bd7ff37bfb3f25f61d1a75b",
+        "bytes": 3834238
+      },
+      "toy49-oracle-v1.json": {
+        "historical_path": "artifacts/batched-refill-20261111/toy49-oracle-v1.json",
+        "sha256": "a18028273f488a80f9f889074e61cd72c16bde6b305a715564b7569a9e40bfc0",
+        "bytes": 77413
+      },
+      "toy49-protocol-v1.json": {
+        "historical_path": "artifacts/batched-refill-20261111/toy49-protocol-v1.json",
+        "sha256": "c58bb39e2ac2d5308939a35eed2a9d312cf3a2c89c7cc618c4f444c84844a178",
+        "bytes": 1147670
+      }
+    },
+    "summary_generation": "Selected fields, record identities, counts and SHA256 were checked with the Python standard library; no training, platform request, model import or checkpoint copy was performed while producing this summary.",
+    "credentials_or_checkpoint_payloads_embedded": false
+  },
+  "regression": {
+    "historical_path": "artifacts/batched-refill-20261111/regression-final-v1.log",
+    "sha256": "2de585c029c3d85a01793cb03fa28ebf1cec546da862c5f4fd04ff4b28c5d3b0",
+    "bytes": 1706,
+    "passed": 617,
+    "warnings": 1,
+    "seconds": 70.92,
+    "warning": "Deprecated pynvml import; not a test failure.",
+    "keepalive": "Runner recorded a paused keepalive, then removed only its task-owned pause file and retained monitoring."
+  },
+  "runs": {
+    "toy64": {
+      "run_id": "c6f98a577cbb4ca5b7a7b40540dc0391",
+      "historical_run_path": "runs/refill-toy64-120-20261111-v2",
+      "status": "passed",
+      "updates": 120,
+      "training_contract": {
+        "global_batch": 256,
+        "atomic_units": 64,
+        "atomic_batch_size": 4,
+        "activation_recomputation_enabled": false,
+        "precision_contract": "native FP32 parameters and FP32 AdamW moments; no FP32 master",
+        "optimizer_execution": "native NPU AdamW on each active worker",
+        "gradient_and_optimizer_oracle_passed": true
+      },
+      "membership": {
+        "initial_cards": 64,
+        "final_cards": 64,
+        "physical_pool_limit": 64,
+        "initial_job_layout": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "final_active_allocation_layout": [
+          {
+            "worker_prefix": "w000002",
+            "allocated_cards": 16,
+            "final_active_members": 16,
+            "member_ids": [
+              "w000017",
+              "w000018",
+              "w000019",
+              "w000020",
+              "w000021",
+              "w000022",
+              "w000023",
+              "w000024",
+              "w000025",
+              "w000026",
+              "w000027",
+              "w000028",
+              "w000029",
+              "w000030",
+              "w000031",
+              "w000032"
+            ]
+          },
+          {
+            "worker_prefix": "w000003",
+            "allocated_cards": 16,
+            "final_active_members": 16,
+            "member_ids": [
+              "w000033",
+              "w000034",
+              "w000035",
+              "w000036",
+              "w000037",
+              "w000038",
+              "w000039",
+              "w000040",
+              "w000041",
+              "w000042",
+              "w000043",
+              "w000044",
+              "w000045",
+              "w000046",
+              "w000047",
+              "w000048"
+            ]
+          },
+          {
+            "worker_prefix": "w000005",
+            "allocated_cards": 4,
+            "final_active_members": 4,
+            "member_ids": [
+              "w000065",
+              "w000066",
+              "w000067",
+              "w000068"
+            ]
+          },
+          {
+            "worker_prefix": "w000006",
+            "allocated_cards": 4,
+            "final_active_members": 4,
+            "member_ids": [
+              "w000069",
+              "w000070",
+              "w000071",
+              "w000072"
+            ]
+          },
+          {
+            "worker_prefix": "w000007",
+            "allocated_cards": 2,
+            "final_active_members": 2,
+            "member_ids": [
+              "w000073",
+              "w000074"
+            ]
+          },
+          {
+            "worker_prefix": "w000008",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000075"
+            ]
+          },
+          {
+            "worker_prefix": "w000009",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000076"
+            ]
+          },
+          {
+            "worker_prefix": "w000010",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000077"
+            ]
+          },
+          {
+            "worker_prefix": "w000011",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000078"
+            ]
+          },
+          {
+            "worker_prefix": "w000012",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000079"
+            ]
+          },
+          {
+            "worker_prefix": "w000013",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000080"
+            ]
+          },
+          {
+            "worker_prefix": "w000014",
+            "allocated_cards": 8,
+            "final_active_members": 8,
+            "member_ids": [
+              "w000081",
+              "w000082",
+              "w000083",
+              "w000084",
+              "w000085",
+              "w000086",
+              "w000087",
+              "w000088"
+            ]
+          },
+          {
+            "worker_prefix": "w000015",
+            "allocated_cards": 2,
+            "final_active_members": 2,
+            "member_ids": [
+              "w000089",
+              "w000090"
+            ]
+          },
+          {
+            "worker_prefix": "w000016",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000091"
+            ]
+          },
+          {
+            "worker_prefix": "w000017",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000092"
+            ]
+          },
+          {
+            "worker_prefix": "w000018",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000093"
+            ]
+          },
+          {
+            "worker_prefix": "w000019",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000094"
+            ]
+          },
+          {
+            "worker_prefix": "w000020",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000095"
+            ]
+          },
+          {
+            "worker_prefix": "w000021",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000096"
+            ]
+          }
+        ],
+        "historical_allocated_member_count": 96,
+        "historical_member_count_note": "96 distinct historical members were used across replacements; this does not mean 96 cards were held simultaneously. The configured budget and sampled maximum were 64."
+      },
+      "active_membership_segments": [
+        {
+          "first_update": 1,
+          "last_update": 2,
+          "active_cards": 64
+        },
+        {
+          "first_update": 3,
+          "last_update": 42,
+          "active_cards": 48
+        },
+        {
+          "first_update": 43,
+          "last_update": 55,
+          "active_cards": 64
+        },
+        {
+          "first_update": 56,
+          "last_update": 83,
+          "active_cards": 48
+        },
+        {
+          "first_update": 84,
+          "last_update": 120,
+          "active_cards": 64
+        }
+      ],
+      "numerical": {
+        "initial_loss": 4.453125,
+        "final_checkpoint_loss": 3.202038715244271e-05,
+        "relative_loss_drop": 0.9999928094569202,
+        "parameter_max_abs_errors": {
+          "weight": 1.1920928955078125e-07,
+          "bias": 5.960464477539063e-08
+        },
+        "adam_state_max_abs_errors": {
+          "weight.step": 0.0,
+          "weight.exp_avg": 3.4924596548080444e-08,
+          "weight.exp_avg_sq": 5.587935447692871e-09,
+          "bias.step": 0.0,
+          "bias.exp_avg": 1.1161318980157375e-08,
+          "bias.exp_avg_sq": 5.238689482212067e-10
+        },
+        "full_native_checkpoint_verified": true,
+        "all_final_workers_state_hashes_identical": true,
+        "last_pre_update_loss": 2.4118497934821903e-05
+      },
+      "protocol_audit": {
+        "auditor_source_sha256": "766a50704573a1b64af634765b7bc185dc8386cc979d721911e019c5240df6ec",
+        "evidence_file_count": 20441,
+        "evidence_index_sha256": "80ed91260c0c33a5952cabd6c79e2b505863c3f939c1d66d48840e38e0494753",
+        "all_final_state_hashes_identical": true,
+        "platform_jobs_officially_terminal": 21,
+        "resources_released": true
+      },
+      "timing": {
+        "training_started_at_unix": 1794393699.7553287,
+        "training_completed_at_unix": 1794394175.3344429,
+        "training_elapsed_seconds_including_recovery_and_admission": 475.5791141986847,
+        "steady_by_active_cards": {
+          "48": {
+            "commit_seconds": {
+              "count": 66,
+              "mean": 1.6206368539397689,
+              "median": 1.5945490626618266,
+              "min": 1.4041101355105639,
+              "max": 2.0801687370985746
+            },
+            "commit_interval_seconds": {
+              "count": 66,
+              "mean": 1.7616487054126055,
+              "median": 1.7633241270668805,
+              "min": 1.4754063477739692,
+              "max": 2.199033779092133
+            },
+            "communication_seconds_rank_max": {
+              "count": 66,
+              "mean": 0.24521567130630667,
+              "median": 0.227953989058733,
+              "min": 0.11042576655745506,
+              "max": 0.45253150910139084
+            },
+            "update_ranges": [
+              [
+                4,
+                42
+              ],
+              [
+                57,
+                83
+              ]
+            ]
+          },
+          "64": {
+            "commit_seconds": {
+              "count": 48,
+              "mean": 2.189773869661925,
+              "median": 2.181779708247632,
+              "min": 2.005397289991379,
+              "max": 2.4578734319657087
+            },
+            "commit_interval_seconds": {
+              "count": 48,
+              "mean": 2.4915430976543576,
+              "median": 2.489417291712016,
+              "min": 2.2148181991651654,
+              "max": 2.855793060734868
+            },
+            "communication_seconds_rank_max": {
+              "count": 48,
+              "mean": 0.3344337143935263,
+              "median": 0.3291242327541113,
+              "min": 0.28889454901218414,
+              "max": 0.4290294758975506
+            },
+            "update_ranges": [
+              [
+                44,
+                55
+              ],
+              [
+                85,
+                120
+              ]
+            ]
+          }
+        },
+        "steady_excluded_updates": [
+          1,
+          2,
+          3,
+          43,
+          56,
+          84
+        ],
+        "steady_excluded_recovery_updates": [
+          3,
+          43,
+          56,
+          84
+        ],
+        "steady_excluded_first_updates_after_admission": [
+          43,
+          84
+        ],
+        "warmup_excluded_updates": [
+          1,
+          2
+        ],
+        "commit_duration_definition": "Elapsed time from controller update command start to durable COMMIT.",
+        "commit_interval_definition": "Elapsed time between consecutive durable COMMIT events; may include boundary and controller overhead.",
+        "admission_pause_seconds_total": 15.901590093038976,
+        "scaling_caveat": "This tiny-model run had lower steady update latency with 48 active cards than with 64 after refill. Control overhead and layout differ; it is not an OpenPI scaling comparison."
+      },
+      "healthy_rollback_count": 0,
+      "model_error_evidence_file_count": 0,
+      "final_checkpoint": {
+        "step": 120,
+        "payload_bytes": 116,
+        "payload_sha256": "8a63fadf48adef3fab62fe8138a6da72ae0aa407bdf9b0d43c7a2d5ed042ce30",
+        "manifest_sha256": "9e021a15d805dcfc33e0031427099715e0ae2015faab12a6dc0b69e6d56edcaa",
+        "model_sha256": "ea2b729fe08539154f6af055d9d687b031447202bd972d1298ed53082db79137",
+        "optimizer_sha256": "e1f5e136476080b74fe583710ed536dde21d186532a43acced5c5bccd9a109b1",
+        "optimizer_config_sha256": "352df00f7b200912c158bd6e87070eff7e6e08848a3de38b62532f9380ae5513",
+        "payload_bytes_independently_verified": true,
+        "max_read_block_bytes": 4194304,
+        "historical_path": "runs/refill-toy64-120-20261111-v2/probe/states/final-120-pod-fb2ac1ab3eb84ec4a3be55819d50a71d"
+      },
+      "platform": {
+        "historical_jobs": 21,
+        "all_officially_terminal": true,
+        "terminal_status_counts": {
+          "job_stopped": 2,
+          "job_succeeded": 19
+        },
+        "sampled_resource_snapshots": 34,
+        "maximum_observed_reserved_cards": 64,
+        "cleanup": {
+          "at": "2026-11-11T10:50:58.789974+00:00",
+          "active_jobs": 0,
+          "running_jobs": 0,
+          "pending_jobs": 0,
+          "local_requested_reserved_cards": 0,
+          "verified_allocated_cards": 0,
+          "resources_released": true,
+          "blocked_reason": null,
+          "errors": []
+        }
+      },
+      "fault_injections": {
+        "whole_job_stops": [
+          {
+            "number": 1,
+            "action": "pod_reduce",
+            "base_committed_step": 2,
+            "affected_update": 3,
+            "cards_stopped": 16,
+            "member_range": [
+              "w000049",
+              "w000064"
+            ],
+            "peer_phase_at_stop": "pod_submitted",
+            "ownership_and_low_priority_verified": true,
+            "official_stop_response_code": 0,
+            "stop_request_before_unix": 1794393711.8121822,
+            "stop_response_after_unix": 1794393712.056007,
+            "update_command_started_at_unix": 1794393707.0140877,
+            "recovered_commit_at_unix": 1794393810.1703389,
+            "affected_update_commit_seconds": 103.15623704530299,
+            "affected_update_commit_interval_seconds": 103.1697351243347,
+            "surviving_active_cards": 48,
+            "new_generation": 1
+          },
+          {
+            "number": 2,
+            "action": "pod_reduce",
+            "base_committed_step": 55,
+            "affected_update": 56,
+            "cards_stopped": 16,
+            "member_range": [
+              "w000001",
+              "w000016"
+            ],
+            "peer_phase_at_stop": "pod_submitted",
+            "ownership_and_low_priority_verified": true,
+            "official_stop_response_code": 0,
+            "stop_request_before_unix": 1794393924.6559134,
+            "stop_response_after_unix": 1794393924.8782973,
+            "update_command_started_at_unix": 1794393919.9733071,
+            "recovered_commit_at_unix": 1794394023.4766314,
+            "affected_update_commit_seconds": 103.50331100821495,
+            "affected_update_commit_interval_seconds": 103.65359947830439,
+            "surviving_active_cards": 48,
+            "new_generation": 3
+          }
+        ],
+        "interpretation": "Two independent official low-priority 16-card job stops during pod_reduce. Approximately 103-second affected updates include the controlled injector gate, platform-stop/liveness and communication-group recovery; they are not normal training steps.",
+        "runtime_recovery_records": [
+          {
+            "number": 1,
+            "reason": "replay_missing_ready_owners",
+            "step": 2,
+            "lost_members": 16,
+            "surviving_members": 48
+          },
+          {
+            "number": 2,
+            "reason": "rebuild_group",
+            "step": 2,
+            "lost_members": 16,
+            "surviving_members": 48
+          },
+          {
+            "number": 3,
+            "reason": "rebuild_group",
+            "step": 42,
+            "lost_members": 0,
+            "surviving_members": 64
+          },
+          {
+            "number": 4,
+            "reason": "replay_missing_ready_owners",
+            "step": 55,
+            "lost_members": 16,
+            "surviving_members": 48
+          },
+          {
+            "number": 5,
+            "reason": "rebuild_group",
+            "step": 55,
+            "lost_members": 16,
+            "surviving_members": 48
+          },
+          {
+            "number": 6,
+            "reason": "rebuild_group",
+            "step": 83,
+            "lost_members": 0,
+            "surviving_members": 64
+          }
+        ]
+      },
+      "admissions": [
+        {
+          "batch_id": "b000001",
+          "step": 42,
+          "cards": 16,
+          "layout": [
+            4,
+            4,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "boundary_pause_seconds": 8.113637608475983,
+          "member_range": [
+            "w000065",
+            "w000080"
+          ],
+          "created_at_committed_step": 3,
+          "created_at_unix": 1794393810.2085607,
+          "cold_load_permitted_at_unix": 1794393848.289279,
+          "boundary_commit_at_unix": 1794393879.0179138,
+          "first_new_group_update": 43,
+          "first_new_group_command_at_unix": 1794393887.3198752,
+          "first_new_group_commit_at_unix": 1794393890.9860718,
+          "first_new_group_commit_seconds": 3.666179681196809,
+          "first_new_group_commit_interval_seconds": 11.968153724446893,
+          "full_native_state_alignment_verified": true,
+          "optimizer_updates_during_admission": 0,
+          "healthy_rollback_count": 0
+        },
+        {
+          "batch_id": "b000002",
+          "step": 83,
+          "cards": 16,
+          "layout": [
+            8,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "boundary_pause_seconds": 7.787952484562993,
+          "member_range": [
+            "w000081",
+            "w000096"
+          ],
+          "created_at_committed_step": 56,
+          "created_at_unix": 1794394023.590664,
+          "cold_load_permitted_at_unix": 1794394065.5596685,
+          "boundary_commit_at_unix": 1794394070.8978693,
+          "first_new_group_update": 84,
+          "first_new_group_command_at_unix": 1794394079.0146003,
+          "first_new_group_commit_at_unix": 1794394083.1584454,
+          "first_new_group_commit_seconds": 4.1438276544213295,
+          "first_new_group_commit_interval_seconds": 12.260571680031717,
+          "full_native_state_alignment_verified": true,
+          "optimizer_updates_during_admission": 0,
+          "healthy_rollback_count": 0
+        }
+      ],
+      "source_artifacts": [
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/probe/summary.json",
+          "sha256": "762083c2c1b7b45d3cc343274f9b6038293492e330be68fb80c1324a991e9df4",
+          "bytes": 4339576
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/probe/spec.json",
+          "sha256": "45e6fc4d366c8cdee7e1897fdcfb8c0b8f044c62bc461f911398bdb526e7a2dd",
+          "bytes": 3366
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/training.json",
+          "sha256": "e93759f6cba52309391ccf6190770076761aad054996e906136336037b5d34f0",
+          "bytes": 932
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/source_manifest.json",
+          "sha256": "274dfa9e7541af90716e5bc602f95ce9a193bc555b4bf4705f068adbe25a4b6d",
+          "bytes": 8831
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/refill/state.json",
+          "sha256": "08dfc35874619085df5d7730674a56903ab1958f977cb1c2b3e2b72c46643c27",
+          "bytes": 24471
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/ascend_fleet/state.json",
+          "sha256": "03da0067d31123eac11f6fcaeddfe4e3a18d15745e28363f46ece3b1b818dec5",
+          "bytes": 125921
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/cleanup_receipt.json",
+          "sha256": "a9150aa6a448ddb57b92bf1cc52d3bcc08d84a34edd1141c0f72eb8c4c6fadde",
+          "bytes": 540
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/driver-platform.log",
+          "sha256": "d904d57ecfe8556594bbc08e6a451f5464138efc1ec3d6ae882427119076638e",
+          "bytes": 18913
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/independent_faults/01.json",
+          "sha256": "a9b102570dc58e5193f977720c53c72abdd1275f117a1ad807130a7056872a7d",
+          "bytes": 22290
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/independent_faults/02.json",
+          "sha256": "558e5eb4cb81c299c133af14e0eedd2ac1cf9691b8e4495dc40fa3f66d0fb46c",
+          "bytes": 22351
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/refill/admissions/b000001.json",
+          "sha256": "b5f02bfd38db3b0298f9471b9e4431e8475f49fa205052b44aa80864a1c312cd",
+          "bytes": 8599
+        },
+        {
+          "historical_path": "runs/refill-toy64-120-20261111-v2/refill/admissions/b000002.json",
+          "sha256": "5a65c1c12760b612a4626a00281b0efc082977f9c777fc8beee26484d7012b32",
+          "bytes": 8615
+        }
+      ]
+    },
+    "toy49": {
+      "run_id": "d14a24690f0b4618815c576249d07f2a",
+      "historical_run_path": "runs/refill-toy49-reserve15-40-20261111-v2",
+      "status": "passed",
+      "updates": 40,
+      "training_contract": {
+        "global_batch": 256,
+        "atomic_units": 64,
+        "atomic_batch_size": 4,
+        "activation_recomputation_enabled": false,
+        "precision_contract": "native FP32 parameters and FP32 AdamW moments; no FP32 master",
+        "optimizer_execution": "native NPU AdamW on each active worker",
+        "gradient_and_optimizer_oracle_passed": true
+      },
+      "membership": {
+        "initial_cards": 49,
+        "final_cards": 49,
+        "physical_pool_limit": 64,
+        "initial_job_layout": [
+          16,
+          16,
+          16,
+          1
+        ],
+        "final_active_allocation_layout": [
+          {
+            "worker_prefix": "w000001",
+            "allocated_cards": 16,
+            "final_active_members": 16,
+            "member_ids": [
+              "w000001",
+              "w000002",
+              "w000003",
+              "w000004",
+              "w000005",
+              "w000006",
+              "w000007",
+              "w000008",
+              "w000009",
+              "w000010",
+              "w000011",
+              "w000012",
+              "w000013",
+              "w000014",
+              "w000015",
+              "w000016"
+            ]
+          },
+          {
+            "worker_prefix": "w000002",
+            "allocated_cards": 16,
+            "final_active_members": 16,
+            "member_ids": [
+              "w000017",
+              "w000018",
+              "w000019",
+              "w000020",
+              "w000021",
+              "w000022",
+              "w000023",
+              "w000024",
+              "w000025",
+              "w000026",
+              "w000027",
+              "w000028",
+              "w000029",
+              "w000030",
+              "w000031",
+              "w000032"
+            ]
+          },
+          {
+            "worker_prefix": "w000003",
+            "allocated_cards": 16,
+            "final_active_members": 16,
+            "member_ids": [
+              "w000033",
+              "w000034",
+              "w000035",
+              "w000036",
+              "w000037",
+              "w000038",
+              "w000039",
+              "w000040",
+              "w000041",
+              "w000042",
+              "w000043",
+              "w000044",
+              "w000045",
+              "w000046",
+              "w000047",
+              "w000048"
+            ]
+          },
+          {
+            "worker_prefix": "w000004",
+            "allocated_cards": 1,
+            "final_active_members": 1,
+            "member_ids": [
+              "w000049"
+            ]
+          }
+        ],
+        "historical_allocated_member_count": 64
+      },
+      "active_membership_segments": [
+        {
+          "first_update": 1,
+          "last_update": 40,
+          "active_cards": 49
+        }
+      ],
+      "numerical": {
+        "initial_loss": 4.453125,
+        "final_checkpoint_loss": 0.04385136440396309,
+        "relative_loss_drop": 0.9901526760636714,
+        "parameter_max_abs_errors": {
+          "weight": 1.1920928955078125e-07,
+          "bias": 5.960464477539063e-08
+        },
+        "adam_state_max_abs_errors": {
+          "weight.step": 0.0,
+          "weight.exp_avg": 1.9371509552001953e-07,
+          "weight.exp_avg_sq": 1.1920928955078125e-07,
+          "bias.step": 0.0,
+          "bias.exp_avg": 3.91155481338501e-08,
+          "bias.exp_avg_sq": 0.0
+        },
+        "full_native_checkpoint_verified": true,
+        "all_final_workers_state_hashes_identical": true,
+        "last_pre_update_loss": 0.04752844158792868
+      },
+      "protocol_audit": {
+        "auditor_source_sha256": "766a50704573a1b64af634765b7bc185dc8386cc979d721911e019c5240df6ec",
+        "evidence_file_count": 6114,
+        "evidence_index_sha256": "cbab8d25cb4fa86467eec13f99f870d432c5a6cd8836527bc676a5fe0098331d",
+        "all_final_state_hashes_identical": true,
+        "platform_jobs_officially_terminal": 11,
+        "resources_released": true
+      },
+      "timing": {
+        "training_started_at_unix": 1794394289.629659,
+        "training_completed_at_unix": 1794394357.3705244,
+        "training_elapsed_seconds_including_recovery_and_admission": 67.74086546897888,
+        "steady_by_active_cards": {
+          "48": {
+            "commit_seconds": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "max": null
+            },
+            "commit_interval_seconds": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "max": null
+            },
+            "communication_seconds_rank_max": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "max": null
+            },
+            "update_ranges": []
+          },
+          "49": {
+            "commit_seconds": {
+              "count": 38,
+              "mean": 1.5576305471507734,
+              "median": 1.561967171728611,
+              "min": 1.3926970707252622,
+              "max": 1.802157542668283
+            },
+            "commit_interval_seconds": {
+              "count": 38,
+              "mean": 1.6017688807149075,
+              "median": 1.5932006654329598,
+              "min": 1.4114406649023294,
+              "max": 1.858347994275391
+            },
+            "communication_seconds_rank_max": {
+              "count": 38,
+              "mean": 0.24585479037149957,
+              "median": 0.22201975993812084,
+              "min": 0.20167001336812973,
+              "max": 0.46132867410779
+            },
+            "update_ranges": [
+              [
+                3,
+                40
+              ]
+            ]
+          },
+          "64": {
+            "commit_seconds": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "max": null
+            },
+            "commit_interval_seconds": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "max": null
+            },
+            "communication_seconds_rank_max": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "max": null
+            },
+            "update_ranges": []
+          }
+        },
+        "steady_excluded_updates": [
+          1,
+          2
+        ],
+        "steady_excluded_recovery_updates": [],
+        "steady_excluded_first_updates_after_admission": [],
+        "warmup_excluded_updates": [
+          1,
+          2
+        ],
+        "commit_duration_definition": "Elapsed time from controller update command start to durable COMMIT.",
+        "commit_interval_definition": "Elapsed time between consecutive durable COMMIT events; may include boundary and controller overhead."
+      },
+      "healthy_rollback_count": 0,
+      "model_error_evidence_file_count": 0,
+      "final_checkpoint": {
+        "step": 40,
+        "payload_bytes": 116,
+        "payload_sha256": "44dae191b14e839d06041538f4946f3dde3b56b12020d80246895c8e6585aed4",
+        "manifest_sha256": "d88c5e3c267f8efe2d5c1fb6cd596ffa29de3ba006afa73783f117399948e68e",
+        "model_sha256": "46513022a7631c2ff1b8ba467b131c6664fcdf7e417a7747d6e6cd5b55a6d372",
+        "optimizer_sha256": "ccdf2e0d6316f6347ea824f197c07b36435e473c800592ebc085197dab0c3bac",
+        "optimizer_config_sha256": "352df00f7b200912c158bd6e87070eff7e6e08848a3de38b62532f9380ae5513",
+        "payload_bytes_independently_verified": true,
+        "max_read_block_bytes": 4194304,
+        "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/probe/states/final-40-pod-72c2b122178b40f88b726bb03279a7c6"
+      },
+      "platform": {
+        "historical_jobs": 11,
+        "all_officially_terminal": true,
+        "terminal_status_counts": {
+          "job_failed": 7,
+          "job_succeeded": 4
+        },
+        "sampled_resource_snapshots": 12,
+        "maximum_observed_reserved_cards": 64,
+        "cleanup": {
+          "at": "2026-11-11T10:53:47.358707+00:00",
+          "active_jobs": 0,
+          "running_jobs": 0,
+          "pending_jobs": 0,
+          "local_requested_reserved_cards": 0,
+          "verified_allocated_cards": 0,
+          "resources_released": true,
+          "blocked_reason": null,
+          "errors": []
+        },
+        "unused_candidate_terminal_note": "4 initial training jobs succeeded. 7 reserved, never-loaded candidate wrappers exited after controller cancellation and were recorded by QZ as job_failed with failure_kind unknown. These are preserved platform states, not failures of a trained candidate model.",
+        "cancelled_candidate_terminal_counts": {
+          "job_failed": 7
+        }
+      },
+      "candidate_no_load_evidence": {
+        "candidate_cards": 15,
+        "candidate_job_count": 7,
+        "candidate_job_layout": [
+          8,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "candidate_member_range": [
+          "w000050",
+          "w000064"
+        ],
+        "load_threshold_cards": 16,
+        "load_permit_count": 0,
+        "admission_count": 0,
+        "reservations": [
+          {
+            "allocation_prefix": "w000005",
+            "member_range": [
+              "w000050",
+              "w000057"
+            ],
+            "cards": 8,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 101,
+            "last_heartbeat_at_unix": 1794394356.5973146,
+            "cancellation_matches_reservation_identity": true
+          },
+          {
+            "allocation_prefix": "w000006",
+            "member_range": [
+              "w000058",
+              "w000059"
+            ],
+            "cards": 2,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 101,
+            "last_heartbeat_at_unix": 1794394356.4499235,
+            "cancellation_matches_reservation_identity": true
+          },
+          {
+            "allocation_prefix": "w000007",
+            "member_range": [
+              "w000060",
+              "w000060"
+            ],
+            "cards": 1,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 98,
+            "last_heartbeat_at_unix": 1794394356.4498565,
+            "cancellation_matches_reservation_identity": true
+          },
+          {
+            "allocation_prefix": "w000008",
+            "member_range": [
+              "w000061",
+              "w000061"
+            ],
+            "cards": 1,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 97,
+            "last_heartbeat_at_unix": 1794394356.1664195,
+            "cancellation_matches_reservation_identity": true
+          },
+          {
+            "allocation_prefix": "w000009",
+            "member_range": [
+              "w000062",
+              "w000062"
+            ],
+            "cards": 1,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 94,
+            "last_heartbeat_at_unix": 1794394356.1665256,
+            "cancellation_matches_reservation_identity": true
+          },
+          {
+            "allocation_prefix": "w000010",
+            "member_range": [
+              "w000063",
+              "w000063"
+            ],
+            "cards": 1,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 90,
+            "last_heartbeat_at_unix": 1794394356.1666634,
+            "cancellation_matches_reservation_identity": true
+          },
+          {
+            "allocation_prefix": "w000011",
+            "member_range": [
+              "w000064",
+              "w000064"
+            ],
+            "cards": 1,
+            "state": "reserved",
+            "device_visibility_verified": true,
+            "device_visibility_kind": "assigned_environment_mask",
+            "device_visibility_source": "ASCEND_VISIBLE_DEVICES",
+            "heartbeat_sequence": 90,
+            "last_heartbeat_at_unix": 1794394356.1667376,
+            "cancellation_matches_reservation_identity": true
+          }
+        ],
+        "candidate_training_process_evidence_paths_found": [],
+        "checked_absence_patterns": [
+          "probe/ready/{worker}.json",
+          "probe/supervisors/{worker}.json",
+          "probe/reports/{worker}",
+          "worker_logs/{worker}-supervisor.log"
+        ],
+        "checked_candidate_member_count": 15,
+        "total_ready_records": 49,
+        "total_supervisor_records": 49,
+        "batch": {
+          "batch_id": "b000001",
+          "created_step": 1,
+          "created_at": 1794394294.1135306,
+          "phase": "cancelled",
+          "cancelled_at": 1794394356.6465273,
+          "reason": "Training reached its final committed update"
+        },
+        "load_started_at_field_absent": true,
+        "admitted_step_field_absent": true,
+        "last_official_observation_all_seven_candidate_jobs_running": true,
+        "official_gpu_assignment_ids_available": false,
+        "assignment_verification_note": "Official job/instance observations were matched to wrapper identity; assigned ASCEND_VISIBLE_DEVICES masks verified candidate device counts. Official API allocation_verified remained false when device IDs were absent.",
+        "running_candidate_snapshots_while_training_progressed": [
+          {
+            "at": "2026-11-11T10:51:59.704298+00:00",
+            "committed_steps": 17,
+            "active_jobs": 11,
+            "running_jobs": 11,
+            "pending_jobs": 0,
+            "local_requested_reserved_cards": 64
+          },
+          {
+            "at": "2026-11-11T10:52:16.255669+00:00",
+            "committed_steps": 27,
+            "active_jobs": 11,
+            "running_jobs": 11,
+            "pending_jobs": 0,
+            "local_requested_reserved_cards": 64
+          },
+          {
+            "at": "2026-11-11T10:52:32.750402+00:00",
+            "committed_steps": 37,
+            "active_jobs": 11,
+            "running_jobs": 11,
+            "pending_jobs": 0,
+            "local_requested_reserved_cards": 64
+          }
+        ],
+        "conclusion": "All 15 candidate cards remained reserved without model READY/supervisor/report evidence or load permission; the original 49 members completed all 40 updates. End-of-run controller cancellation matched every candidate reservation."
+      },
+      "metadata_clarifications": {
+        "legacy_oracle_physical_pool_slots": 49,
+        "protocol_physical_pool_limit": 64,
+        "explanation": "The legacy oracle reports 49 in physical_pool_slots, matching initial active workers; the run/protocol physical budget is 64 = 49 active + 15 candidates. Use protocol physical_pool_limit for budget accounting. This metadata discrepancy does not change the numerical oracle."
+      },
+      "source_artifacts": [
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/probe/summary.json",
+          "sha256": "faf3dd56c3cdfc561c4718adc8b5a14ab0a3908da07fda095aa1e3e27f81b383",
+          "bytes": 472443
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/probe/spec.json",
+          "sha256": "e726e622f2914548cf6d65e0423e1b0b843c10f8f0c40e6c9a2c753d8d2401a0",
+          "bytes": 3053
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/training.json",
+          "sha256": "2073433a48e1d27b38f6266f7171e8271280d0142ecddd07fa92e4dcad0da1a9",
+          "bytes": 930
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/source_manifest.json",
+          "sha256": "d48e0195982b104c8502036a1833813b3943cddc74eede59da78dda52c4c0089",
+          "bytes": 8831
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/state.json",
+          "sha256": "66eac12de4c88bfd5e056386d056e1ccac2854a71885e166284d1e44d1bfa6a1",
+          "bytes": 3006
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/ascend_fleet/state.json",
+          "sha256": "4219a053519d60409db7b92ee141ea9883d3d5a29938bfa601f0255f44f7bd39",
+          "bytes": 68407
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/cleanup_receipt.json",
+          "sha256": "41d132f6988209385cf6f7ab1dad690cc1ba34b5c8a0c177d8fedafaff911b7c",
+          "bytes": 538
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/driver-platform.log",
+          "sha256": "e17bd18b7734b8ca2ce5a08ba3a3ad2462aa4922f2e361195adb62afc99e93af",
+          "bytes": 7504
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000005.json",
+          "sha256": "fbe22f2ca47300e79feb72ab224b55dc58b45b724c5e5b3cc2dc5ae779972e95",
+          "bytes": 2745
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000005.json",
+          "sha256": "a5bb4b44ebf0feb510bcf37168941c182d939704e3b3ce0b5c749bbbe2038048",
+          "bytes": 372
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000006.json",
+          "sha256": "407f0d44bfe5a3a052edba8650356329fac454624ec871cd499ad34821fabbeb",
+          "bytes": 2485
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000006.json",
+          "sha256": "81cfc838f4a5d7aca7983c945ec1969b10362179a41aed56f41d6a83c5a21042",
+          "bytes": 372
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000007.json",
+          "sha256": "bdd1d6915f789d391604cb335f09d6f84be209ddbae37b1c168b0bf8e089e950",
+          "bytes": 2442
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000007.json",
+          "sha256": "9d4bb2f45749fa63660abc9ef76eddabaf301fd73d0a39159470f2f51c219197",
+          "bytes": 372
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000008.json",
+          "sha256": "c5d6fd90fe6b01d4956eb3c0a1a181df8f758b0d046469d654d0a37dde024673",
+          "bytes": 2459
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000008.json",
+          "sha256": "faa5e52aaa8eccfa6fd7d12d534591ae847a597871f1065decfbf7aa229c0a4e",
+          "bytes": 372
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000009.json",
+          "sha256": "ce8b82f1c4b6474fb4e5407ee5fd5f35c4e3243ea7dbb06e578e3e8abccd788c",
+          "bytes": 2458
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000009.json",
+          "sha256": "d45bb3bfa2035cf74b0b9098a6b7d6e8511fbcec959cf1362664c56037ba12bb",
+          "bytes": 372
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000010.json",
+          "sha256": "2e726ef9ed148353b0518c2d523f4bd5fb2eb6e1d10eb520b2865e4a030376b1",
+          "bytes": 2458
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000010.json",
+          "sha256": "bd35b354baafcad53b2cb202f8367c6c706f3cf63928da95cde990a3e25fb274",
+          "bytes": 372
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/reservations/w000011.json",
+          "sha256": "9e79d6d4800e8494da467106fc0738ce3c4d7d25ccbe3b593e7a5e094ff50c92",
+          "bytes": 2458
+        },
+        {
+          "historical_path": "runs/refill-toy49-reserve15-40-20261111-v2/refill/cancelled/w000011.json",
+          "sha256": "8c8d63b3d33ce91fa3de70b44530940993c4ba3c517bf08bc260f03bb6960a99",
+          "bytes": 372
+        }
+      ]
+    }
+  },
+  "interpretation_limits": [
+    "This is short functional and numerical acceptance, not a long-term stability claim or downstream task-quality evaluation.",
+    "The toy model does not predict OpenPI throughput, memory costs, checkpoint admission time or final task quality.",
+    "The independent CPU oracle verifies saved toy gradients and AdamW state. The separate protocol audit verifies records and checkpoint bytes; it does not independently recompute gradients.",
+    "Recorded hashes and logs are reproducible provenance, not signed attestations of the platform.",
+    "Commit duration and successive commit interval differ; admission/recovery/warmup updates are excluded from steady statistics explicitly.",
+    "Per-rank communication elapsed time includes peer/stream waiting; it is not a measurement of pure network bandwidth.",
+    "Observed reserved-card maxima come from sampled launcher snapshots, not continuous external resource telemetry.",
+    "No claim is made that cancelled unused candidate jobs all ended with a successful platform status."
+  ]
+}

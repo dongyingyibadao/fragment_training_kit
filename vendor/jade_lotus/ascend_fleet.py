@@ -371,9 +371,14 @@ def _observe(client, entry, snapshot_id, observation_path):
     return evidence, priority_ok
 
 
+class IntentDeferred(RuntimeError):
+    """An optional plan lost its authority before a durable intent/POST."""
+
+
 def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, fill=False,
               registry_path=None, job_runtime_seconds=86400, retries=2, reset_failures=False,
-              global_card_limit=32, placement_planner=None):
+              global_card_limit=32, placement_planner=None, state_planner=None,
+              intent_hook=None, retire_predicate=None, isolate_candidate_failures=False, state_hook=None):
     # Larger experiments must explicitly opt in; existing callers retain the
     # historical 32-card ceiling across all registered fleets and spaces.
     positive_int(card_limit, "card_limit", 64)
@@ -398,6 +403,9 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
         marker = next((name for name in MARKERS if (run_dir / name).exists()), None)
         write_json(state_path, state)
         states = _registry_states(registry_path, state_path, state)
+        if state_hook is not None:
+            state_hook(state)
+            write_json(state_path, state)
         official, errors = [], []
         workspaces = tuple(dict.fromkeys([s["workspace_id"] for s in inventory.get("selections", [])]
             + [entry["payload"]["workspace_id"] for other in states.values() for entry in other["jobs"]]))
@@ -431,7 +439,10 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
                 entry["last_error"] = str(error)
                 continue
             if not priority_ok:
-                state["blocked_reason"] = "An owned job is not at its verified LOW priority"
+                if isolate_candidate_failures and entry.get('refill_role') == 'candidate':
+                    entry['refill_priority_error'] = True
+                else:
+                    state["blocked_reason"] = "An owned job is not at its verified LOW priority"
                 if fill and not entry.get("stop_requested"):
                     client.request("POST", API["stop"], {"job_id": entry["job_id"]})
                     entry["stop_requested"] = now
@@ -441,13 +452,25 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
                     events, _ = failed_job_evidence(client, entry["job_id"], entry.get("last_observation", {}).get("running_round"))
                     kind = failure_kind(entry["status"], events)
                     entry["failure_kind"] = kind
-                    state["failures"].append({"at": now, "kind": kind, "group_id": entry["group_id"], "job_id": entry["job_id"]})
+                    state["failures"].append({"at": now, "kind": kind, "group_id": entry["group_id"], "job_id": entry["job_id"],
+                        "optional_candidate": bool(isolate_candidate_failures and entry.get("refill_role") == "candidate")})
                     write_json(fleet_dir / "events" / (entry["worker_id"] + ".json"), public(events))
                     previous = sum(row["group_id"] == entry["group_id"] and now - row["at"] < 3600 for row in state["failures"])
                     state["group_backoff"][entry["group_id"]] = now + min(1800, 30 * 2 ** min(previous - 1, 6))
-        errors_recent = [row for row in state["failures"] if now - row["at"] < 900 and row["kind"] != "resource_or_runtime"]
+        errors_recent = [row for row in state["failures"] if now - row["at"] < 900
+                         and row["kind"] != "resource_or_runtime" and not row.get("optional_candidate")]
         if len(errors_recent) >= 3:
             state["blocked_reason"] = "Three software/capacity or unexplained failures in 15 minutes"
+        if fill and not marker and retire_predicate is not None:
+            for entry in state["jobs"]:
+                if not active(entry) or not retire_predicate(entry):
+                    continue
+                if not entry.get("job_id") and not Path(entry["record_path"]).exists():
+                    entry["status"] = "cancelled_before_submission"
+                elif entry.get("job_id") and not entry.get("stop_requested") and entry["workspace_id"] not in unreachable:
+                    client.request("POST", API["stop"], {"job_id": entry["job_id"]})
+                    entry["stop_requested"] = now
+                write_json(state_path, state)
         inventory = refresh_inventory(client, inventory) if not marker else inventory
         for group in inventory.get("groups", []):
             if group.get("workspace_id") in unreachable:
@@ -457,7 +480,14 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
         local = sum(row["cards"] for row in reserved if str(state_path) in row["fleet_paths"])
         available = min(max(0, global_card_limit - used), max(0, card_limit - local))
         planner = placement_planner or plan_placements
-        placements = [] if marker or state.get("blocked_reason") else planner(inventory, reserved, available, state["group_backoff"], now)
+        if marker or state.get("blocked_reason"):
+            placements = []
+        elif state_planner is not None:
+            placements = state_planner(state, inventory, reserved, available, state["group_backoff"], now)
+        else:
+            placements = planner(inventory, reserved, available, state["group_backoff"], now)
+        if sum(p["cards"] for p in placements) > available:
+            raise PlatformError("Placement plan exceeds the currently available physical-card budget")
         write_json(state_path, state)
         created = []
         if fill and not marker and not state.get("blocked_reason"):
@@ -474,12 +504,25 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
                     "record_path": str(fleet_dir / "submissions" / (worker_id + ".json"))}
                 if sum(row["cards"] for row in reservations(states, official)) + cards(payload) > global_card_limit:
                     raise PlatformError(f"New intent exceeds the global {global_card_limit} physical-card budget")
+                if cards(payload) != placement["cards"]:
+                    raise PlatformError("Placement size differs from its immutable payload")
+                if intent_hook is not None:
+                    # Publish immutable training identities before POST: a fast
+                    # container must never derive them from a mutable layout.
+                    try:
+                        intent_hook(state, entry, placement)
+                    except IntentDeferred:
+                        break  # Optional candidate plan is safe to retry.
                 state["next_worker"] += 1
                 state["jobs"].append(entry)
                 write_json(state_path, state)
             for entry in state["jobs"]:
                 path = Path(entry["record_path"])
                 if entry["status"] != "planned" or entry.get("job_id") or path.exists():
+                    continue
+                if retire_predicate is not None and retire_predicate(entry):
+                    entry['status'] = 'cancelled_before_submission'
+                    write_json(state_path, state)
                     continue
                 if entry["workspace_id"] in unreachable or number(state["group_backoff"].get(entry["group_id"])) > now:
                     continue
@@ -494,7 +537,10 @@ def reconcile(client, run_dir, command_template, inventory_seed, card_limit=32, 
                     write_json(fleet_dir / "status" / (entry["worker_id"] + ".json"), evidence)
                     created.append({key: entry.get(key) for key in ("worker_id", "workspace_id", "group_id", "job_id", "status")})
                     if not priority_ok:
-                        state["blocked_reason"] = "New owned job did not receive the verified LOW priority"
+                        if isolate_candidate_failures and entry.get('refill_role') == 'candidate':
+                            entry['refill_priority_error'] = True
+                        else:
+                            state["blocked_reason"] = "New owned job did not receive the verified LOW priority"
                         client.request("POST", API["stop"], {"job_id": entry["job_id"]})
                         entry["stop_requested"] = now
                         break

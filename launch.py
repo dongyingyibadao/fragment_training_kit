@@ -94,11 +94,14 @@ def resolve_site(source):
     site["global_card_limit"] = positive(site.get("global_card_limit", 64), "global_card_limit", 64)
     if site["cards"] > site["global_card_limit"]:
         raise ValueError("cards exceeds the shared global card budget")
-    layout = site.get("job_layout", [1] * site["cards"])
+    refill = isinstance(site.get("training_config"), dict) and site["training_config"].get("resident_pod_refill") is True
+    site["active_cards"] = positive(site.get("active_cards", site["cards"]), "active_cards", site["cards"])
+    layout_cards = site["active_cards"] if refill else site["cards"]
+    layout = site.get("job_layout", [1] * layout_cards)
     if (not isinstance(layout, list) or not layout
             or any(type(size) is not int or size not in (1, 2, 4, 8, 16) for size in layout)
-            or sum(layout) != site["cards"]):
-        raise ValueError("job_layout must contain 1/2/4/8/16-card jobs summing to cards")
+            or sum(layout) != layout_cards):
+        raise ValueError("job_layout must contain 1/2/4/8/16-card jobs summing to active_cards in refill mode, otherwise cards")
     site["job_layout"] = layout
     selection_plan = site.get("job_selections")
     if selection_plan is not None:
@@ -154,6 +157,11 @@ def resolve_site(source):
     if (not isinstance(site["workspace_ids"], list) or not site["workspace_ids"]
             or not set(site["workspace_ids"]).issubset(WORKSPACES)):
         raise ValueError("This validated backend supports only its two explicit QZ WORKSPACES; port the backend for another site")
+    allowed_groups = site.get('allowed_group_ids')
+    if allowed_groups is not None and (not isinstance(allowed_groups, list) or not allowed_groups
+            or any(not isinstance(g, str) or not g for g in allowed_groups)
+            or len(set(allowed_groups)) != len(allowed_groups)):
+        raise ValueError('allowed_group_ids must contain unique explicit group IDs')
     environment = dict(ENVIRONMENT)
     for key, value in site.get("environment", {}).items():
         if key not in set(ENVIRONMENT) | {"ASCEND_GLOBAL_LOG_LEVEL", "HCCL_ENTRY_LOG_ENABLE"}:
@@ -182,10 +190,22 @@ def resolve_site(source):
         raise ValueError("resident_pod_recovery must be boolean")
     if type(training.get("resident_pod_allow_test_holds", False)) is not bool:
         raise ValueError("resident_pod_allow_test_holds must be boolean")
+    if type(training.get("resident_pod_refill", False)) is not bool:
+        raise ValueError("resident_pod_refill must be boolean")
+    if refill:
+        if not pod_enabled or site["cards"] < 16 or site["defer_standby_until_idle"]:
+            raise ValueError("Batched refill requires pod recovery, cards>=16, and no legacy deferred standby")
+        if training.get("resident_topology_switches") or training.get("resident_topology_slots"):
+            raise ValueError("Batched refill cannot use legacy topology slots or switches")
+        training["resident_refill_target_cards"] = site["cards"]
+        for key, default, maximum in (("resident_refill_max_batches", 32, 64),
+                                      ("resident_refill_candidate_timeout", 1800, 86400),
+                                      ("resident_refill_max_intents", 512, 2048)):
+            training[key] = positive(training.get(key, default), key, maximum)
     if pod_enabled:
         if site["mode"] != "external-loss" or site["replacement"]:
             raise ValueError("Pod recovery requires external-loss and no legacy replacement")
-        if site["active_cards"] != site["cards"] or training.get("resident_topology_switches"):
+        if (not refill and site["active_cards"] != site["cards"]) or training.get("resident_topology_switches"):
             raise ValueError("Pod recovery currently uses only the active pool; legacy cohort switching is separate")
         maximum = training.get("resident_pod_max_recoveries", 64)
         if type(maximum) is not int or not 1 <= maximum <= 256:
@@ -194,7 +214,7 @@ def resolve_site(source):
         if type(timeout) not in (int, float) or not 1 <= timeout <= 86400:
             raise ValueError("resident_pod_step_timeout must be in 1..86400 seconds")
     site["training_config"] = training
-    if site["active_cards"] < site["cards"]:
+    if site["active_cards"] < site["cards"] and not refill:
         training["resident_topology_slots"] = site["cards"]
     sources = site.get("source_dirs", [])
     if not isinstance(sources, list):
@@ -265,7 +285,7 @@ def controller_command(run, site):
 def launcher_source(run, site, python_paths):
     environment = "\n".join(f"export {key}={shlex.quote(value)}" for key, value in site["environment"].items())
     cache_environment = '''export HF_HOME="$kit_run/cache/huggingface"
-export HF_HUB_CACHE="$HF_HOME/hub" HF_DATASETS_CACHE="$HF_HOME/datasets"
+export HF_HUB_CACHE="$HF_HOME/hub" HF_DATASETS_CACHE="$HF_HOME/datasets/$kit_worker"
 export HF_LEROBOT_HOME="$kit_run/cache/lerobot" OPENPI_DATA_HOME="$kit_run/cache/openpi"
 export XDG_CACHE_HOME="$kit_run/cache/xdg"
 # CANN creates multiprocessing Unix sockets here. A shared run path can exceed
@@ -275,7 +295,7 @@ mkdir -p "$HF_HOME" "$HF_DATASETS_CACHE" "$OPENPI_DATA_HOME" "$XDG_CACHE_HOME"
 ''' if site.get("isolate_model_cache") else ""
     data_environment = ("unset OPENPI_EXCLUDED_EPISODES_FILE OPENPI_EPISODE_PROMPTS_MANIFEST"
                         if site.get("clear_openpi_data_overrides") else "")
-    grouped = any(size > 1 for size in site["job_layout"]) or site.get("active_cards", site["cards"]) < site["cards"]
+    grouped = bool(site["training_config"].get("resident_pod_refill")) or any(size > 1 for size in site["job_layout"]) or site.get("active_cards", site["cards"]) < site["cards"]
     worker_command = (f'{shlex.quote(site["python"])} -u "$kit_run/runtime/fragment_training_kit/group_worker.py" --run-dir "$kit_run" --worker-prefix "$kit_worker" --allocated-devices "${{3:?allocated devices}}"'
                       if grouped else f'{shlex.quote(site["python"])} -u "$kit_run/runtime/scripts/probe_resident_openpi_fault.py" --worker --run-dir "$kit_run/probe" --worker-id "$kit_worker"')
     return f'''#!/usr/bin/env bash
@@ -315,7 +335,9 @@ def prepare(config_path, run_dir):
     inventory = public(read(site["inventory"]))
     inventory["selections"] = [selection for selection in inventory.get("selections", [])
         if selection.get("workspace_id") in site["workspace_ids"]
-        and selection.get("resource_spec_price", {}).get("gpu_count") in set(site["job_layout"])]
+        and (site.get('allowed_group_ids') is None or selection.get('logic_compute_group_id') in site['allowed_group_ids'])
+        and selection.get("resource_spec_price", {}).get("gpu_count") in
+            ({1, 2, 4, 8, 16} if site["training_config"].get("resident_pod_refill") else set(site["job_layout"]))]
     if not inventory["selections"]:
         raise ValueError("Inventory has no authorized LOW/1 selection matching job_layout")
     if not set(site["job_layout"]).issubset({s["resource_spec_price"]["gpu_count"] for s in inventory["selections"]}):
@@ -328,19 +350,27 @@ def prepare(config_path, run_dir):
         raise ValueError("Planned selections must match the supplied authorized discovery inventory")
     run.mkdir(parents=True, exist_ok=False)
     paths = copy_sources(run, site)
+    # A model root explicitly included in source_dirs must use this run's
+    # frozen copy, rather than re-inserting the mutable source on sys.path.
+    model_root = site['training_config'].get('openpi_root')
+    if isinstance(model_root, str):
+        for index, source in enumerate(site['source_dirs']):
+            if Path(model_root).expanduser().resolve() == Path(source):
+                site['training_config']['openpi_root'] = str(run/'runtime/project_sources'/f'source{index}')
+                break
     write(run / "site.json", site)
     write(run / "training.json", site["training_config"])
     write(run / "inventory.json", inventory)
     write(run / "controller_command.json", controller_command(run, site))
     (run / "launch.sh").write_text(launcher_source(run, site, paths))
-    grouped = any(n > 1 for n in site["job_layout"]) or site.get("active_cards", site["cards"]) < site["cards"]
+    grouped = bool(site["training_config"].get("resident_pod_refill")) or any(n > 1 for n in site["job_layout"]) or site.get("active_cards", site["cards"]) < site["cards"]
     (run / "fleet_command.txt").write_text("bash {run_dir}/launch.sh {run_dir} {worker_id}" + (" {npu_count}" if grouped else "") + "\n")
     files = {str(path.relative_to(run)): digest(path) for path in sorted(run.rglob("*")) if path.is_file()}
     write(run / "source_manifest.json", {"schema": "fragment-training-kit-prepared-v1", "files": files})
     return {"prepared": True, "run_dir": str(run), "submitted": False, "cards": site["cards"],
             "steps": site["steps"], "frozen_files": len(files), "mode": site["mode"],
             "initial_intent_limit": len(site["job_layout"]), "job_layout": site["job_layout"],
-            "arbitrary_fleet_refill_joins_supported": False}
+            "arbitrary_fleet_refill_joins_supported": bool(site["training_config"].get("resident_pod_refill"))}
 
 
 def verify(run):
@@ -455,7 +485,15 @@ def _snapshot_locked(client, run, *, fill=False):
     occupied = sum(cards(job["payload"]) if job.get("payload") else 1 for job in jobs if active(job))
     limit = min(site["cards"], occupied + initial_room) if creating else site["cards"]
     kwargs = {}
-    if site.get("defer_standby_until_idle"):
+    refill = site["training_config"].get("resident_pod_refill", False)
+    if refill:
+        from jade_lotus.refill_fleet import RefillFleet
+        coordinator = RefillFleet(client, run, site,
+            initial_planner=layout_planner(layout, min(intents, len(layout)), site.get("job_selections")))
+        creating, limit = fill and not marker, site["cards"]
+        kwargs.update(state_planner=coordinator.plan, intent_hook=coordinator.intent,
+                      retire_predicate=coordinator.retire, isolate_candidate_failures=True, state_hook=coordinator.restore)
+    elif site.get("defer_standby_until_idle"):
         progress_path = run / "probe/summary.json"
         started = progress_path.exists() and read(progress_path).get("committed_steps", 0) > 0
         kwargs["placement_planner"] = deferred_layout_planner(client, run, site, intents,
@@ -475,7 +513,7 @@ def _snapshot_locked(client, run, *, fill=False):
                       training_status=summary.get("status"))
     status["initial_intent_limit"] = len(layout)
     status["job_layout"] = layout
-    status["arbitrary_fleet_refill_joins_supported"] = False
+    status["arbitrary_fleet_refill_joins_supported"] = bool(refill)
     write(run / "launcher_status.json", status)
     return status
 

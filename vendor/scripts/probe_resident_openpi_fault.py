@@ -952,7 +952,9 @@ def child(args):
               "hostname": socket.gethostname(), "address": socket.gethostbyname(socket.gethostname()),
               "port": _free_port(), "started_at": time.time(),
               "device_index": args.device_index, "allocated_devices": args.allocated_devices,
-              "allocation_group": os.environ.get("JADE_ALLOCATION_GROUP", args.worker_id)}
+              "allocation_group": os.environ.get("JADE_ALLOCATION_GROUP", args.worker_id),
+              "refill_wrapper_session": os.environ.get("JADE_REFILL_WRAPPER_SESSION"),
+              "refill_batch_id": os.environ.get("JADE_REFILL_BATCH_ID")}
     active_status = {"token": None, "base_step": None, "generation": None}
     def progress(phase, *, timeout_seconds=None):
         _write(run / "status" / f"{args.worker_id}-{args.session_id}.json",
@@ -1006,7 +1008,7 @@ def child(args):
             idle_timeout = boundary_lease.remaining()
             progress("idle_boundary", timeout_seconds=idle_timeout)
             independent_standby = group is None and (parked or (
-                spec.get("topology_slots", spec["cards"]) > spec["cards"] and args.replacement))
+                (spec.get("pod_refill") or spec.get("topology_slots", spec["cards"]) > spec["cards"]) and args.replacement))
             next_idle_refresh = time.monotonic() + min(5.0, spec["phase_timeout"] / 3)
             def next_command():
                 nonlocal next_idle_refresh
@@ -1240,7 +1242,25 @@ def supervisor(args):
     """Host-only owner of one child; never signal a PID taken from a remote record."""
     run = args.run_dir.resolve()
     spec = _wait(lambda: _read(run / "spec.json"), args.phase_timeout, "controller spec")
-    if args.worker_id not in spec["workers"]:
+    if spec.get("pod_refill"):
+        from jade_lotus.refill_protocol import read_allocation, allocation_slots, validate_permit, validate_cancel
+        prefix = os.environ.get("JADE_ALLOCATION_GROUP", "")
+        mapping = read_allocation(run.parent, prefix, args.allocated_devices)
+        if (mapping['config_sha256'] != spec['config_sha256']
+                or (args.worker_id, args.device_index) not in allocation_slots(mapping)
+                or not os.environ.get('JADE_REFILL_WRAPPER_SESSION')):
+            raise ValueError('Supervisor does not match its immutable allocation')
+        if mapping['role'] == 'candidate':
+            reservation = _read(run.parent/'refill/reservations'/f'{prefix}.json')
+            permit = _read(run.parent/'refill/permits'/f'{prefix}.json')
+            if (not args.initial_standby or not validate_permit(mapping, reservation, permit)
+                    or reservation['wrapper_session'] != os.environ['JADE_REFILL_WRAPPER_SESSION']
+                    or mapping['batch_id'] != os.environ.get('JADE_REFILL_BATCH_ID')
+                    or validate_cancel(mapping, _read(run.parent/'refill/cancelled'/f'{prefix}.json'))):
+                raise ValueError('Candidate supervisor lacks its exact-incarnation load permit')
+        elif args.initial_standby or args.worker_id not in spec['initial_workers']:
+            raise ValueError('Initial allocation cannot impersonate a candidate')
+    elif args.worker_id not in spec["workers"]:
         raise ValueError("Worker is outside this isolated probe")
     if getattr(args, "initial_standby", False) and args.worker_id in spec.get("initial_workers", spec["workers"]):
         raise ValueError("An initial active worker cannot be launched as independent standby")
@@ -1258,6 +1278,8 @@ def supervisor(args):
             startup_deadline = time.time() + spec["phase_timeout"]
             own = {"schema": SCHEMA, "run_id": spec["run_id"], "worker_id": args.worker_id,
                    "session_id": session, "pid": process.pid, "supervisor_pid": os.getpid(),
+                   "refill_wrapper_session": os.environ.get("JADE_REFILL_WRAPPER_SESSION"),
+                   "refill_batch_id": os.environ.get("JADE_REFILL_BATCH_ID"),
                    "heartbeat_counter": 0}
             _write(run / "supervisors" / f"{args.worker_id}.json", own)
             killed, directive, timed_out = False, None, False
@@ -1500,6 +1522,17 @@ def controller(args):
     pod_enabled = config.get("resident_pod_recovery", False)
     if type(pod_enabled) is not bool:
         raise ValueError("resident_pod_recovery must be boolean")
+    refill_enabled = config.get('resident_pod_refill', False)
+    if type(refill_enabled) is not bool or (refill_enabled and not pod_enabled):
+        raise ValueError('Batched refill requires explicit pod recovery')
+    if refill_enabled:
+        target = config.get('resident_refill_target_cards')
+        if type(target) is not int or not max(16, args.cards) <= target <= 64:
+            raise ValueError('Batched refill target must cover active cards inside 16..64')
+        for key, maximum in (('resident_refill_max_batches',64), ('resident_refill_candidate_timeout',86400),
+                             ('resident_refill_max_intents',2048)):
+            if type(config.get(key)) is not int or not 1 <= config[key] <= maximum:
+                raise ValueError(f'Invalid bounded refill setting {key}')
     if pod_enabled and (not args.external_loss or not args.no_replacement):
         raise ValueError("Pod recovery requires external-loss and no legacy single-card replacement")
     max_recoveries = config.get("resident_pod_max_recoveries", 64)
@@ -1531,7 +1564,7 @@ def controller(args):
             "rng_scheme": config.get("resident_rng_scheme", "torch-atomic4-preprocess-cpu-noise-inverse-beta-v1"),
             "join_transport": args.join_transport,
             "external_loss": args.external_loss, "audit_before_collective": args.audit_before_collective,
-            "pod_recovery": pod_enabled, "pod_max_recoveries": max_recoveries,
+            "pod_recovery": pod_enabled, "pod_refill": refill_enabled, "pod_max_recoveries": max_recoveries,
             "pod_step_timeout": step_timeout, "pod_allow_test_holds": test_holds,
             "heartbeat_timeout": args.heartbeat_timeout,
             "communication_diagnostics": args.communication_diagnostics,
@@ -1552,7 +1585,7 @@ def controller(args):
                "single_card_loss_during_optimizer_apply_verified": False,
                "durable_gradient_acceptance_verified": False}
     _write(run / "summary.json", summary)
-    watch, topology, pod = None, None, None
+    watch, topology, pod, refill = None, None, None, None
     members, nonactive_errors = [], set()
     def checked_wait(readiness, label, *, hot_control=False, fatal_members=None, timeout_seconds=None):
         def check():
@@ -1568,7 +1601,7 @@ def controller(args):
                 if pod is not None and record and any(key.worker_id == record.get("worker_id")
                         and key.session_id == record.get("session_id") for key in pod.watch.detector.fenced_sessions):
                     continue
-                if topology_slots == args.cards or not record or record.get("worker_id") in fatal_ids:
+                if (not refill_enabled and topology_slots == args.cards) or not record or record.get("worker_id") in fatal_ids:
                     raise RuntimeError(f"Worker failed: {path}")
                 if str(path) not in nonactive_errors:
                     nonactive_errors.add(str(path))
@@ -1583,7 +1616,7 @@ def controller(args):
                 if watch is not None and record and any(key.matches_supervisor_record(record) for key in watch.detector.fenced_sessions):
                     continue  # An exact persisted loss is already being repaired.
                 if record and record.get("run_id") == spec["run_id"] and record.get("exit_code") != 0 and not record.get("killed_by_controller"):
-                    if topology_slots > args.cards and record.get("worker_id") not in fatal_ids:
+                    if (refill_enabled or topology_slots > args.cards) and record.get("worker_id") not in fatal_ids:
                         continue
                     raise RuntimeError(f"Unexpected worker exit: {path}")
             return readiness()
@@ -1644,6 +1677,9 @@ def controller(args):
         if pod_enabled:
             from jade_lotus.pod_controller_runtime import PodController
             pod = PodController(sys.modules[__name__], run, spec, members, summary)
+            if refill_enabled:
+                from jade_lotus.refill_controller import RefillController
+                refill = RefillController(pod, config)
         summary.update(stage="training", training_started_at=time.time())
         _write(run / "summary.json", summary)
         previous_commit = time.monotonic()
@@ -1746,6 +1782,10 @@ def controller(args):
                        if pod_commit is not None else {})})
             previous_commit = committed_at
             _publish_commit(run, summary, summary["commits"][-1], window=config.get("resident_summary_window", 0))
+            if refill is not None:
+                members, group = refill.on_commit(members, group, step + 1, final=step + 1 == args.steps)
+                summary['batched_refill_enabled'] = True
+                _write(run/'summary.json', summary)
             if topology is not None:
                 topology.on_commit(step + 1, members)
             checkpoint_every = config.get("resident_checkpoint_every", 0)

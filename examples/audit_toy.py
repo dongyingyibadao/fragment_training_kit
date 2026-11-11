@@ -152,7 +152,31 @@ def audit_run(directory, *, archived_evidence=False):
     if len(summary["commits"]) != spec["steps"]:
         raise ValueError("A full untrimmed commit ledger is required for toy validation")
     devices = []
-    for worker in spec["workers"]:
+    used_members = [m for commit in summary['commits'] for m in commit.get('prepared_members', commit['members'])]
+    used_workers = sorted(set(spec['workers']) | {m['worker_id'] for m in used_members})
+    if spec.get('pod_refill'):
+        if archived_evidence:
+            raise ValueError('Dynamic refill archives require their allocation/admission ledger; use the complete live run')
+        from jade_lotus.refill_protocol import read_allocation
+        admitted = {}
+        for event in summary.get('refill_events', []):
+            if event['status'] != 'admitted':
+                continue
+            if event['candidate_count'] != 16 or len(event['candidates']) != 16 or not event['full_native_state_alignment_verified']:
+                raise ValueError('Refill admission lacks exact-16 complete-state evidence')
+            for member in event['candidates']:
+                admitted[member['worker_id']] = event['step']
+        for commit in summary['commits']:
+            for member in commit.get('prepared_members', commit['members']):
+                worker = member['worker_id']
+                if worker not in spec['initial_workers'] and (worker not in admitted or commit['step'] <= admitted[worker]):
+                    raise ValueError('Candidate trained before its COMMIT admission')
+        for worker in used_workers:
+            ready = json.loads(evidence_path('ready', f'{worker}.json').read_text())
+            mapping = read_allocation(directory.parent, ready['allocation_group'], ready['allocated_devices'])
+            if not any(m['worker_id'] == worker and m['device_index'] == ready['device_index'] for m in mapping['members']):
+                raise ValueError('Trained member does not match its immutable physical allocation')
+    for worker in used_workers:
         ready = json.loads(evidence_path("ready", f"{worker}.json").read_text())
         proof = ready.get("adapter_device", {})
         index, allocated = proof.get("device_index", 0), proof.get("allocated_devices", 1)
@@ -163,8 +187,20 @@ def audit_run(directory, *, archived_evidence=False):
                 or "Ascend" not in proof.get("device_name", "")):
             raise ValueError("Expected actual assigned logical-NPU adapter readiness evidence")
         devices.append(proof)
-    if list(evidence_path("errors").glob("*.json")):
-        raise ValueError("Worker errors are present")
+    errors = list(evidence_path("errors").glob("*.json"))
+    if errors:
+        if not spec.get('pod_refill'):
+            raise ValueError('Worker errors are present')
+        for path in errors:
+            record = json.loads(path.read_text())
+            if record.get('worker_id') in used_workers:
+                raise ValueError('A trained worker reported a device error')
+            ready = json.loads(evidence_path('ready', f"{record['worker_id']}.json").read_text())
+            from jade_lotus.refill_protocol import validate_cancel
+            mapping = read_allocation(directory.parent, ready['allocation_group'], ready['allocated_devices'])
+            cancellation = json.loads((directory.parent/'refill/cancelled'/f"{ready['allocation_group']}.json").read_text())
+            if not validate_cancel(mapping, cancellation):
+                raise ValueError('Untrained candidate error lacks a controller-owned cancellation')
     model, optimizer, oracle, final_loss = reference(config, spec["steps"])
     observed = []
     for commit, expected in zip(summary["commits"], oracle, strict=True):

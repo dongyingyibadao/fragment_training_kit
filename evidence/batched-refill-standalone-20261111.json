@@ -1,0 +1,86 @@
+{
+  "schema": "fragment-refill-standalone-check-v1",
+  "temporary_root": "/inspire/sj-ssd3/project/robot-decision/laijunxi-CZXS25230141/.cache/ascend-keepalive/tmp/fragment-refill-standalone-icag79mk",
+  "source_runtime_set_sha256": "84870ee83de9c8c54fe78118ca704b4c990bdb8ff4d39f144ccfac5db6888d42",
+  "tested_package_file_set_sha256": "58a93f8d185b6742813ea09e17ad67bcef884cb3a287965dfaafaad07d246de0",
+  "original_project_reads_forbidden": true,
+  "external_pythonpath_removed": true,
+  "torch_device_backend_autoload": "0",
+  "platform_jobs_created": 0,
+  "checks": {
+    "guard": {
+      "returncode": 0,
+      "seconds": 0.046873368322849274,
+      "stdout_sha256": "03c5638568051dc6e4a554bb889e81b49bfe465eacb3451934241cf23b7f2c0b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "guard verified\n",
+      "stderr_tail": ""
+    },
+    "hashes": {
+      "returncode": 0,
+      "seconds": 0.21601542364805937,
+      "stdout_sha256": "e2327d6d209e963b4e5ce47e5d9f30b35d23df245e326d1fb4cb1bc289757588",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "{\"passed\": true, \"runtime_sources_verified\": 57, \"release_files_verified\": 460}\n",
+      "stderr_tail": ""
+    },
+    "tests": {
+      "returncode": 0,
+      "seconds": 126.96190887037665,
+      "stdout_sha256": "19cdf5a12ea0e877652ab77f4328f6fec1cd9100a0d93dfb1602eb769f792381",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "%]\n........................................................................ [ 80%]\n........................................................................ [ 92%]\n.................................................                        [100%]\n=============================== warnings summary ===============================\n../../../../../../../../../../opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63\n  /opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n    import pynvml  # type: ignore[import]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n625 passed, 1 warning in 125.72s (0:02:05)\n",
+      "stderr_tail": ""
+    },
+    "cpu_oracle": {
+      "returncode": 0,
+      "seconds": 2.3375213453546166,
+      "stdout_sha256": "44b2913ef50e17c3b832376577ee516206ed244e99f3fdd99d9d49dd5f123e5b",
+      "stderr_sha256": "ebf00617ae81fae761cd6d84f9da420d1e4b94c76fd1f50edc082e13079e8820",
+      "stdout_tail": "  \"gradient_norm\": 1.6771106719970703\n    },\n    {\n      \"step\": 14,\n      \"loss_before_update\": 0.5870292782783508,\n      \"gradient_norm\": 1.5323567390441895\n    },\n    {\n      \"step\": 15,\n      \"loss_before_update\": 0.4883755147457123,\n      \"gradient_norm\": 1.3976774215698242\n    },\n    {\n      \"step\": 16,\n      \"loss_before_update\": 0.40539002418518066,\n      \"gradient_norm\": 1.2734049558639526\n    },\n    {\n      \"step\": 17,\n      \"loss_before_update\": 0.33636409044265747,\n      \"gradient_norm\": 1.1599379777908325\n    },\n    {\n      \"step\": 18,\n      \"loss_before_update\": 0.2796722650527954,\n      \"gradient_norm\": 1.0576810836791992\n    },\n    {\n      \"step\": 19,\n      \"loss_before_update\": 0.23372408747673035,\n      \"gradient_norm\": 0.9669004678726196\n    },\n    {\n      \"step\": 20,\n      \"loss_before_update\": 0.19692134857177734,\n      \"gradient_norm\": 0.887516438961029\n    }\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "normal_archive": {
+      "returncode": 0,
+      "seconds": 2.366238012909889,
+      "stdout_sha256": "0f079b69d17e72159b1d66c032e47e4bdc1b0e65287c23644275419abacd90e8",
+      "stderr_sha256": "ebf00617ae81fae761cd6d84f9da420d1e4b94c76fd1f50edc082e13079e8820",
+      "stdout_tail": "12819,\n      \"members\": 2\n    },\n    {\n      \"step\": 19,\n      \"loss\": 0.2337240757769905,\n      \"gradient_norms\": [\n        0.9669004082679749,\n        0.9669004082679749\n      ],\n      \"commit_seconds\": 0.09582638368010521,\n      \"commit_interval_seconds\": 0.10282518249005079,\n      \"members\": 2\n    },\n    {\n      \"step\": 20,\n      \"loss\": 0.19692136932280846,\n      \"gradient_norms\": [\n        0.8875163793563843,\n        0.8875163793563843\n      ],\n      \"commit_seconds\": 0.08347873948514462,\n      \"commit_interval_seconds\": 0.09164378233253956,\n      \"members\": 2\n    }\n  ],\n  \"actual_fault_occurred\": false,\n  \"pod_recovery_enabled\": false,\n  \"pod_recovery_events\": [],\n  \"limitations\": [\n    \"Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.\",\n    \"Saved-evidence audit does not rerun HCCL; real failure injection is reported separately.\"\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "fault_archive": {
+      "returncode": 0,
+      "seconds": 2.3293817611411214,
+      "stdout_sha256": "6bb87663e4025818e50be039f4aacced5f9f82d3df11e69b761ae125171afd61",
+      "stderr_sha256": "ebf00617ae81fae761cd6d84f9da420d1e4b94c76fd1f50edc082e13079e8820",
+      "stdout_tail": "9359841347,\n      \"commit_interval_seconds\": 0.08983172010630369,\n      \"members\": 1\n    },\n    {\n      \"step\": 19,\n      \"loss\": 0.23372410098090768,\n      \"gradient_norms\": [\n        0.9669004678726196\n      ],\n      \"commit_seconds\": 0.07261369749903679,\n      \"commit_interval_seconds\": 0.0784522881731391,\n      \"members\": 1\n    },\n    {\n      \"step\": 20,\n      \"loss\": 0.1969213449920062,\n      \"gradient_norms\": [\n        0.887516438961029\n      ],\n      \"commit_seconds\": 0.09549727104604244,\n      \"commit_interval_seconds\": 0.10130145121365786,\n      \"members\": 1\n    }\n  ],\n  \"actual_fault_occurred\": true,\n  \"pod_recovery_enabled\": false,\n  \"pod_recovery_events\": [],\n  \"limitations\": [\n    \"Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.\",\n    \"Saved-evidence audit does not rerun HCCL; real failure injection is reported separately.\"\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "prepare_refill": {
+      "returncode": 0,
+      "seconds": 0.2534837769344449,
+      "stdout_sha256": "186275aa09d2a9ba23e6e769c6fb5e9768b898686b61cb8ac3f150b12f2b4583",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "{\"prepared\": true, \"verified\": true, \"submitted\": false, \"initial_cards\": 48, \"target_cards\": 64, \"job_layout\": [16, 16, 16], \"retained_spec_counts\": [1, 2, 4, 8, 16]}\n",
+      "stderr_tail": ""
+    },
+    "refill_auditor_cli": {
+      "returncode": 0,
+      "seconds": 0.06434585433453321,
+      "stdout_sha256": "4ed3a85e0a4ccc0123659691f71da99f34be5217e045fa4e01dec2e81f35ec52",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "usage: audit_refill.py [-h] --run-dir RUN_DIR --output OUTPUT\n\nRead-only evidence audit for completed native AdamW dynamic-refill runs. Use\n--run-dir RUN_ROOT --output NEW_JSON. No model, Torch, device framework,\nplatform client or numerical oracle is loaded. Hash agreement verifies saved\nbytes and recorded protocol evidence, not mathematical gradient correctness.\n\noptions:\n  -h, --help         show this help message and exit\n  --run-dir RUN_DIR\n  --output OUTPUT\n",
+      "stderr_tail": ""
+    }
+  },
+  "passed": true,
+  "source_result_sha256": "457e07a7a119ff22a9aa5e9fbb4c5b7979859ec8d0dea3e43c33798a0caafaeb",
+  "source_log_sha256": "3b02f64e202cadf5fbade3ab48ccba0432370aa02ed20d5e9339cd37b22b4bb6",
+  "verification_script_sha256": "59040e19741cfd7a564e3408e4f81a4e6e20a4b7a6a3fc4f56ecef9f95b44848",
+  "tests_passed": 625,
+  "tested_python_files": 94,
+  "tested_python_sources_unchanged_before_publication": true,
+  "release_followup_scope": "Only new verification evidence, acceptance index and documentation are added after this copied-package check. Package is resealed and reverified; runtime and Python sources remain identical.",
+  "keepalive_monitor_stopped": false,
+  "task_owned_pause_removed": true
+}

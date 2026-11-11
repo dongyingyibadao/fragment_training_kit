@@ -1,0 +1,106 @@
+{
+  "schema": "fragment-batched-refill-acceptance-v1",
+  "date_utc": "2026-11-11T11:32:18.569950+00:00",
+  "status": "passed",
+  "feature_branch": "feature/batched-refill",
+  "backup_ref": "backup/pre-batched-refill-20261111",
+  "backup_commit": "f0b37e01316804b5fb4a44b0100d9b8c3e34dab8",
+  "authorized_shared_card_limit": 64,
+  "runtime_source_files": 57,
+  "runtime_source_set_sha256": "84870ee83de9c8c54fe78118ca704b4c990bdb8ff4d39f144ccfac5db6888d42",
+  "evidence": {
+    "batched-refill-toy-20261111.json": "6a9f4420dde12f6c885018122a0443658ccadf71e656fbe405ec063c7f4dc9ae",
+    "batched-refill-openpi-20261111.json": "22c62797f97903e856ab1ff162b1199bae72da1ee5badcbb4a005b63fe36dacd",
+    "batched-refill-standalone-20261111.json": "31b5306524a370c93067403cf6df95227e6c3aa2563c950f62c43a9d72dc8b88"
+  },
+  "acceptance_cases": [
+    {
+      "case": "two sequential whole-pod losses with mixed-size exact16 refills",
+      "steps": 120,
+      "initial_cards": 64,
+      "final_cards": 64,
+      "strict_independent_cpu_gradient_and_adam_oracle": true,
+      "admission_steps": [
+        42,
+        83
+      ],
+      "source": "batched-refill-toy-20261111.json"
+    },
+    {
+      "case": "exactly15 reserve-only candidates",
+      "steps": 40,
+      "initial_cards": 49,
+      "final_cards": 49,
+      "reserved_candidates": 15,
+      "candidate_model_loads": 0,
+      "candidate_supervisors": 0,
+      "strict_independent_cpu_gradient_and_adam_oracle": true,
+      "source": "batched-refill-toy-20261111.json"
+    },
+    {
+      "case": "native OpenPI whole-pod loss and mixed-size exact16 refill",
+      "steps": 150,
+      "initial_cards": 64,
+      "final_cards": 64,
+      "admission_steps": [
+        65
+      ],
+      "checkpoint_payload_bytes": 20946116788,
+      "strict_independent_cpu_gradient_and_adam_oracle": false,
+      "source": "batched-refill-openpi-20261111.json"
+    }
+  ],
+  "all_acceptance_jobs_officially_terminal": true,
+  "all_acceptance_resources_released": true,
+  "auditor_regression": {
+    "passed": 38,
+    "log_sha256": "cf4d73bebd2df8269cc5c5d755a730bd3f2b3389b026262dedb7288cc40c4e4c"
+  },
+  "auditor_compatibility_fix": {
+    "rejected_audit_log_sha256": "fb706e46e7e131d9e80ea5f2d691d7abfd148cc670de83851773c73d8dab442c",
+    "reason": "Native OpenPI reads microbatch_size; custom adapters read worker_microbatch_size. Audit now follows the selected engine and rejects misleading unused aliases. Training runtime unchanged."
+  },
+  "preserved_diagnostic_attempts": [
+    {
+      "run_name": "refill-toy64-200-20261111-v1",
+      "acceptance": false,
+      "reason": "Controlled stop after 55 healthy updates: official instance API omitted device count, so the initial API-only allocation gate correctly withheld loading. Replaced by official-instance plus independently read assigned-device-mask proof.",
+      "summary_status_preserved": "running",
+      "committed_steps": 55,
+      "resources_released": true,
+      "summary_sha256": "57586a6dcec26f3eee07027a3bd9e63665ba14df97cce2972ade1dd2fabb22e4",
+      "cleanup_sha256": "530a039a8ca05916dff4f4da76bb1b9ff9c671552955ccb5de3e0232e2aec262"
+    },
+    {
+      "run_name": "refill-openpi64-150-20261111-v1",
+      "acceptance": false,
+      "reason": "Failed during initial model loading before any COMMIT: shared HF Arrow cache was read before generation completed. Per-platform-job dataset cache isolation and run-owned OpenPI source rebasing were then added.",
+      "summary_status_preserved": "failed",
+      "committed_steps": 0,
+      "resources_released": true,
+      "summary_sha256": "df8e19f1f8ab5e11e2d6d858b2320041eee168fb1ed5c8c2ca9eddeb653f73e2",
+      "cleanup_sha256": "ada0ebaf9f2b267d17bd7a86672c3446dd053833446ccd44e34d9ba2b219df1c",
+      "earliest_error_file": "w000021-b46db59be5b44efaa50423c52a68f897.json",
+      "earliest_error_sha256": "24db53ae958c8c38885a9bb0a90227dc135abaee7be72dd09187053e7de8fed3"
+    }
+  ],
+  "limits": [
+    "This stage validates bounded short-run dynamic exact16 admission, not a new 2000-step/20000-step stability run or LIBERO task quality.",
+    "Native admission uses a full shared-storage checkpoint; its 321.59-second boundary pause remains an optimization target. Healthy training continues during cold loading, but pauses for final complete-state alignment.",
+    "Per-step HCCL SUM and per-device native Adam remain the existing backend; steady timing is not a comparison against a simultaneously measured packed cluster baseline.",
+    "Candidate failure/init rollback cases are covered by protocol tests; this hardware acceptance injects failures into already-active pods.",
+    "A fully occupied64-card budget has no room for an additional16-card replacement batch. All pending and unknown requests count against the budget.",
+    "The independent numerical gradient/Adam reference applies to toy runs. Native OpenPI audit checks finite recorded values, protocol evidence and checkpoint bytes, not independent OpenPI gradient recomputation."
+  ],
+  "standalone_verification": {
+    "passed": true,
+    "checks": 8,
+    "tests_passed": 625,
+    "source_runtime_set_sha256": "84870ee83de9c8c54fe78118ca704b4c990bdb8ff4d39f144ccfac5db6888d42",
+    "tested_package_file_set_sha256": "58a93f8d185b6742813ea09e17ad67bcef884cb3a287965dfaafaad07d246de0",
+    "tested_python_files": 94,
+    "original_project_reads_forbidden": true,
+    "platform_jobs_created": 0,
+    "evidence": "batched-refill-standalone-20261111.json"
+  }
+}

@@ -24,6 +24,7 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 | [07 独立项目与依赖](docs/07_standalone_project.md) | 目录迁移、外部输入、历史证据和验证范围 |
 | [08 拓扑执行计划](docs/08_topology_execution_plan.md)、[09 混合训练](docs/09_topology_training.md) | 节点规划、多卡作业、timeout对照、候选切换与限制 |
 | [10 整组与连续掉卡恢复](docs/10_pod_loss_recovery.md) | 显式启用的分阶段缩组、部分 APPLY 检查、checkpoint 换源与验收边界 |
+| [11 累计16张后在线补卡](docs/11_batched_refill.md) | 动态身份、无模型预留、成批加载、完整模型/Adam同步与更新边界接入 |
 | `adapters.py`、[模型模板](examples/model_adapter_template.py) | 可修改的模型接入点 |
 | [toy代码](examples/toy_regression.py)、[数值审计](examples/audit_toy.py) | 无外部数据、CPU参考与真实NPU短训练 |
 | [站点示例](config/site.example.json)、`launch.py` | prepare/verify/run/observe/cleanup |
@@ -70,7 +71,7 @@ python fragment_training_kit/launch.py cleanup --run-dir /shared/work/toy-low2-v
 
 复制 `examples/model_adapter_template.py` 到自己的纯代码目录，实现模型、`prepare_samples` 和逐样本 `losses`，在site.training_config中设置 `resident_adapter="your_module:create_engine"`，并把模块所在目录放入site.source_dirs。基类按每样本1/256累积梯度，归约、裁剪和Adam仍由现有运行时执行。适配后先按 [02](docs/02_adapting_your_model.md) 与 [04](docs/04_validation_and_performance.md) 做自己的数值/短跑验收。
 
-平台自动申请和训练入组是两个门槛。新分配的任意job不会自动进入固定成员组；当前launcher避免持续补占不能被controller接纳的新ID。受控替补运行在同一存活supervisor下；真实整作业丢失可在已支持阶段缩组继续，后续完整checkpoint新run恢复需显式规划。
+平台自动申请和训练入组是两个门槛。默认路径仍使用固定成员；显式启用 [16卡成批补卡](docs/11_batched_refill.md) 后，launcher 可持续申请动态成员，累计16张才冷加载，完整同步模型/Adam/step并确认新组后接入。候选失败只延后补卡，健康组继续训练；同时活动、预留、排队和未知提交合计不能超过共享物理预算。完整checkpoint新run恢复仍需显式规划。
 
 底层controller的checkpoint恢复需要checkpoint和原source-spec一起绑定；此launcher目前未提供一键resume参数，接入者需单独接入并验证，不能假设prepare会自动续训。
 
