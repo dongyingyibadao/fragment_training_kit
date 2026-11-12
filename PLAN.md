@@ -24,3 +24,5 @@
 2026-11-12推广整理：保持已验收同步训练和资源逻辑，新增 [当前策略使用手册](docs/12_current_ascend_strategy.md) 及完整初始组配置，统一 agent/README/平台/验收入口，区分初始节点规划、持续补缺与旧固定候选切换。一个子 agent 只读审查文档和配置边界；主会话完成整理、无平台提交的示例验证、哈希封包及 GitHub 同步。本轮不启动真实训练，不把历史短跑改称新稳定性验收。
 
 整理验证已通过：6 份配置 JSON、文档本地链接与 4 个 CLI help 入口正常；官方 API fixture 下三条准备流程均通过 prepare/verify 且提交数为 0。94 份 Python 源码、57 份 vendor 源码及 345 份历史证据/验证文件保持一致。见 [验证记录](evidence/strategy-guide-verification-20261112.json)。
+
+2026-11-12 发布 main：旧 main 提交 `4f1066924269ed8e4c436be1db8add6dc69c4947` 已备份到远端 `backup/pre-main-promotion-20261112`。独立副本重新完成 625 项回归、CPU 数值参考、历史正常/掉卡审计和三种无提交准备；一个子 agent 只读审阅策略无阻断问题。更新默认克隆入口后封包，快进合入 main；不改训练源码，不新增平台作业。详见 [发布核验](evidence/main-promotion-verification-20261112.json)。

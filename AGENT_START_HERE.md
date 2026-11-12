@@ -1,6 +1,6 @@
 # 给第一次接手的 agent
 
-本目录提供当前同步昇腾低优策略、通用模型接入点与无需下载数据的回归样例。先读 [当前策略使用手册](docs/12_current_ascend_strategy.md)：空闲节点规划 → LOW/1 单/多卡申请 → 每卡 NPU Adam → 分阶段掉卡恢复 → 累计 16 张完整同步补入。当前代码在 `feature/batched-refill`，不要默认普通 clone 的历史 main 已包含该组合。历史 OpenPI 64 卡、global256、无重算的 20,000 步/LIBERO 结果，与新补卡路径的 150 步验收是不同证据。
+本目录提供当前同步昇腾低优策略、通用模型接入点与无需下载数据的回归样例。先读 [当前策略使用手册](docs/12_current_ascend_strategy.md)：空闲节点规划 → LOW/1 单/多卡申请 → 每卡 NPU Adam → 分阶段掉卡恢复 → 累计 16 张完整同步补入。当前代码以默认分支 `main` 为使用入口；`feature/batched-refill` 保留开发历史。历史 OpenPI 64 卡、global256、无重算的 20,000 步/LIBERO 结果，与新补卡路径的 150 步验收是不同证据。
 
 阅读与操作顺序如下。
 

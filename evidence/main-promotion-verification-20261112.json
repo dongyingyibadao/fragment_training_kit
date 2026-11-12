@@ -1,0 +1,179 @@
+{
+  "schema": "fragment-main-promotion-verification-v1",
+  "verified_at": "2026-11-12T07:47:32.375310+00:00",
+  "source_commit": "4b314c1e0276e1702b66b399ed4f41a5b3072060",
+  "previous_main_commit": "4f1066924269ed8e4c436be1db8add6dc69c4947",
+  "backup_ref": "backup/pre-main-promotion-20261112",
+  "scope": "Release verification of unchanged training sources; main documentation entry updated",
+  "source_runtime_set_sha256": "84870ee83de9c8c54fe78118ca704b4c990bdb8ff4d39f144ccfac5db6888d42",
+  "tested_package_file_set_sha256": "afb960c62644c7f6e9c5ebf31cba4bb0b55099b87dfe0ab8450cbec1bce4ebba",
+  "tested_package_files": 464,
+  "original_project_reads_forbidden": true,
+  "external_pythonpath_removed": true,
+  "torch_device_backend_autoload": "0",
+  "platform_jobs_created": 0,
+  "npu_experiments_started": 0,
+  "checks": {
+    "guard": {
+      "returncode": 0,
+      "seconds": 0.04699421999976039,
+      "stdout_sha256": "1533351f220a437d3bfef32a92a71aaed86b71ca14e7fbf04d5f52e78d497cf6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "Both original source trees blocked\n",
+      "stderr_tail": ""
+    },
+    "hashes": {
+      "returncode": 0,
+      "seconds": 0.24211271398235112,
+      "stdout_sha256": "09c8af91b22f2379c24d2734cd4d182962917934bd94ca212ec18ca025a50408",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "{\"passed\": true, \"runtime_sources_verified\": 57, \"release_files_verified\": 464}\n",
+      "stderr_tail": ""
+    },
+    "tests": {
+      "returncode": 0,
+      "seconds": 140.99701337097213,
+      "stdout_sha256": "2e5b29f668d2afd502f4d079ebc005a4232891249f3af0c083cf1bddbde2eb66",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "................................... [ 46%]\n........................................................................ [ 57%]\n........................................................................ [ 69%]\n........................................................................ [ 80%]\n........................................................................ [ 92%]\n.................................................                        [100%]\n=============================== warnings summary ===============================\n../../../../../../../../../../opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63\n  /opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n    import pynvml  # type: ignore[import]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n625 passed, 1 warning in 139.67s (0:02:19)\n",
+      "stderr_tail": ""
+    },
+    "cpu_oracle": {
+      "returncode": 0,
+      "seconds": 2.4291879939846694,
+      "stdout_sha256": "44b2913ef50e17c3b832376577ee516206ed244e99f3fdd99d9d49dd5f123e5b",
+      "stderr_sha256": "ebf00617ae81fae761cd6d84f9da420d1e4b94c76fd1f50edc082e13079e8820",
+      "stdout_tail": "},\n    {\n      \"step\": 12,\n      \"loss_before_update\": 0.8387740850448608,\n      \"gradient_norm\": 1.8316922187805176\n    },\n    {\n      \"step\": 13,\n      \"loss_before_update\": 0.7031750082969666,\n      \"gradient_norm\": 1.6771106719970703\n    },\n    {\n      \"step\": 14,\n      \"loss_before_update\": 0.5870292782783508,\n      \"gradient_norm\": 1.5323567390441895\n    },\n    {\n      \"step\": 15,\n      \"loss_before_update\": 0.4883755147457123,\n      \"gradient_norm\": 1.3976774215698242\n    },\n    {\n      \"step\": 16,\n      \"loss_before_update\": 0.40539002418518066,\n      \"gradient_norm\": 1.2734049558639526\n    },\n    {\n      \"step\": 17,\n      \"loss_before_update\": 0.33636409044265747,\n      \"gradient_norm\": 1.1599379777908325\n    },\n    {\n      \"step\": 18,\n      \"loss_before_update\": 0.2796722650527954,\n      \"gradient_norm\": 1.0576810836791992\n    },\n    {\n      \"step\": 19,\n      \"loss_before_update\": 0.23372408747673035,\n      \"gradient_norm\": 0.9669004678726196\n    },\n    {\n      \"step\": 20,\n      \"loss_before_update\": 0.19692134857177734,\n      \"gradient_norm\": 0.887516438961029\n    }\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "normal_archive": {
+      "returncode": 0,
+      "seconds": 2.288593259989284,
+      "stdout_sha256": "d91fd22e42afc041cf8c978752ab0c1fbf459c38678848217f058f713115677f",
+      "stderr_sha256": "ebf00617ae81fae761cd6d84f9da420d1e4b94c76fd1f50edc082e13079e8820",
+      "stdout_tail": "7967224828898907,\n      \"gradient_norms\": [\n        1.0576810836791992,\n        1.0576810836791992\n      ],\n      \"commit_seconds\": 0.09862999524921179,\n      \"commit_interval_seconds\": 0.10674937348812819,\n      \"members\": 2\n    },\n    {\n      \"step\": 19,\n      \"loss\": 0.2337240757769905,\n      \"gradient_norms\": [\n        0.9669004082679749,\n        0.9669004082679749\n      ],\n      \"commit_seconds\": 0.09582638368010521,\n      \"commit_interval_seconds\": 0.10282518249005079,\n      \"members\": 2\n    },\n    {\n      \"step\": 20,\n      \"loss\": 0.19692136932280846,\n      \"gradient_norms\": [\n        0.8875163793563843,\n        0.8875163793563843\n      ],\n      \"commit_seconds\": 0.08347873948514462,\n      \"commit_interval_seconds\": 0.09164378233253956,\n      \"members\": 2\n    }\n  ],\n  \"actual_fault_occurred\": false,\n  \"pod_recovery_enabled\": false,\n  \"pod_recovery_events\": [],\n  \"limitations\": [\n    \"Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.\",\n    \"Saved-evidence audit does not rerun HCCL; real failure injection is reported separately.\"\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "fault_archive": {
+      "returncode": 0,
+      "seconds": 2.287770290975459,
+      "stdout_sha256": "813a5a4103c49df849fb0568b21f3f87171b633ee62defffeb6109b700b7e2f4",
+      "stderr_sha256": "ebf00617ae81fae761cd6d84f9da420d1e4b94c76fd1f50edc082e13079e8820",
+      "stdout_tail": ".09922612737864256,\n      \"members\": 1\n    },\n    {\n      \"step\": 18,\n      \"loss\": 0.27967228076886386,\n      \"gradient_norms\": [\n        1.0576809644699097\n      ],\n      \"commit_seconds\": 0.08440879359841347,\n      \"commit_interval_seconds\": 0.08983172010630369,\n      \"members\": 1\n    },\n    {\n      \"step\": 19,\n      \"loss\": 0.23372410098090768,\n      \"gradient_norms\": [\n        0.9669004678726196\n      ],\n      \"commit_seconds\": 0.07261369749903679,\n      \"commit_interval_seconds\": 0.0784522881731391,\n      \"members\": 1\n    },\n    {\n      \"step\": 20,\n      \"loss\": 0.1969213449920062,\n      \"gradient_norms\": [\n        0.887516438961029\n      ],\n      \"commit_seconds\": 0.09549727104604244,\n      \"commit_interval_seconds\": 0.10130145121365786,\n      \"members\": 1\n    }\n  ],\n  \"actual_fault_occurred\": true,\n  \"pod_recovery_enabled\": false,\n  \"pod_recovery_events\": [],\n  \"limitations\": [\n    \"Tiny FP32 regression is a correctness and onboarding smoke test, not large-model throughput.\",\n    \"Saved-evidence audit does not rerun HCCL; real failure injection is reported separately.\"\n  ]\n}\n",
+      "stderr_tail": "/opt/ascend-vla/envs/lerobot-npu/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.\n  import pynvml  # type: ignore[import]\n"
+    },
+    "prepare_modes": {
+      "returncode": 0,
+      "seconds": 0.5235203630290926,
+      "stdout_sha256": "4d3b6cc849d1db190c07569ea58c75d7650fe74ab07e96cee55d8ae34f9feaa5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": "{\"cases\": [{\"case\": \"complete64\", \"layout\": [16, 16, 16, 16], \"submitted\": false, \"verified\": true}, {\"case\": \"partial48_target64\", \"layout\": [16, 16, 16], \"submitted\": false, \"verified\": true}, {\"case\": \"plan48_then_target64\", \"layout\": [16, 16, 16], \"submitted\": false, \"verified\": true}], \"platform_mutation_calls\": 0}\n",
+      "stderr_tail": ""
+    }
+  },
+  "keepalive": {
+    "parent_pid": 2621,
+    "initial_state": "paused",
+    "task_owned_pause_file": "fragment-main-promotion-a19594fc395449b3a666377bf841c2ec.pause",
+    "paused_confirmed": true,
+    "workers_empty": true,
+    "keepalive_workers_absent_from_device_table": true,
+    "stopped": false,
+    "task_owned_pause_removed": true,
+    "parent_still_alive": true,
+    "final_state": "paused",
+    "final_reason": "其他 NPU 进程: {0: [18666]}",
+    "remaining_pause_files": [],
+    "final_updated_at": "2026-11-12T07:51:07.252646+00:00"
+  },
+  "passed": true,
+  "tests_passed": 625,
+  "tests_warning_count": 1,
+  "runtime_source_files": 57,
+  "python_source_files": 94,
+  "training_sources_unchanged": true,
+  "numerical_audits": {
+    "oracle": {
+      "status": "passed",
+      "steps": 20,
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766051948070526,
+      "json_sha256": "44b2913ef50e17c3b832376577ee516206ed244e99f3fdd99d9d49dd5f123e5b"
+    },
+    "normal": {
+      "status": "passed",
+      "steps": 20,
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766048967838287,
+      "json_sha256": "d91fd22e42afc041cf8c978752ab0c1fbf459c38678848217f058f713115677f",
+      "gradient_and_optimizer_reference_passed": true,
+      "full_native_checkpoint_verified": true,
+      "npu_training_rerun": false
+    },
+    "fault": {
+      "status": "passed",
+      "steps": 20,
+      "initial_loss": 4.453125,
+      "final_loss": 0.16766051948070526,
+      "json_sha256": "813a5a4103c49df849fb0568b21f3f87171b633ee62defffeb6109b700b7e2f4",
+      "gradient_and_optimizer_reference_passed": true,
+      "full_native_checkpoint_verified": true,
+      "npu_training_rerun": false
+    }
+  },
+  "no_submit_preparation": {
+    "cases": [
+      {
+        "case": "complete64",
+        "layout": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "submitted": false,
+        "verified": true
+      },
+      {
+        "case": "partial48_target64",
+        "layout": [
+          16,
+          16,
+          16
+        ],
+        "submitted": false,
+        "verified": true
+      },
+      {
+        "case": "plan48_then_target64",
+        "layout": [
+          16,
+          16,
+          16
+        ],
+        "submitted": false,
+        "verified": true
+      }
+    ],
+    "platform_mutation_calls": 0
+  },
+  "independent_readonly_review": {
+    "blocking_findings": [],
+    "reviewed": [
+      "Ready/online and NPU/CPU/memory constraints",
+      "legal LOW multi-card choices and single-card queue fallback",
+      "locked registry budgets including pending/unknown/not-officially-terminal",
+      "exact16 load permits; below16 reserve only",
+      "complete native state alignment and COMMIT-boundary admission",
+      "candidate failure cancellation and no duplicate Adam APPLY",
+      "no full-budget healthy-pool compaction"
+    ],
+    "platform_called": false,
+    "files_edited": false
+  },
+  "release_scope_note": "The tested 464-file package precedes this evidence and release-note additions. Final publication changes only documentation, this evidence and package hashes; all training Python sources and runtime hashes are unchanged.",
+  "limits": [
+    "CPU regression and saved-evidence audits do not rerun NPU/HCCL or constitute a new long-run stability acceptance.",
+    "Existing refill and recovery support boundaries remain as documented in docs/12_current_ascend_strategy.md."
+  ]
+}

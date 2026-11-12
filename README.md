@@ -46,10 +46,10 @@ OpenPI案例已完成64张独立低优卡、global256、无重算、20,000步；
 先克隆项目，以下命令都从包含 `fragment_training_kit/` 的父目录执行；保留这个目录名即可使用 Python 模块入口。
 
 ```bash
-git clone --branch feature/batched-refill https://github.com/dongyingyibadao/fragment_training_kit.git fragment_training_kit
+git clone https://github.com/dongyingyibadao/fragment_training_kit.git fragment_training_kit
 ```
 
-当前组合位于 `feature/batched-refill`；默认分支的历史版本不一定包含它。先用两卡样例验证站点和模型：将 `fragment_training_kit/config/site.example.json` 复制到项目外，填好 Python、CANN、私有inventory、共享registry等站点路径。登录文件通过CLI传入，不写进site.json。完成后按 [当前手册](docs/12_current_ascend_strategy.md) 启用节点规划、整组恢复和动态补卡。
+当前组合以默认分支 `main` 为使用入口；`feature/batched-refill` 保留开发历史。先用两卡样例验证站点和模型：将 `fragment_training_kit/config/site.example.json` 复制到项目外，填好 Python、CANN、私有inventory、共享registry等站点路径。登录文件通过CLI传入，不写进site.json。完成后按 [当前手册](docs/12_current_ascend_strategy.md) 启用节点规划、整组恢复和动态补卡。
 
 ```bash
 python fragment_training_kit/tools/verify_package.py

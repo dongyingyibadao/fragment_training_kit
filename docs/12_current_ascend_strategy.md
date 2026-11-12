@@ -1,6 +1,6 @@
 # 当前昇腾低优训练策略与推广使用手册
 
-本页是新使用者和其他 agent 的统一入口，整理截至 2026-11-12 已实现的组合。代码在本独立目录与 GitHub `feature/batched-refill` 分支中；无需原实验目录。当前保持同步训练：候选不能携带旧权重直接参加梯度归约，不启用异步 SGD、DiLoCo 或手工分层通信后端。
+本页是新使用者和其他 agent 的统一入口，整理截至 2026-11-12 已实现的组合。代码在本独立目录与 GitHub 默认分支 `main` 中，`feature/batched-refill` 保留开发历史；无需原实验目录。当前保持同步训练：候选不能携带旧权重直接参加梯度归约，不启用异步 SGD、DiLoCo 或手工分层通信后端。
 
 ## 一次训练如何运行
 
@@ -92,7 +92,7 @@ flowchart TD
 以下命令从 `fragment_training_kit/` 的父目录执行。所有 `/shared/...` 均需替换；site、inventory、registry、登录文件和新 run 放在项目之外。Python/CANN 路径需在控制端和作业环境中可用，网络与共享盘由站点提供。
 
 ```bash
-git clone --branch feature/batched-refill https://github.com/dongyingyibadao/fragment_training_kit.git fragment_training_kit
+git clone https://github.com/dongyingyibadao/fragment_training_kit.git fragment_training_kit
 python fragment_training_kit/tools/verify_package.py
 TORCH_DEVICE_BACKEND_AUTOLOAD=0 python -m fragment_training_kit.examples.audit_toy --cpu-oracle --steps 20 --output /shared/results/toy-oracle-v1.json
 ```
