@@ -43,4 +43,6 @@ OpenPI 默认分支仍可使用：省略 `resident_adapter` 并提供原训练�
 
 字段映射示例见 [OpenPI案例配置](../config/openpi.case.template.json)：将该对象放到site.training_config，site.steps与target_steps对齐，按环境填入共享路径。它是从历史配置提炼的接入模板，不是本轮重新完整训练的证据。base_params目录需包含model.safetensors及对应assets；该案例要求mean/std的pi05_libero_lerobot，不能随意换成horizon或归一化不同的pi05_libero。
 
-`openpi_root`需要指向你已经固定版本的upstream源码。当前launcher冻结自己的runtime和source_dirs，但不会自动把这个外部路径下的整个OpenPI工程冻结；外部源码、第三方依赖和数据版本需要使用者自己锁定，才能复现实验。
+`openpi_root`需要指向你已经固定版本的upstream源码。将纯源码根目录显式放入 `source_dirs`，且 `openpi_root` 与该项完全匹配时，prepare 会复制源码并将模型根目录重绑到本 run 的冻结副本。未显式包含的外部源码不会自动冻结；第三方依赖、数据、权重版本仍需自己锁定。不要填上一次 run 的 runtime。OpenPI 建议启用 `isolate_model_cache=true`，按平台作业隔离 HF dataset 缓存，减少跨节点并发生成同一缓存的问题。
+
+选择当前动态补卡策略时，先读 [统一使用手册](12_current_ascend_strategy.md)。用 OpenPI 案例对象替换 toy 的 `training_config` 后，再加回 `resident_pod_recovery=true`、`resident_pod_refill=true`；不能保留 toy adapter 或高学习率。通用 adapter 读取 `worker_microbatch_size`，原生 OpenPI 读取 `microbatch_size`，两者不可混淆。

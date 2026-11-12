@@ -1,0 +1,88 @@
+{
+  "schema": "fragment-strategy-guide-verification-v1",
+  "verified_at": "2026-11-12T07:29:50.705386+00:00",
+  "scope": "Documentation and configuration consolidation; no new runtime or training algorithm",
+  "platform_jobs_created": 0,
+  "npu_experiments_started": 0,
+  "json_configs_parsed": 6,
+  "markdown": {
+    "files_checked": 18,
+    "local_file_links_checked": 140,
+    "broken_file_links": [],
+    "platform_selectors_json_blocks_parsed": 1
+  },
+  "cli_help_passed": [
+    "launch",
+    "topology",
+    "audit_refill",
+    "discovery"
+  ],
+  "offline_preparation": {
+    "official_api_fixture_only": true,
+    "new_complete64": {
+      "layout": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "submitted": false,
+      "verify": {
+        "verified": true,
+        "frozen_files": 78
+      }
+    },
+    "existing_partial48_target64": {
+      "layout": [
+        16,
+        16,
+        16
+      ],
+      "submitted": false,
+      "verify": {
+        "verified": true,
+        "frozen_files": 78
+      }
+    },
+    "planned48_then_prepared_target64": {
+      "layout": [
+        16,
+        16,
+        16
+      ],
+      "submitted": false,
+      "verify": {
+        "verified": true,
+        "frozen_files": 78
+      }
+    },
+    "fixture_api_calls": 8,
+    "platform_create_or_stop_calls": 0,
+    "torch_imported": false,
+    "temporary_runs_removed": true
+  },
+  "unchanged_runtime": {
+    "python_sources": 94,
+    "vendor_sources": 57,
+    "source_set_sha256": "84870ee83de9c8c54fe78118ca704b4c990bdb8ff4d39f144ccfac5db6888d42",
+    "runtime_manifest_identical_to_head": true,
+    "python_sources_identical_to_head": true
+  },
+  "historical_evidence": {
+    "unchanged_files": 345,
+    "file_set_sha256": "149de9e4edbc6066ce1fe6c0b84bc5c7e0753f0886d05b6215528cc174ba4179"
+  },
+  "review": {
+    "one_readonly_subagent": true,
+    "issues_corrected": [
+      "Raw discovery is distinct from verified LOW/project/image inventory",
+      "Refill target has a minimum of 16 cards"
+    ],
+    "runtime_edits": false
+  },
+  "keepalive": {
+    "paused_by_this_check": false,
+    "stopped_by_this_check": false,
+    "reason": "Only standard-library checks and local source freezing; no training, device framework or timing experiment"
+  }
+}

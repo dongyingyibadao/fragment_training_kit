@@ -2,6 +2,8 @@
 
 本页描述 `resident_pod_recovery` 实验路径：一个多卡作业同时失去多个成员、恢复途中再次掉卡时，保留健康进程的完整模型、Adam 和已完成的本地梯度，缩小通信组后继续当前更新。2026-11-11 已完成真实 QZ 小模型连续整组失联、部分 APPLY 和 checkpoint 导出换源短跑，并通过严格 CPU 数值参考。OpenPI 新路径的独立实测结果另列于本页验收记录；不能直接套用历史成绩。
 
+使用者先读 [当前策略手册](12_current_ascend_strategy.md)。本页配置和后文未实现范围描述不带 refill 的历史恢复分支；当前组合进一步加入 [11 的累计补卡](11_batched_refill.md)。`cards == active_cards` 等约束不能套用于已开启 refill 的48初始/64目标配置。
+
 这里的 pod 指一个平台多卡作业的共同故障域。控制器实际按 `run_id + worker_id + session_id + pid` 确认并封禁失联会话；不会因为两个进程位于同一主机就推断它们必然一起失效。节点规划及正常成员切换见 [09](09_topology_training.md)。
 
 ## 启用方式

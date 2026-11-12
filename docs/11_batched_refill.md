@@ -4,7 +4,7 @@
 
 ## 使用约定
 
-复制 [补卡配置示例](../config/site.refill.example.json) 到项目外，提供自己的 Python/CANN、私有 inventory、共享 registry 和模型 adapter。执行通常的 prepare → verify → run → audit → observe/cleanup。配置中的 `cards` 是本 run 同时持有的物理预算及训练目标，`active_cards` 是初始训练成员数；本模式的 `job_layout` **仅覆盖 active_cards**，之后绝不追加历史作业。初始成员仍需全部 READY 并完成建组，随后才能使用掉卡恢复与补卡。
+推广完整流程见 [当前策略手册](12_current_ascend_strategy.md)。复制 [48卡初始配置](../config/site.refill.example.json) 或 [完整初始组配置](../config/site.low_priority.example.json) 到项目外，提供自己的 Python/CANN、私有 inventory、共享 registry 和模型 adapter。执行通常的 prepare → verify → run → audit → observe/cleanup。配置中的 `cards` 是本 run 同时持有的物理预算及训练目标，`active_cards` 是初始训练成员数；本模式的 `job_layout` **仅覆盖 active_cards**，之后不修改这份初始布局；动态补卡会向 fleet 历史追加新意图和成员映射。初始成员仍需全部 READY 并完成建组，随后才能使用掉卡恢复与补卡。
 
 ```json
 {
@@ -25,6 +25,8 @@
 这段只是完整站点配置的补卡字段。global batch 固定 256、atomic4、无梯度重算、原生设备 AdamW。OpenPI 沿用已验收的显式模型源码/数据/权重路径，心跳建议先使用 60 秒，RDMA timeout 保持 12；心跳与 RDMA 超时解决不同问题。
 
 初始选择可先使用节点规划功能；后续补卡每轮重新读取官方节点视图，按 CPU、内存和卡数选择合法的 16/8/4/2/1 卡作业。没有空闲容量时，只在物理预算内排队单卡。inventory 保留所有已授权规格；不能伪造新规格、突破空间权限或把计划节点当作实际指定节点。`topology.py watch` 仍只处理固定初始槽位，持续补卡由新配置下的 `launch.py run` 完成。
+
+`topology.py prepare` 可直接用于 `cards=active_cards` 的完整初始组；48初始/64目标需用 `launch.py prepare`，若也要自动规划初始48张，先独立只读 plan48，再把布局与精确 selections 写回正式48/64配置，具体步骤见当前手册。不要直接把上方48/64示例交给 `topology.py prepare`。
 
 OpenPI 使用 `source_dirs` 提供纯源码目录，且 `training_config.openpi_root` 指向同一源目录时，prepare 会将模型根目录重绑到本 run 的冻结副本。不要把它填成上一次 run 的 runtime。启用 `isolate_model_cache` 时，HF dataset 缓存按平台作业分别存放，避免多个主机同时生成同一缓存；不要用共享缓存文件的存在代替完整读取校验。
 

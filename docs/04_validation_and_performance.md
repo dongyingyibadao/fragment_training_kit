@@ -5,13 +5,17 @@ loss下降是可训练性的证据之一，不能单独证明梯度归约正确�
 | 层次 | 要检查的事实 | 不能由它替代的验证 |
 |---|---|---|
 | CPU数值 | 完整batch梯度与分片/非均匀/补算梯度一致，Adam步数与参数参考正确 | NPU实际执行、通信、平台作业 |
-| 真NPU短跑 | 每作业1张可见卡、HCCL SUM、所有loss/grad有限、每步恰好256样本、重算0 | 长期稳定性或模型效果 |
+| 真NPU短跑 | 作业完整可见域与申请的1/2/4/8/16卡规格一致、每进程独立逻辑设备、HCCL SUM、所有loss/grad有限、每步恰好256样本、重算0 | 长期稳定性或模型效果 |
 | 完整状态 | 各卡模型/Adam/config hash一致；最终checkpoint可校验 | 与FP32-master等其他精度轨迹等价 |
-| 故障 | 原PID/session保留、原local_grad保护、只补缺失分配、替补先对齐完整状态 | 连续掉卡、任意Adam写入中点恢复 |
+| 故障 | 健康PID/session保留、原local_grad保护、只补缺失分配、替补先对齐完整状态；按启用模式验证连续失联与部分APPLY | 任意Adam写入中点、任意驱动故障或controller重启恢复 |
 | 效果 | 验证集loss或下游任务成绩 | 同协议原生集群对照 |
 | 平台收尾 | 自有job全部官方终态，运行/排队/预留0 | 仅本地worker退出 |
 
 toy的固定小模型与确定性数据用于数值和接入验证。CPU oracle比较完整batch梯度与2/3/7分片及补算梯度。真实NPU审计逐步比较global loss和每卡梯度范数，最后对完整参数及Adam状态逐张量比较独立CPU参考；它没有保存每一步所有实际NPU梯度张量。报告初末loss、容差及最终张量最大误差，不能只写“精度正确”。损失下降不要求每一步严格单调。
+
+当前恢复/补卡组合按 [统一手册](12_current_ascend_strategy.md) 验收。先跑普通两卡；补卡另需恰好 16 张候选，检查无许可时没有模型 supervisor、正式 admission 后才有计算报告、每步只有一次更新及最终状态一致。训练结束而候选没来得及接入，不能算补卡通过。原生 OpenPI 的 150 步、toy 的两次补入与 15 卡不加载对照见 [11](11_batched_refill.md)，不重写为新的 2,000 步稳定性验收。
+
+完成且资源释放后，`examples.audit_refill --run-dir RUN_ROOT --output NEW_JSON` 只用标准库复核协议、准入、完整 checkpoint 字节和所有历史终态；toy 再执行 `examples.audit_toy --run-dir RUN_ROOT/probe --output NEW_JSON` 对照独立 CPU 梯度/Adam。该 toy 数值检查不能用于任意大模型，通用哈希审计也不能替代梯度数学参考。
 
 对于自定义模型，adapter的checkpoint_call_count需要接入者真实维护，不能把默认0当作无重算的独立证明。OpenPI已有禁用与调用拦截；toy前向源码不调用checkpoint。其他模型若直接使用函数式torch.utils.checkpoint，应在自己adapter中禁用并仪器核验该路径。
 

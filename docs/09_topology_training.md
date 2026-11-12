@@ -2,6 +2,8 @@
 
 本页对应 `feature/topology-aware-training`，记录 2026-11-07 的有界实验验收：节点规划、多卡通信对照、600 步小模型自动切入/定时切回和 64 卡 OpenPI 30 步短训。当时任意新作业持续加入、整 pod 被抢占后的自动恢复尚未完成。后续独立的整组缩组恢复路径见 [10](10_pod_loss_recovery.md)，与本页旧候选切换路径互斥；不能据此宣称全自动低优训练已经生产就绪。
 
+新接入使用 [当前策略手册](12_current_ascend_strategy.md) 与 [16 卡累计补入](11_batched_refill.md)。本页后文“尚未实现”的切换/恢复边界均保留为当时版本记录，不代表后续补卡模式；不要把旧 deferred standby/candidate watcher 与新 refill 混用。
+
 ## 为什么整机申请会改变通信
 
 “16 张卡在同一物理机器上”和“一个作业看到这 16 张卡”不是同一条件。设备可见性、容器 IPC 权限与 HCCL 识别出的通信域都会影响路径。历史 64 个单卡容器虽然有部分共用物理节点，HCCL 仍记录 `serverNum=64`、`HccsNum=0`，设备通信分析没有发现 HCCS 字节。不能通过伪造 rank table 的 server ID 解决隔离问题：历史同机双卡试验发现 HCCS 后仍因对端设备 IPC notify 不可访问而失败。

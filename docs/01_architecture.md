@@ -1,6 +1,6 @@
 # 一步训练与掉卡恢复
 
-默认每个 LOW/1 平台作业独立申请一张卡，也可按 `job_layout` 申请包含 2/4/8/16 卡的作业；每张卡仍由独立 CPU supervisor 管理训练子进程。CPU controller 决定本步成员与样本位置，模型、局部梯度和原生 AdamW 状态常驻每张 NPU。平台调度和训练成员是两套状态：平台作业 running 不等于训练 READY。多卡共享设备域和候选切换见 [09](09_topology_training.md)；下文单成员恢复证据不涵盖整个多卡作业同时丢失。
+当前推广组合先读 [策略使用手册](12_current_ascend_strategy.md)。普通两卡样例默认每作业独立一张 LOW/1 卡；节点规划可按 `job_layout` 申请包含 2/4/8/16 卡的作业，每张卡仍由独立 CPU supervisor 管理训练子进程。CPU controller 决定本步成员与样本位置，模型、局部梯度和原生 AdamW 状态常驻每张 NPU。平台调度和训练成员是两套状态：平台作业 running 不等于训练 READY。多卡共享设备域见 [09](09_topology_training.md)，显式分阶段恢复与累计补入分别见 [10](10_pod_loss_recovery.md)/[11](11_batched_refill.md)；下文单成员示例属于基础路径，不能覆盖新路径所有恢复阶段。
 
 当前复用路径明确固定 **global batch 256、atomic unit 4、关闭梯度重算、原生 torch.optim.AdamW**。支持 2–64 个初始成员。要改变 global batch、优化器或状态精度，需要修改并验证相应合同，不能只改一个配置数字。
 
@@ -51,12 +51,14 @@ sequenceDiagram
     C->>C: 提交新版本
 ```
 
-这条恢复会暂停当步；不能描述为掉卡完全无停顿。设备恢复依赖已验证的 torch_npu/CANN 后端 API，换版本后先做小组故障测试。当前控制流只支持一次 APPLY 前的成员失联，修复中再次丢卡等情况不会自动无限缩组。
+这条恢复会暂停当步；不能描述为掉卡完全无停顿。设备恢复依赖已验证的 torch_npu/CANN 后端 API，换版本后先做小组故障测试。基础路径只覆盖一次 APPLY 前失联；显式 `resident_pod_recovery=true` 路径支持有界连续失联与多成员缩组，按 [10](10_pod_loss_recovery.md) 的阶段和恢复预算执行，不能无限缩组或绕过状态校验。
 
 ## 替补入组与 checkpoint
 
 替补先独立 LOADING，不属于当前训练成员。初始模型加载可以和健康组训练并行；入组边界要暂停，传递并校验完整状态，再建立新组。需要模型全部参数（含冻结/共享别名）、buffers、Adam moments、每参数 step、optimizer groups/defaults、提交版本与随机性合同。只加载权重不足以恢复 Adam。
 
+显式开启 `resident_pod_refill=true` 后，候选还有更早的预留阶段：不足 16 张只占资源与 CPU 心跳，恰好 16 张才开始冷加载；全部 READY 且完整对齐后整批接入。初始布局保持冻结，后续动态成员通过独立映射账本追加；不靠修改初始 `job_layout` 扩组。
+
 本实现的原生状态使用参数本来的 dtype：BF16 参数配 BF16 moments，FP32 参数配 FP32 moments，没有额外 FP32 master。这不能自动等价于别人的 FP32-master 优化器。
 
-一旦 APPLY 已授权，部分卡可能已更新。当前通用控制流不能简单缩组、重放再更新，否则可能双重 apply；它应以明确失败结束，保留最后完整 checkpoint。控制器进程崩溃也不是无状态重启即可继续的情形。详见 [边界](05_evidence_and_limits.md)。
+一旦 APPLY 已授权，部分卡可能已更新，不能简单缩组、重放再更新，否则可能双重 apply。基础路径应明确失败；显式分阶段路径检查存活副本模型、Adam、步数与更新授权，证据一致时才前进提交，不重放 Adam，具体边界见 [10](10_pod_loss_recovery.md)。控制器进程崩溃仍不是无状态重启即可继续的情形。详见 [边界](05_evidence_and_limits.md)。
